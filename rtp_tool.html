@@ -13,231 +13,287 @@ body {
   background: #0f1117;
   color: #e0e0e0;
   min-height: 100vh;
-  padding: 24px;
+  padding: 18px 22px;
 }
 
-h1 {
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: #7eb8f7;
-  margin-bottom: 24px;
-  letter-spacing: 0.5px;
+/* ── Top Bar ──────────────────────────────── */
+.top-bar {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: stretch;
 }
 
-/* ── Upload ─────────────────────────────── */
+/* Upload compact */
 #upload-area {
   border: 2px dashed #3a4a6b;
-  border-radius: 12px;
-  padding: 36px 24px;
+  border-radius: 10px;
+  padding: 14px 18px;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
   background: #161b27;
-  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 #upload-area:hover, #upload-area.drag-over {
   border-color: #7eb8f7;
   background: #1a2235;
 }
-#upload-area .up-icon { font-size: 2.4rem; margin-bottom: 8px; }
-#upload-area p { color: #8899aa; font-size: 0.92rem; }
+#upload-area .up-icon { font-size: 1.6rem; }
+#upload-area p { color: #8899aa; font-size: 0.82rem; }
 #upload-area p span { color: #7eb8f7; font-weight: 600; }
+#file-name { font-size: 0.75rem; color: #5566aa; margin-top: 2px; }
 #file-input { display: none; }
+
+/* G19 Result Display */
+.g19-display {
+  background: #161b27;
+  border: 1px solid #2a3550;
+  border-radius: 10px;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.g19-block { display: flex; flex-direction: column; gap: 4px; }
+.g19-block .glabel { font-size: 0.75rem; color: #8899aa; text-transform: uppercase; letter-spacing: 0.5px; }
+.g19-block .gvalue {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #7eb8f7;
+  letter-spacing: 1px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.g19-block .gvalue.good { color: #5ef77a; }
+.g19-block .gvalue.neutral { color: #7eb8f7; }
+.g19-block .gvalue.dim { color: #445566; }
+.g19-sep { width: 1px; height: 48px; background: #2a3550; }
+.g19-detail { display: flex; flex-direction: column; gap: 6px; }
+.g19-detail .drow { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; }
+.g19-detail .drow .dk { color: #6677aa; width: 60px; }
+.g19-detail .drow .dv { color: #ccd6e8; font-weight: 600; }
+.g19-detail .drow .dv.hi { color: #5ef77a; }
 
 /* ── Card ────────────────────────────────── */
 .card {
   background: #161b27;
   border: 1px solid #2a3550;
-  border-radius: 12px;
-  margin-bottom: 18px;
+  border-radius: 10px;
+  margin-bottom: 14px;
   overflow: hidden;
 }
 .card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 20px;
+  padding: 11px 18px;
   background: #1c2336;
   border-bottom: 1px solid #2a3550;
   cursor: pointer;
   user-select: none;
 }
 .card-header:hover { background: #212840; }
-.card-header h2 { font-size: 0.97rem; font-weight: 600; color: #b0c4de; }
+.card-header h2 { font-size: 0.9rem; font-weight: 600; color: #b0c4de; }
 .card-header .badge {
-  background: #263352;
-  color: #7eb8f7;
-  padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  margin-left: 10px;
+  background: #263352; color: #7eb8f7;
+  padding: 1px 9px; border-radius: 20px;
+  font-size: 0.75rem; margin-left: 8px;
 }
 .collapse-btn {
-  background: none;
-  border: 1px solid #3a4a6b;
-  color: #8899aa;
-  border-radius: 6px;
-  padding: 3px 10px;
-  cursor: pointer;
-  font-size: 0.82rem;
+  background: none; border: 1px solid #3a4a6b;
+  color: #8899aa; border-radius: 5px;
+  padding: 2px 9px; cursor: pointer; font-size: 0.8rem;
   transition: all 0.15s;
 }
 .collapse-btn:hover { background: #263352; color: #ccc; }
 .card-body.collapsed { display: none; }
 
-/* ── Table ───────────────────────────────── */
-.table-wrap { overflow-x: auto; max-height: 480px; overflow-y: auto; }
+/* ── Split Table Layout ──────────────────── */
+.split-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
 
-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.split-pane {
+  overflow-x: auto;
+  max-height: 440px;
+  overflow-y: auto;
+}
+.split-pane:first-child {
+  border-right: 2px solid #2a3550;
+}
+
+/* ── Tables ──────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
 
 thead th {
   position: sticky;
   top: 0;
   background: #1c2336;
   color: #7eb8f7;
-  padding: 10px 12px;
+  padding: 9px 11px;
   text-align: center;
   border-bottom: 2px solid #3a4a6b;
   white-space: nowrap;
   z-index: 2;
   font-weight: 600;
 }
-thead th .sub { font-size: 0.7rem; color: #556688; font-weight: 400; display: block; }
+thead th .sub { font-size: 0.67rem; color: #556688; font-weight: 400; display: block; margin-top: 1px; }
+
+/* left pane header accent */
+.pane-left thead th { background: #1c2a36; }
+.pane-right thead th { background: #1c2336; }
 
 tbody tr { transition: background 0.1s; }
-tbody tr:hover { background: #1e2840; }
-tbody tr.sum-row {
-  background: #1a2e1a;
-  border-top: 2px solid #3a6b3a;
-  font-weight: 700;
-}
-tbody tr.sum-row td { color: #7ef7a0; }
+tbody tr:hover td { background: #1e2840; }
+
+/* pair rows in both panes highlight together via JS */
+tbody tr.row-hover td { background: #1e2840 !important; }
 
 td {
-  padding: 7px 12px;
+  padding: 6px 11px;
   text-align: right;
   border-bottom: 1px solid #1e2535;
   color: #ccd6e8;
   white-space: nowrap;
 }
-td:first-child { text-align: center; color: #6677aa; font-size: 0.8rem; }
+td:first-child { text-align: center; color: #6677aa; font-size: 0.78rem; }
 
-/* C column with input + lock */
-td.col-c {
-  display: table-cell;
-  white-space: nowrap;
-}
-.c-wrap { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
-.c-input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid transparent;
-  color: #ccd6e8;
+/* range cells */
+td.range-cell { color: #8899bb; font-size: 0.8rem; }
+
+tbody tr.sum-row td { color: #7ef7a0; background: #1a2e1a; font-weight: 700; }
+tbody tr.sum-row:hover td { background: #1a2e1a !important; }
+tbody tr.sum-row { border-top: 2px solid #3a6b3a; }
+
+/* ── Respin Input ────────────────────────── */
+td.respin-cell { padding: 4px 8px; }
+.respin-wrap { display: flex; align-items: center; gap: 5px; justify-content: flex-end; }
+.respin-input {
+  background: #0d1320;
+  border: 1.5px solid #3a5a8b;
+  border-radius: 5px;
+  color: #e0f0ff;
   text-align: right;
-  width: 88px;
-  font-size: 0.84rem;
+  width: 86px;
+  font-size: 0.83rem;
   font-family: inherit;
+  padding: 4px 8px;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
-.c-input:focus { border-bottom-color: #7eb8f7; }
+.respin-input:focus {
+  border-color: #7eb8f7;
+  box-shadow: 0 0 0 2px rgba(126,184,247,0.15);
+}
+.respin-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: #2a3550;
+  background: #111722;
+}
 .lock-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 1px 3px;
-  font-size: 0.88rem;
-  border-radius: 4px;
+  background: none; border: none;
+  cursor: pointer; padding: 1px 3px;
+  font-size: 0.85rem; border-radius: 4px;
   transition: background 0.15s;
 }
 .lock-btn:hover { background: #2a3550; }
 
-td.cell-changed { background: #2a2a10 !important; color: #ffe066 !important; }
-td.cell-g19 { background: transparent !important; color: #5ef77a !important; font-weight: 700; }
+td.cell-changed { background: #282510 !important; color: #ffe066 !important; }
+td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
 
 /* ── Control ─────────────────────────────── */
-.ctrl-body { padding: 18px 20px; }
-.ctrl-row { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
-
+.ctrl-body { padding: 14px 18px; }
+.ctrl-row  { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
 .input-group { display: flex; flex-direction: column; gap: 4px; }
-.input-group label { font-size: 0.78rem; color: #8899aa; }
+.input-group label { font-size: 0.76rem; color: #8899aa; }
 .input-group input[type=number] {
   background: #0f1117;
   border: 1px solid #3a4a6b;
   color: #e0e0e0;
-  border-radius: 8px;
-  padding: 8px 14px;
-  font-size: 0.97rem;
-  width: 160px;
+  border-radius: 7px;
+  padding: 7px 13px;
+  font-size: 0.95rem;
+  width: 150px;
   outline: none;
   transition: border-color 0.15s;
 }
 .input-group input[type=number]:focus { border-color: #7eb8f7; }
 
-.btn {
-  border: none;
-  border-radius: 8px;
-  padding: 9px 22px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
-}
+.btn { border: none; border-radius: 7px; padding: 8px 20px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
 .btn:active { transform: translateY(1px); }
+.btn:hover { opacity: 0.86; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-run   { background: linear-gradient(135deg, #3a7bd5, #2060b0); color: #fff; }
 .btn-reset { background: #263352; color: #aab8cc; border: 1px solid #3a4a6b; }
 .btn-dl    { background: linear-gradient(135deg, #2e7d52, #1a5c3a); color: #fff; }
-.btn:hover { opacity: 0.88; }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* ── Status ──────────────────────────────── */
-.status-msg {
-  margin-top: 14px;
-  padding: 9px 14px;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  display: none;
-}
+.status-msg { margin-top: 12px; padding: 8px 13px; border-radius: 7px; font-size: 0.85rem; display: none; }
 .status-msg.success { background: #1a2e1a; color: #7ef7a0; border: 1px solid #2a4a2a; display: block; }
 .status-msg.error   { background: #2e1a1a; color: #f77e7e; border: 1px solid #4a2a2a; display: block; }
 .status-msg.info    { background: #1a2235; color: #7eb8f7; border: 1px solid #2a3a5a; display: block; }
 
-/* ── Result bar ──────────────────────────── */
-.result-bar {
-  display: flex;
-  gap: 28px;
-  padding: 14px 20px;
-  background: #1a2235;
-  border-bottom: 1px solid #2a3550;
-  flex-wrap: wrap;
-}
-.ritem { display: flex; flex-direction: column; gap: 3px; }
-.ritem .rlabel { font-size: 0.73rem; color: #8899aa; }
-.ritem .rvalue { font-size: 1.05rem; font-weight: 700; }
-.rvalue.good    { color: #5ef77a; }
-.rvalue.bad     { color: #f77e5e; }
-.rvalue.neutral { color: #7eb8f7; }
+/* ── Result Table (9 cols) ───────────────── */
+.result-wrap { overflow-x: auto; max-height: 440px; overflow-y: auto; }
 
 /* ── Scrollbar ───────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: #161b27; }
 ::-webkit-scrollbar-thumb { background: #3a4a6b; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #4a5a8b; }
+
+.hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<h1>⚙ RTP Respin 調整工具</h1>
+<!-- ── Top Bar ─────────────────────────────── -->
+<div class="top-bar">
 
-<!-- ── Upload ─────────────────────────── -->
-<div id="upload-area">
-  <div class="up-icon">📂</div>
-  <p>拖放 <span>.xlsx</span> 至此，或<span> 點擊上傳</span></p>
-  <p style="margin-top:6px;font-size:0.8rem;color:#6677aa;">目前載入：<span id="file-name">尚未載入</span></p>
-  <input type="file" id="file-input" accept=".xlsx,.xls">
+  <!-- Upload compact -->
+  <div id="upload-area">
+    <div class="up-icon">📂</div>
+    <p>拖放 <span>.xlsx</span> 或<span> 點擊上傳</span></p>
+    <div id="file-name">尚未載入</div>
+    <input type="file" id="file-input" accept=".xlsx,.xls">
+  </div>
+
+  <!-- G19 result -->
+  <div class="g19-display">
+    <div class="g19-block">
+      <span class="glabel">目前 G19</span>
+      <span class="gvalue dim" id="g19-current">—</span>
+    </div>
+    <div class="g19-sep"></div>
+    <div class="g19-block">
+      <span class="glabel">目標 G19</span>
+      <span class="gvalue dim" id="g19-target">—</span>
+    </div>
+    <div class="g19-sep"></div>
+    <div class="g19-block">
+      <span class="glabel">調整後 G19</span>
+      <span class="gvalue dim" id="g19-result">—</span>
+    </div>
+    <div class="g19-sep"></div>
+    <div class="g19-detail" id="g19-detail" style="display:none">
+      <div class="drow"><span class="dk">誤差</span><span class="dv" id="det-err">—</span></div>
+      <div class="drow"><span class="dk">狀態</span><span class="dv" id="det-status">—</span></div>
+      <div class="drow"><span class="dk">變更列</span><span class="dv" id="det-changed">—</span></div>
+    </div>
+  </div>
+
 </div>
 
-<!-- ── Raw Table ──────────────────────── -->
+<!-- ── Raw Table Card ─────────────────────── -->
 <div class="card" id="raw-card" style="display:none">
   <div class="card-header" id="raw-hdr">
     <div style="display:flex;align-items:center">
@@ -247,27 +303,45 @@ td.cell-g19 { background: transparent !important; color: #5ef77a !important; fon
     <button class="collapse-btn" id="raw-btn">收合 ▲</button>
   </div>
   <div class="card-body" id="raw-body">
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>A <span class="sub">獎勵倍數</span></th>
-            <th>B <span class="sub">機率</span></th>
-            <th>C <span class="sub">Respin 因子 🔓=可調</span></th>
-            <th>D <span class="sub">B×(1-C)</span></th>
-            <th>E <span class="sub">B×C</span></th>
-            <th>F <span class="sub">B×A</span></th>
-            <th>G <span class="sub">B×(1-C)×A / Σ</span></th>
-          </tr>
-        </thead>
-        <tbody id="raw-tbody"></tbody>
-      </table>
+    <div class="split-wrap" id="split-wrap">
+
+      <!-- Left pane: range + avg + prob -->
+      <div class="split-pane" id="left-pane">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>倍率下限<span class="sub">range min</span></th>
+              <th>倍率上限<span class="sub">range max</span></th>
+              <th>平均倍率<span class="sub">avg mult</span></th>
+              <th>機率<span class="sub">prob</span></th>
+            </tr>
+          </thead>
+          <tbody id="left-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Right pane: range + respin + G -->
+      <div class="split-pane" id="right-pane">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>倍率下限<span class="sub">range min</span></th>
+              <th>倍率上限<span class="sub">range max</span></th>
+              <th>重轉機率<span class="sub">respin — 可調整</span></th>
+              <th>G<span class="sub">B×(1-C)×A / Σ</span></th>
+            </tr>
+          </thead>
+          <tbody id="right-tbody"></tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- ── Control ────────────────────────── -->
+<!-- ── Control Card ───────────────────────── -->
 <div class="card" id="ctrl-card" style="display:none">
   <div class="card-header" style="cursor:default">
     <h2>調整控制</h2>
@@ -278,15 +352,15 @@ td.cell-g19 { background: transparent !important; color: #5ef77a !important; fon
         <label>目標 G19 值</label>
         <input type="number" id="target-input" placeholder="例：0.97" step="0.001" min="0">
       </div>
-      <button class="btn btn-run"   id="run-btn"  onclick="runOptimize()">▶ 執行調整</button>
-      <button class="btn btn-reset" id="reset-btn" onclick="resetC()">↺ 還原 C 值</button>
+      <button class="btn btn-run"   onclick="runOptimize()">▶ 執行調整</button>
+      <button class="btn btn-reset" onclick="resetRespin()">↺ 還原重轉機率</button>
       <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
     </div>
     <div class="status-msg" id="status-msg"></div>
   </div>
 </div>
 
-<!-- ── Result Table ───────────────────── -->
+<!-- ── Result Card ─────────────────────────── -->
 <div class="card" id="result-card" style="display:none">
   <div class="card-header" id="result-hdr">
     <div style="display:flex;align-items:center">
@@ -296,19 +370,17 @@ td.cell-g19 { background: transparent !important; color: #5ef77a !important; fon
     <button class="collapse-btn" id="result-btn">收合 ▲</button>
   </div>
   <div class="card-body" id="result-body">
-    <div class="result-bar" id="result-bar"></div>
-    <div class="table-wrap">
-      <table>
+    <div class="result-wrap">
+      <table id="result-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>A</th>
-            <th>B</th>
-            <th>C 原始</th>
-            <th>C 調整後</th>
-            <th>D <span class="sub">B×(1-C)</span></th>
-            <th>E <span class="sub">B×C</span></th>
-            <th>F <span class="sub">B×A</span></th>
+            <th>倍率下限</th>
+            <th>倍率上限</th>
+            <th>平均倍率</th>
+            <th>機率</th>
+            <th>重轉 原始</th>
+            <th>重轉 調整後</th>
             <th>G</th>
           </tr>
         </thead>
@@ -324,34 +396,34 @@ td.cell-g19 { background: transparent !important; color: #5ef77a !important; fon
 // ═══════════════════════════════════════════════
 // State
 // ═══════════════════════════════════════════════
-let rows       = [];          // [{rowIdx, a, b, c, locked}]
-let backupC    = [];          // original C values
-let wb         = null;
-let fileName   = '';
+let rows     = [];   // [{rowIdx, rangeMin, rangeMax, avg, prob, respin, locked}]
+let backupR  = [];   // original respin values
+let wb       = null;
+let fileName = '';
 
 // ═══════════════════════════════════════════════
-// Helpers
+// Math helpers
 // ═══════════════════════════════════════════════
-const clip  = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
-const fmt   = (v, d = 7) => (+v).toFixed(d);
-const fmtE  = (v, d = 3) => (+v).toExponential(d);
-const safeN = v => (v == null || isNaN(+v)) ? 0 : +v;
+const clip = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+const fmt  = (v, d = 7) => Number(v).toFixed(d);
+const fmtE = (v, d = 3) => Number(v).toExponential(d);
 
-/** G19 = Σ(b*(1-c)*a) / Σ(b*(1-c))  for given row array */
 function calcG19(arr) {
   let num = 0, den = 0;
-  arr.forEach(r => { const w = r.b * (1 - r.c); num += w * r.a; den += w; });
+  arr.forEach(r => {
+    const w = r.prob * (1 - r.respin);
+    num += w * r.avg;
+    den += w;
+  });
   return den === 0 ? 0 : num / den;
 }
 
-/** Compute derived D,E,F,G for a row (needs the shared denominator) */
-function calcDerived(r, denom) {
-  return {
-    d: r.b * (1 - r.c),
-    e: r.b * r.c,
-    f: r.b * r.a,
-    g: denom > 0 ? r.b * (1 - r.c) * r.a / denom : 0,
-  };
+function calcG(r, denom) {
+  return denom > 0 ? r.prob * (1 - r.respin) * r.avg / denom : 0;
+}
+
+function getDenom(arr) {
+  return arr.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
 }
 
 // ═══════════════════════════════════════════════
@@ -364,8 +436,7 @@ uploadEl.addEventListener('click', () => fileInput.click());
 uploadEl.addEventListener('dragover', e => { e.preventDefault(); uploadEl.classList.add('drag-over'); });
 uploadEl.addEventListener('dragleave', () => uploadEl.classList.remove('drag-over'));
 uploadEl.addEventListener('drop', e => {
-  e.preventDefault();
-  uploadEl.classList.remove('drag-over');
+  e.preventDefault(); uploadEl.classList.remove('drag-over');
   if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
 });
 fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
@@ -394,146 +465,225 @@ function parseSheet() {
     const getV = c => {
       const cell = ws[XLSX.utils.encode_cell({ r, c })];
       if (!cell) return null;
+      // skip text header cells
+      if (cell.t === 's') return 'TEXT';
       return typeof cell.v === 'number' ? cell.v : null;
     };
-    const a = getV(0), b = getV(1), c = getV(2);
-    // 跳過 A/B/C 全為 null 的列（通常是合計列）
-    if (a === null && b === null && c === null) continue;
-    rows.push({ rowIdx: r + 1, a: safeN(a), b: safeN(b), c: safeN(c), locked: false });
+
+    const a = getV(0), b = getV(1), c = getV(2), d = getV(3), e = getV(4);
+
+    // Skip header row (any cell is text)
+    if (a === 'TEXT' || b === 'TEXT' || c === 'TEXT' || d === 'TEXT' || e === 'TEXT') continue;
+
+    // All null → skip
+    if (a === null && b === null && c === null && d === null && e === null) continue;
+
+    const safeN = v => (v === null || isNaN(+v)) ? 0 : +v;
+    rows.push({
+      rowIdx:   r + 1,
+      rangeMin: safeN(a),
+      rangeMax: safeN(b),
+      avg:      safeN(c),
+      prob:     safeN(d),
+      respin:   safeN(e),
+      locked:   false,
+    });
   }
 
-  // 移除末尾全零的 padding 列（A=0, B=0, C=0）
+  // Drop trailing zero-padding rows (avg=0, prob=0, respin=0)
   while (rows.length > 0) {
     const last = rows[rows.length - 1];
-    if (last.a === 0 && last.b === 0 && last.c === 0) rows.pop(); else break;
+    if (last.avg === 0 && last.prob === 0 && last.respin === 0) rows.pop(); else break;
   }
 
   if (rows.length === 0) { setStatus('找不到有效資料列，請確認 Excel 格式。', 'error'); return; }
 
-  backupC = rows.map(r => r.c);
+  backupR = rows.map(r => r.respin);
 
   document.getElementById('row-badge').textContent = rows.length + ' 列';
-  renderRawTable();
+  renderTables();
 
   document.getElementById('raw-card').style.display    = '';
   document.getElementById('ctrl-card').style.display   = '';
   document.getElementById('result-card').style.display = 'none';
   document.getElementById('dl-btn').classList.add('hidden');
+
+  updateG19Display(calcG19(rows), null, null);
   clearStatus();
 }
 
 // ═══════════════════════════════════════════════
-// Render Raw Table
+// Render Tables (split left / right)
 // ═══════════════════════════════════════════════
-function renderRawTable() {
-  const denom = rows.reduce((s, r) => s + r.b * (1 - r.c), 0);
-  const tbody = document.getElementById('raw-tbody');
-  tbody.innerHTML = '';
+function renderTables() {
+  const denom   = getDenom(rows);
+  const ltbody  = document.getElementById('left-tbody');
+  const rtbody  = document.getElementById('right-tbody');
+  ltbody.innerHTML = '';
+  rtbody.innerHTML = '';
 
   rows.forEach((row, idx) => {
-    const { d, e, f, g } = calcDerived(row, denom);
-    const tr = document.createElement('tr');
-    tr.id = 'raw-tr-' + idx;
-    tr.innerHTML = `
+    const g = calcG(row, denom);
+
+    // Left row: #, rangeMin, rangeMax, avg, prob
+    const ltr = document.createElement('tr');
+    ltr.id = 'ltr-' + idx;
+    ltr.innerHTML = `
       <td>${row.rowIdx}</td>
-      <td>${fmt(row.a)}</td>
-      <td>${fmt(row.b)}</td>
-      <td class="col-c">
-        <div class="c-wrap">
-          <input class="c-input" id="ci-${idx}" type="number"
-            value="${fmt(row.c)}" step="0.001" min="0" max="1"
-            onchange="onCInput(${idx},this.value)"
-            title="可直接編輯">
+      <td class="range-cell">${row.rangeMin}</td>
+      <td class="range-cell">${row.rangeMax}</td>
+      <td>${fmt(row.avg)}</td>
+      <td>${fmt(row.prob)}</td>
+    `;
+    addHoverSync(ltr, idx);
+    ltbody.appendChild(ltr);
+
+    // Right row: #, rangeMin, rangeMax, respin(input), G
+    const rtr = document.createElement('tr');
+    rtr.id = 'rtr-' + idx;
+    rtr.innerHTML = `
+      <td>${row.rowIdx}</td>
+      <td class="range-cell">${row.rangeMin}</td>
+      <td class="range-cell">${row.rangeMax}</td>
+      <td class="respin-cell">
+        <div class="respin-wrap">
+          <input class="respin-input" id="ri-${idx}" type="number"
+            value="${fmt(row.respin)}" step="0.001" min="0" max="1"
+            onchange="onRespinChange(${idx}, this.value)"
+            title="重轉機率（0~1），可直接輸入">
           <button class="lock-btn" id="lb-${idx}"
             onclick="toggleLock(${idx})"
             title="鎖定後不被演算法調整">🔓</button>
         </div>
       </td>
-      <td>${fmt(d)}</td>
-      <td>${fmt(e)}</td>
-      <td>${fmt(f)}</td>
-      <td>${fmt(g)}</td>
+      <td id="gval-${idx}">${fmt(g)}</td>
     `;
-    tbody.appendChild(tr);
+    addHoverSync(rtr, idx);
+    rtbody.appendChild(rtr);
   });
 
-  appendSumRow('raw-tbody', rows, 8);
+  // Sum rows
+  appendSumRowLeft(ltbody);
+  appendSumRowRight(rtbody, denom);
 }
 
-function appendSumRow(tbodyId, arr, colCount) {
-  const denom = arr.reduce((s, r) => s + r.b * (1 - r.c), 0);
-  const g19   = calcG19(arr);
-  const sumD  = arr.reduce((s, r) => s + r.b * (1 - r.c), 0);
-  const sumE  = arr.reduce((s, r) => s + r.b * r.c, 0);
-  const sumF  = arr.reduce((s, r) => s + r.b * r.a, 0);
+function addHoverSync(tr, idx) {
+  tr.addEventListener('mouseenter', () => {
+    const l = document.getElementById('ltr-' + idx);
+    const r = document.getElementById('rtr-' + idx);
+    if (l) l.classList.add('row-hover');
+    if (r) r.classList.add('row-hover');
+  });
+  tr.addEventListener('mouseleave', () => {
+    const l = document.getElementById('ltr-' + idx);
+    const r = document.getElementById('rtr-' + idx);
+    if (l) l.classList.remove('row-hover');
+    if (r) r.classList.remove('row-hover');
+  });
+}
 
+function appendSumRowLeft(tbody) {
   const tr = document.createElement('tr');
   tr.className = 'sum-row';
-  // colCount=8 means: #, A, B, C, D, E, F, G
-  tr.innerHTML = `
-    <td>Σ</td>
-    <td>—</td><td>—</td><td>—</td>
-    <td>${fmt(sumD)}</td>
-    <td>${fmt(sumE)}</td>
-    <td>${fmt(sumF)}</td>
-    <td id="${tbodyId}-g19" class="cell-g19">${fmt(g19)}</td>
-  `;
-  document.getElementById(tbodyId).appendChild(tr);
+  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td><td id="sum-prob">${fmt(rows.reduce((s,r) => s+r.prob, 0))}</td>`;
+  tbody.appendChild(tr);
 }
 
-function onCInput(idx, val) {
+function appendSumRowRight(tbody, denom) {
+  const g19 = calcG19(rows);
+  const tr  = document.createElement('tr');
+  tr.className = 'sum-row';
+  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td><td id="sum-g19" class="cell-g19val">${fmt(g19)}</td>`;
+  tbody.appendChild(tr);
+}
+
+function refreshRightColumn() {
+  const denom = getDenom(rows);
+  rows.forEach((row, idx) => {
+    const g  = calcG(row, denom);
+    const el = document.getElementById('gval-' + idx);
+    if (el) el.textContent = fmt(g);
+  });
+  const g19 = calcG19(rows);
+  const el2 = document.getElementById('sum-g19');
+  if (el2) el2.textContent = fmt(g19);
+  updateG19Display(g19, null, null);
+}
+
+function onRespinChange(idx, val) {
   const v = parseFloat(val);
   if (!isNaN(v)) {
-    rows[idx].c = clip(v);
-    refreshRawG19();
+    rows[idx].respin = clip(v);
+    refreshRightColumn();
   }
-}
-
-function refreshRawG19() {
-  const g19 = calcG19(rows);
-  const el  = document.getElementById('raw-tbody-g19');
-  if (el) el.textContent = fmt(g19);
 }
 
 function toggleLock(idx) {
   rows[idx].locked = !rows[idx].locked;
-  const btn = document.getElementById('lb-' + idx);
+  const btn   = document.getElementById('lb-' + idx);
+  const input = document.getElementById('ri-' + idx);
   if (rows[idx].locked) {
     btn.textContent = '🔒';
-    btn.title = '此列已鎖定，演算法不會調整其 C 值';
+    btn.title = '此列已鎖定，演算法不會調整其重轉機率';
     btn.style.color = '#f7a07e';
+    if (input) { input.disabled = true; }
   } else {
     btn.textContent = '🔓';
     btn.title = '鎖定後不被演算法調整';
     btn.style.color = '';
+    if (input) { input.disabled = false; }
   }
 }
 
 // ═══════════════════════════════════════════════
-// Collapse Toggle
+// G19 top display
 // ═══════════════════════════════════════════════
-function makeCollapsible(headerId, bodyId, btnId) {
-  document.getElementById(headerId).addEventListener('click', () => {
-    const body = document.getElementById(bodyId);
-    const btn  = document.getElementById(btnId);
-    body.classList.toggle('collapsed');
-    btn.textContent = body.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
+function updateG19Display(current, target, result) {
+  const curEl = document.getElementById('g19-current');
+  const tgtEl = document.getElementById('g19-target');
+  const resEl = document.getElementById('g19-result');
+
+  if (current !== null) {
+    curEl.textContent = current.toFixed(6);
+    curEl.className   = 'gvalue neutral';
+  }
+  if (target !== null) {
+    tgtEl.textContent = target.toFixed(6);
+    tgtEl.className   = 'gvalue neutral';
+  }
+  if (result !== null) {
+    const ok = Math.abs(result - (target ?? result)) < 1e-4;
+    resEl.textContent = result.toFixed(6);
+    resEl.className   = 'gvalue ' + (ok ? 'good' : 'neutral');
+  }
+}
+
+// ═══════════════════════════════════════════════
+// Collapse
+// ═══════════════════════════════════════════════
+function makeCollapsible(hId, bId, btnId) {
+  document.getElementById(hId).addEventListener('click', () => {
+    const b = document.getElementById(bId);
+    const btn = document.getElementById(btnId);
+    b.classList.toggle('collapsed');
+    btn.textContent = b.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
   });
 }
 makeCollapsible('raw-hdr',    'raw-body',    'raw-btn');
 makeCollapsible('result-hdr', 'result-body', 'result-btn');
 
+// Sync scroll between left and right pane
+document.addEventListener('DOMContentLoaded', () => {
+  const lp = document.getElementById('left-pane');
+  const rp = document.getElementById('right-pane');
+  if (!lp || !rp) return;
+  lp.addEventListener('scroll', () => { rp.scrollTop = lp.scrollTop; });
+  rp.addEventListener('scroll', () => { lp.scrollTop = rp.scrollTop; });
+});
+
 // ═══════════════════════════════════════════════
 // Optimizer — Binary Search on Δ
 // ═══════════════════════════════════════════════
-/**
- * G19(Δ) = weighted mean of A values,
- * where each unlocked row's C is replaced by clip(C_original + Δ, 0, 1).
- *
- * For rows with high A (>> current G19), increasing Δ → decreasing G19.
- * So G19(Δ) is monotone-decreasing in Δ for typical slot-machine data.
- * Binary search finds the right Δ.
- */
 function runOptimize() {
   const target = parseFloat(document.getElementById('target-input').value);
   if (isNaN(target) || target <= 0) {
@@ -545,129 +695,103 @@ function runOptimize() {
     setStatus('所有列都已鎖定，無法調整。請解鎖至少一列。', 'error'); return;
   }
 
-  // Snapshot current C values as the base for this optimization
-  const baseC = rows.map(r => r.c);
+  const baseR = rows.map(r => r.respin);
 
-  function g19ofDelta(d) {
-    const snapshot = rows.map((r, i) => ({
-      a: r.a, b: r.b,
-      c: r.locked ? baseC[i] : clip(baseC[i] + d),
+  function g19ofD(d) {
+    const snap = rows.map((r, i) => ({
+      avg: r.avg, prob: r.prob,
+      respin: r.locked ? baseR[i] : clip(baseR[i] + d),
     }));
-    return calcG19(snapshot);
+    return calcG19(snap);
   }
 
-  // Reachable range
-  const gAtPlus1  = g19ofDelta( 1.0);   // C pushed toward 1 → lower G19
-  const gAtMinus1 = g19ofDelta(-1.0);   // C pushed toward 0 → higher G19
-  const gLow  = Math.min(gAtPlus1,  gAtMinus1);
-  const gHigh = Math.max(gAtPlus1,  gAtMinus1);
+  const gP1 = g19ofD( 1.0);
+  const gM1 = g19ofD(-1.0);
+  const gLo = Math.min(gP1, gM1);
+  const gHi = Math.max(gP1, gM1);
 
-  if (target < gLow - 1e-9 || target > gHigh + 1e-9) {
+  if (target < gLo - 1e-9 || target > gHi + 1e-9) {
     setStatus(
-      `目標 ${target.toFixed(6)} 超出可調整範圍 ` +
-      `[${gLow.toFixed(6)}, ${gHigh.toFixed(6)}]。` +
-      `目前 G19 = ${g19ofDelta(0).toFixed(6)}`,
+      `目標 ${target.toFixed(6)} 超出可調整範圍 [${gLo.toFixed(6)}, ${gHi.toFixed(6)}]。` +
+      `目前 G19 = ${g19ofD(0).toFixed(6)}`,
       'error'
     );
     return;
   }
 
-  // Determine sign: if G19 decreasing in Δ, lo starts at -1, hi at +1
-  const decreasing = gAtMinus1 >= gAtPlus1;
-  let lo = decreasing ? -1.0 :  1.0;
-  let hi = decreasing ?  1.0 : -1.0;
-  // Normalise so lo < hi
-  if (lo > hi) { [lo, hi] = [hi, lo]; }
+  const decreasing = gM1 >= gP1;
+  let lo = -1.0, hi = 1.0, delta = 0;
 
-  let delta = 0;
   for (let i = 0; i < 300; i++) {
     const mid = (lo + hi) / 2;
-    const g   = g19ofDelta(mid);
+    const g   = g19ofD(mid);
     if (Math.abs(g - target) < 1e-12) { delta = mid; break; }
-    // For decreasing function: if g > target → need higher Δ → lo = mid
     if (decreasing ? g > target : g < target) lo = mid;
     else hi = mid;
     delta = mid;
     if (Math.abs(hi - lo) < 1e-13) break;
   }
 
-  // Build adjusted C array
-  const newC   = rows.map((r, i) => r.locked ? baseC[i] : clip(baseC[i] + delta));
-  const g19New = calcG19(rows.map((r, i) => ({ a: r.a, b: r.b, c: newC[i] })));
+  const newR   = rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta));
+  const g19New = calcG19(rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] })));
   const err    = Math.abs(g19New - target);
 
-  showResult(baseC, newC, target, g19New, err);
+  showResult(baseR, newR, target, g19New, err);
 }
 
 // ═══════════════════════════════════════════════
-// Render Result
+// Result
 // ═══════════════════════════════════════════════
-function showResult(baseC, newC, target, g19New, err) {
+function showResult(baseR, newR, target, g19New, err) {
   const ok = err < 1e-4;
 
-  // Result info bar
-  document.getElementById('result-bar').innerHTML = `
-    <div class="ritem">
-      <span class="rlabel">目標 G19</span>
-      <span class="rvalue neutral">${target.toFixed(7)}</span>
-    </div>
-    <div class="ritem">
-      <span class="rlabel">調整後 G19</span>
-      <span class="rvalue ${ok ? 'good' : 'bad'}">${g19New.toFixed(7)}</span>
-    </div>
-    <div class="ritem">
-      <span class="rlabel">誤差</span>
-      <span class="rvalue ${ok ? 'good' : 'bad'}">${fmtE(err)}</span>
-    </div>
-    <div class="ritem">
-      <span class="rlabel">狀態</span>
-      <span class="rvalue ${ok ? 'good' : 'bad'}">${ok ? '✔ 收斂' : '⚠ 未完全收斂'}</span>
-    </div>
-  `;
+  // Update top display
+  updateG19Display(calcG19(rows), target, g19New);
+  const detEl = document.getElementById('g19-detail');
+  detEl.style.display = '';
+  document.getElementById('det-err').textContent     = fmtE(err);
+  document.getElementById('det-err').className       = 'dv ' + (ok ? 'hi' : '');
+  document.getElementById('det-status').textContent  = ok ? '✔ 收斂' : '⚠ 未收斂';
+  document.getElementById('det-status').className    = 'dv ' + (ok ? 'hi' : '');
 
   // Result table
-  const adjRows = rows.map((r, i) => ({ ...r, c: newC[i] }));
-  const denom   = adjRows.reduce((s, r) => s + r.b * (1 - r.c), 0);
+  const adjRows = rows.map((r, i) => ({ ...r, respin: newR[i] }));
+  const denom   = getDenom(adjRows);
   const tbody   = document.getElementById('result-tbody');
   tbody.innerHTML = '';
 
   let changed = 0;
   adjRows.forEach((row, idx) => {
-    const isChanged = Math.abs(newC[idx] - baseC[idx]) > 1e-10;
+    const isChanged = Math.abs(newR[idx] - baseR[idx]) > 1e-10;
     if (isChanged) changed++;
-    const { d, e, f, g } = calcDerived(row, denom);
+    const g = calcG(row, denom);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.rowIdx}</td>
-      <td>${fmt(row.a)}</td>
-      <td>${fmt(row.b)}</td>
-      <td>${fmt(baseC[idx])}</td>
-      <td class="${isChanged ? 'cell-changed' : ''}">${fmt(newC[idx])}</td>
-      <td>${fmt(d)}</td>
-      <td>${fmt(e)}</td>
-      <td>${fmt(f)}</td>
+      <td class="range-cell">${row.rangeMin}</td>
+      <td class="range-cell">${row.rangeMax}</td>
+      <td>${fmt(row.avg)}</td>
+      <td>${fmt(row.prob)}</td>
+      <td>${fmt(baseR[idx])}</td>
+      <td class="${isChanged ? 'cell-changed' : ''}">${fmt(newR[idx])}</td>
       <td>${fmt(g)}</td>
     `;
     tbody.appendChild(tr);
   });
 
-  // Sum row for result (9 columns: #, A, B, C原, C新, D, E, F, G)
-  const sumD = adjRows.reduce((s, r) => s + r.b * (1 - r.c), 0);
-  const sumE = adjRows.reduce((s, r) => s + r.b * r.c, 0);
-  const sumF = adjRows.reduce((s, r) => s + r.b * r.a, 0);
-  const trSum = document.createElement('tr');
-  trSum.className = 'sum-row';
-  trSum.innerHTML = `
-    <td>Σ</td>
-    <td>—</td><td>—</td><td>—</td><td>—</td>
-    <td>${fmt(sumD)}</td>
-    <td>${fmt(sumE)}</td>
-    <td>${fmt(sumF)}</td>
-    <td class="cell-g19">${fmt(g19New)}</td>
+  // Sum row
+  const sumProb = adjRows.reduce((s, r) => s + r.prob, 0);
+  const trS = document.createElement('tr');
+  trS.className = 'sum-row';
+  trS.innerHTML = `
+    <td>Σ</td><td>—</td><td>—</td><td>—</td>
+    <td>${fmt(sumProb)}</td><td>—</td><td>—</td>
+    <td class="cell-g19val">${fmt(g19New)}</td>
   `;
-  tbody.appendChild(trSum);
+  tbody.appendChild(trS);
 
   document.getElementById('changed-badge').textContent = changed + ' 列變更';
+  document.getElementById('det-changed').textContent   = changed + ' 列';
   document.getElementById('result-card').style.display = '';
   document.getElementById('dl-btn').classList.remove('hidden');
 
@@ -676,14 +800,15 @@ function showResult(baseC, newC, target, g19New, err) {
     ok ? 'success' : 'info'
   );
 
-  // Persist adjusted C into rows (so download picks them up)
-  rows.forEach((r, i) => { r.c = newC[i]; });
-  // Sync raw-table C inputs
+  // Persist adjusted respin into rows
+  rows.forEach((r, i) => { r.respin = newR[i]; });
+
+  // Sync raw table inputs & G column
   rows.forEach((r, i) => {
-    const inp = document.getElementById('ci-' + i);
-    if (inp) inp.value = fmt(r.c);
+    const inp = document.getElementById('ri-' + i);
+    if (inp) inp.value = fmt(r.respin);
   });
-  refreshRawG19();
+  refreshRightColumn();
 
   document.getElementById('result-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -691,17 +816,23 @@ function showResult(baseC, newC, target, g19New, err) {
 // ═══════════════════════════════════════════════
 // Reset
 // ═══════════════════════════════════════════════
-function resetC() {
-  if (backupC.length === 0) { setStatus('尚無備份可還原。', 'info'); return; }
-  rows.forEach((r, i) => { r.c = backupC[i]; });
+function resetRespin() {
+  if (backupR.length === 0) { setStatus('尚無備份可還原。', 'info'); return; }
+  rows.forEach((r, i) => { r.respin = backupR[i]; });
   rows.forEach((r, i) => {
-    const inp = document.getElementById('ci-' + i);
-    if (inp) inp.value = fmt(r.c);
+    const inp = document.getElementById('ri-' + i);
+    if (inp) inp.value = fmt(r.respin);
   });
-  refreshRawG19();
+  refreshRightColumn();
+  updateG19Display(calcG19(rows), null, null);
+  document.getElementById('g19-target').textContent = '—';
+  document.getElementById('g19-target').className   = 'gvalue dim';
+  document.getElementById('g19-result').textContent = '—';
+  document.getElementById('g19-result').className   = 'gvalue dim';
+  document.getElementById('g19-detail').style.display = 'none';
   document.getElementById('result-card').style.display = 'none';
   document.getElementById('dl-btn').classList.add('hidden');
-  setStatus('C 值已還原至原始數值。', 'info');
+  setStatus('重轉機率已還原至原始數值。', 'info');
 }
 
 // ═══════════════════════════════════════════════
@@ -711,9 +842,9 @@ function downloadExcel() {
   if (!wb) return;
   const ws = wb.Sheets[wb.SheetNames[0]];
   rows.forEach(row => {
-    const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: 2 });
-    if (ws[addr]) { ws[addr].v = row.c; ws[addr].t = 'n'; delete ws[addr].f; }
-    else ws[addr] = { v: row.c, t: 'n' };
+    const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: 4 }); // col E = index 4
+    if (ws[addr]) { ws[addr].v = row.respin; ws[addr].t = 'n'; delete ws[addr].f; }
+    else ws[addr] = { v: row.respin, t: 'n' };
   });
   const outName = fileName.replace(/\.xlsx?$/i, '') + '_adjusted.xlsx';
   XLSX.writeFile(wb, outName);
@@ -721,7 +852,7 @@ function downloadExcel() {
 }
 
 // ═══════════════════════════════════════════════
-// Status helpers
+// Status
 // ═══════════════════════════════════════════════
 function setStatus(msg, type) {
   const el = document.getElementById('status-msg');
@@ -730,7 +861,7 @@ function setStatus(msg, type) {
 }
 function clearStatus() {
   const el = document.getElementById('status-msg');
-  el.className = 'status-msg';
+  el.className   = 'status-msg';
   el.textContent = '';
 }
 </script>
