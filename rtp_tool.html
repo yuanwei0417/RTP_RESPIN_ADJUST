@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTP Respin 調整工具</title>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+  background: #0f1117;
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+h1 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #7eb8f7;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+
+/* ── Upload ─────────────────────────────── */
+#upload-area {
+  border: 2px dashed #3a4a6b;
+  border-radius: 12px;
+  padding: 36px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #161b27;
+  margin-bottom: 22px;
+}
+#upload-area:hover, #upload-area.drag-over {
+  border-color: #7eb8f7;
+  background: #1a2235;
+}
+#upload-area .up-icon { font-size: 2.4rem; margin-bottom: 8px; }
+#upload-area p { color: #8899aa; font-size: 0.92rem; }
+#upload-area p span { color: #7eb8f7; font-weight: 600; }
+#file-input { display: none; }
+
+/* ── Card ────────────────────────────────── */
+.card {
+  background: #161b27;
+  border: 1px solid #2a3550;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  background: #1c2336;
+  border-bottom: 1px solid #2a3550;
+  cursor: pointer;
+  user-select: none;
+}
+.card-header:hover { background: #212840; }
+.card-header h2 { font-size: 0.97rem; font-weight: 600; color: #b0c4de; }
+.card-header .badge {
+  background: #263352;
+  color: #7eb8f7;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  margin-left: 10px;
+}
+.collapse-btn {
+  background: none;
+  border: 1px solid #3a4a6b;
+  color: #8899aa;
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.15s;
+}
+.collapse-btn:hover { background: #263352; color: #ccc; }
+.card-body.collapsed { display: none; }
+
+/* ── Table ───────────────────────────────── */
+.table-wrap { overflow-x: auto; max-height: 480px; overflow-y: auto; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #1c2336;
+  color: #7eb8f7;
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 2px solid #3a4a6b;
+  white-space: nowrap;
+  z-index: 2;
+  font-weight: 600;
+}
+thead th .sub { font-size: 0.7rem; color: #556688; font-weight: 400; display: block; }
+
+tbody tr { transition: background 0.1s; }
+tbody tr:hover { background: #1e2840; }
+tbody tr.sum-row {
+  background: #1a2e1a;
+  border-top: 2px solid #3a6b3a;
+  font-weight: 700;
+}
+tbody tr.sum-row td { color: #7ef7a0; }
+
+td {
+  padding: 7px 12px;
+  text-align: right;
+  border-bottom: 1px solid #1e2535;
+  color: #ccd6e8;
+  white-space: nowrap;
+}
+td:first-child { text-align: center; color: #6677aa; font-size: 0.8rem; }
+
+/* C column with input + lock */
+td.col-c {
+  display: table-cell;
+  white-space: nowrap;
+}
+.c-wrap { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+.c-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: #ccd6e8;
+  text-align: right;
+  width: 88px;
+  font-size: 0.84rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.c-input:focus { border-bottom-color: #7eb8f7; }
+.lock-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1px 3px;
+  font-size: 0.88rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.lock-btn:hover { background: #2a3550; }
+
+td.cell-changed { background: #2a2a10 !important; color: #ffe066 !important; }
+td.cell-g19 { background: transparent !important; color: #5ef77a !important; font-weight: 700; }
+
+/* ── Control ─────────────────────────────── */
+.ctrl-body { padding: 18px 20px; }
+.ctrl-row { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+
+.input-group { display: flex; flex-direction: column; gap: 4px; }
+.input-group label { font-size: 0.78rem; color: #8899aa; }
+.input-group input[type=number] {
+  background: #0f1117;
+  border: 1px solid #3a4a6b;
+  color: #e0e0e0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.97rem;
+  width: 160px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input-group input[type=number]:focus { border-color: #7eb8f7; }
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn:active { transform: translateY(1px); }
+.btn-run   { background: linear-gradient(135deg, #3a7bd5, #2060b0); color: #fff; }
+.btn-reset { background: #263352; color: #aab8cc; border: 1px solid #3a4a6b; }
+.btn-dl    { background: linear-gradient(135deg, #2e7d52, #1a5c3a); color: #fff; }
+.btn:hover { opacity: 0.88; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Status ──────────────────────────────── */
+.status-msg {
+  margin-top: 14px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  display: none;
+}
+.status-msg.success { background: #1a2e1a; color: #7ef7a0; border: 1px solid #2a4a2a; display: block; }
+.status-msg.error   { background: #2e1a1a; color: #f77e7e; border: 1px solid #4a2a2a; display: block; }
+.status-msg.info    { background: #1a2235; color: #7eb8f7; border: 1px solid #2a3a5a; display: block; }
+
+/* ── Result bar ──────────────────────────── */
+.result-bar {
+  display: flex;
+  gap: 28px;
+  padding: 14px 20px;
+  background: #1a2235;
+  border-bottom: 1px solid #2a3550;
+  flex-wrap: wrap;
+}
+.ritem { display: flex; flex-direction: column; gap: 3px; }
+.ritem .rlabel { font-size: 0.73rem; color: #8899aa; }
+.ritem .rvalue { font-size: 1.05rem; font-weight: 700; }
+.rvalue.good    { color: #5ef77a; }
+.rvalue.bad     { color: #f77e5e; }
+.rvalue.neutral { color: #7eb8f7; }
+
+/* ── Scrollbar ───────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #161b27; }
+::-webkit-scrollbar-thumb { background: #3a4a6b; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4a5a8b; }
+</style>
+</head>
+<body>
+
+<h1>⚙ RTP Respin 調整工具</h1>
+
+<!-- ── Upload ─────────────────────────── -->
+<div id="upload-area">
+  <div class="up-icon">📂</div>
+  <p>拖放 <span>.xlsx</span> 至此，或<span> 點擊上傳</span></p>
+  <p style="margin-top:6px;font-size:0.8rem;color:#6677aa;">目前載入：<span id="file-name">尚未載入</span></p>
+  <input type="file" id="file-input" accept=".xlsx,.xls">
+</div>
+
+<!-- ── Raw Table ──────────────────────── -->
+<div class="card" id="raw-card" style="display:none">
+  <div class="card-header" id="raw-hdr">
+    <div style="display:flex;align-items:center">
+      <h2>原始表格</h2>
+      <span class="badge" id="row-badge">—</span>
+    </div>
+    <button class="collapse-btn" id="raw-btn">收合 ▲</button>
+  </div>
+  <div class="card-body" id="raw-body">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>A <span class="sub">獎勵倍數</span></th>
+            <th>B <span class="sub">機率</span></th>
+            <th>C <span class="sub">Respin 因子 🔓=可調</span></th>
+            <th>D <span class="sub">B×(1-C)</span></th>
+            <th>E <span class="sub">B×C</span></th>
+            <th>F <span class="sub">B×A</span></th>
+            <th>G <span class="sub">B×(1-C)×A / Σ</span></th>
+          </tr>
+        </thead>
+        <tbody id="raw-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── Control ────────────────────────── -->
+<div class="card" id="ctrl-card" style="display:none">
+  <div class="card-header" style="cursor:default">
+    <h2>調整控制</h2>
+  </div>
+  <div class="ctrl-body">
+    <div class="ctrl-row">
+      <div class="input-group">
+        <label>目標 G19 值</label>
+        <input type="number" id="target-input" placeholder="例：0.97" step="0.001" min="0">
+      </div>
+      <button class="btn btn-run"   id="run-btn"  onclick="runOptimize()">▶ 執行調整</button>
+      <button class="btn btn-reset" id="reset-btn" onclick="resetC()">↺ 還原 C 值</button>
+      <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
+    </div>
+    <div class="status-msg" id="status-msg"></div>
+  </div>
+</div>
+
+<!-- ── Result Table ───────────────────── -->
+<div class="card" id="result-card" style="display:none">
+  <div class="card-header" id="result-hdr">
+    <div style="display:flex;align-items:center">
+      <h2>調整結果</h2>
+      <span class="badge" id="changed-badge">—</span>
+    </div>
+    <button class="collapse-btn" id="result-btn">收合 ▲</button>
+  </div>
+  <div class="card-body" id="result-body">
+    <div class="result-bar" id="result-bar"></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C 原始</th>
+            <th>C 調整後</th>
+            <th>D <span class="sub">B×(1-C)</span></th>
+            <th>E <span class="sub">B×C</span></th>
+            <th>F <span class="sub">B×A</span></th>
+            <th>G</th>
+          </tr>
+        </thead>
+        <tbody id="result-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════════
+// State
+// ═══════════════════════════════════════════════
+let rows       = [];          // [{rowIdx, a, b, c, locked}]
+let backupC    = [];          // original C values
+let wb         = null;
+let fileName   = '';
+
+// ═══════════════════════════════════════════════
+// Helpers
+// ═══════════════════════════════════════════════
+const clip  = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+const fmt   = (v, d = 7) => (+v).toFixed(d);
+const fmtE  = (v, d = 3) => (+v).toExponential(d);
+const safeN = v => (v == null || isNaN(+v)) ? 0 : +v;
+
+/** G19 = Σ(b*(1-c)*a) / Σ(b*(1-c))  for given row array */
+function calcG19(arr) {
+  let num = 0, den = 0;
+  arr.forEach(r => { const w = r.b * (1 - r.c); num += w * r.a; den += w; });
+  return den === 0 ? 0 : num / den;
+}
+
+/** Compute derived D,E,F,G for a row (needs the shared denominator) */
+function calcDerived(r, denom) {
+  return {
+    d: r.b * (1 - r.c),
+    e: r.b * r.c,
+    f: r.b * r.a,
+    g: denom > 0 ? r.b * (1 - r.c) * r.a / denom : 0,
+  };
+}
+
+// ═══════════════════════════════════════════════
+// Upload / Parse
+// ═══════════════════════════════════════════════
+const uploadEl  = document.getElementById('upload-area');
+const fileInput = document.getElementById('file-input');
+
+uploadEl.addEventListener('click', () => fileInput.click());
+uploadEl.addEventListener('dragover', e => { e.preventDefault(); uploadEl.classList.add('drag-over'); });
+uploadEl.addEventListener('dragleave', () => uploadEl.classList.remove('drag-over'));
+uploadEl.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadEl.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+function loadFile(file) {
+  fileName = file.name;
+  document.getElementById('file-name').textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      wb = XLSX.read(ev.target.result, { type: 'array' });
+      parseSheet();
+    } catch (err) {
+      setStatus('讀取 Excel 失敗：' + err.message, 'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseSheet() {
+  const ws  = wb.Sheets[wb.SheetNames[0]];
+  const ref = XLSX.utils.decode_range(ws['!ref']);
+
+  rows = [];
+  for (let r = 0; r <= ref.e.r; r++) {
+    const getV = c => {
+      const cell = ws[XLSX.utils.encode_cell({ r, c })];
+      if (!cell) return null;
+      return typeof cell.v === 'number' ? cell.v : null;
+    };
+    const a = getV(0), b = getV(1), c = getV(2);
+    // 跳過 A/B/C 全為 null 的列（通常是合計列）
+    if (a === null && b === null && c === null) continue;
+    rows.push({ rowIdx: r + 1, a: safeN(a), b: safeN(b), c: safeN(c), locked: false });
+  }
+
+  // 移除末尾全零的 padding 列（A=0, B=0, C=0）
+  while (rows.length > 0) {
+    const last = rows[rows.length - 1];
+    if (last.a === 0 && last.b === 0 && last.c === 0) rows.pop(); else break;
+  }
+
+  if (rows.length === 0) { setStatus('找不到有效資料列，請確認 Excel 格式。', 'error'); return; }
+
+  backupC = rows.map(r => r.c);
+
+  document.getElementById('row-badge').textContent = rows.length + ' 列';
+  renderRawTable();
+
+  document.getElementById('raw-card').style.display    = '';
+  document.getElementById('ctrl-card').style.display   = '';
+  document.getElementById('result-card').style.display = 'none';
+  document.getElementById('dl-btn').classList.add('hidden');
+  clearStatus();
+}
+
+// ═══════════════════════════════════════════════
+// Render Raw Table
+// ═══════════════════════════════════════════════
+function renderRawTable() {
+  const denom = rows.reduce((s, r) => s + r.b * (1 - r.c), 0);
+  const tbody = document.getElementById('raw-tbody');
+  tbody.innerHTML = '';
+
+  rows.forEach((row, idx) => {
+    const { d, e, f, g } = calcDerived(row, denom);
+    const tr = document.createElement('tr');
+    tr.id = 'raw-tr-' + idx;
+    tr.innerHTML = `
+      <td>${row.rowIdx}</td>
+      <td>${fmt(row.a)}</td>
+      <td>${fmt(row.b)}</td>
+      <td class="col-c">
+        <div class="c-wrap">
+          <input class="c-input" id="ci-${idx}" type="number"
+            value="${fmt(row.c)}" step="0.001" min="0" max="1"
+            onchange="onCInput(${idx},this.value)"
+            title="可直接編輯">
+          <button class="lock-btn" id="lb-${idx}"
+            onclick="toggleLock(${idx})"
+            title="鎖定後不被演算法調整">🔓</button>
+        </div>
+      </td>
+      <td>${fmt(d)}</td>
+      <td>${fmt(e)}</td>
+      <td>${fmt(f)}</td>
+      <td>${fmt(g)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  appendSumRow('raw-tbody', rows, 8);
+}
+
+function appendSumRow(tbodyId, arr, colCount) {
+  const denom = arr.reduce((s, r) => s + r.b * (1 - r.c), 0);
+  const g19   = calcG19(arr);
+  const sumD  = arr.reduce((s, r) => s + r.b * (1 - r.c), 0);
+  const sumE  = arr.reduce((s, r) => s + r.b * r.c, 0);
+  const sumF  = arr.reduce((s, r) => s + r.b * r.a, 0);
+
+  const tr = document.createElement('tr');
+  tr.className = 'sum-row';
+  // colCount=8 means: #, A, B, C, D, E, F, G
+  tr.innerHTML = `
+    <td>Σ</td>
+    <td>—</td><td>—</td><td>—</td>
+    <td>${fmt(sumD)}</td>
+    <td>${fmt(sumE)}</td>
+    <td>${fmt(sumF)}</td>
+    <td id="${tbodyId}-g19" class="cell-g19">${fmt(g19)}</td>
+  `;
+  document.getElementById(tbodyId).appendChild(tr);
+}
+
+function onCInput(idx, val) {
+  const v = parseFloat(val);
+  if (!isNaN(v)) {
+    rows[idx].c = clip(v);
+    refreshRawG19();
+  }
+}
+
+function refreshRawG19() {
+  const g19 = calcG19(rows);
+  const el  = document.getElementById('raw-tbody-g19');
+  if (el) el.textContent = fmt(g19);
+}
+
+function toggleLock(idx) {
+  rows[idx].locked = !rows[idx].locked;
+  const btn = document.getElementById('lb-' + idx);
+  if (rows[idx].locked) {
+    btn.textContent = '🔒';
+    btn.title = '此列已鎖定，演算法不會調整其 C 值';
+    btn.style.color = '#f7a07e';
+  } else {
+    btn.textContent = '🔓';
+    btn.title = '鎖定後不被演算法調整';
+    btn.style.color = '';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// Collapse Toggle
+// ═══════════════════════════════════════════════
+function makeCollapsible(headerId, bodyId, btnId) {
+  document.getElementById(headerId).addEventListener('click', () => {
+    const body = document.getElementById(bodyId);
+    const btn  = document.getElementById(btnId);
+    body.classList.toggle('collapsed');
+    btn.textContent = body.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
+  });
+}
+makeCollapsible('raw-hdr',    'raw-body',    'raw-btn');
+makeCollapsible('result-hdr', 'result-body', 'result-btn');
+
+// ═══════════════════════════════════════════════
+// Optimizer — Binary Search on Δ
+// ═══════════════════════════════════════════════
+/**
+ * G19(Δ) = weighted mean of A values,
+ * where each unlocked row's C is replaced by clip(C_original + Δ, 0, 1).
+ *
+ * For rows with high A (>> current G19), increasing Δ → decreasing G19.
+ * So G19(Δ) is monotone-decreasing in Δ for typical slot-machine data.
+ * Binary search finds the right Δ.
+ */
+function runOptimize() {
+  const target = parseFloat(document.getElementById('target-input').value);
+  if (isNaN(target) || target <= 0) {
+    setStatus('請輸入有效的目標 G19 值（正數）', 'error'); return;
+  }
+
+  const unlocked = rows.filter(r => !r.locked);
+  if (unlocked.length === 0) {
+    setStatus('所有列都已鎖定，無法調整。請解鎖至少一列。', 'error'); return;
+  }
+
+  // Snapshot current C values as the base for this optimization
+  const baseC = rows.map(r => r.c);
+
+  function g19ofDelta(d) {
+    const snapshot = rows.map((r, i) => ({
+      a: r.a, b: r.b,
+      c: r.locked ? baseC[i] : clip(baseC[i] + d),
+    }));
+    return calcG19(snapshot);
+  }
+
+  // Reachable range
+  const gAtPlus1  = g19ofDelta( 1.0);   // C pushed toward 1 → lower G19
+  const gAtMinus1 = g19ofDelta(-1.0);   // C pushed toward 0 → higher G19
+  const gLow  = Math.min(gAtPlus1,  gAtMinus1);
+  const gHigh = Math.max(gAtPlus1,  gAtMinus1);
+
+  if (target < gLow - 1e-9 || target > gHigh + 1e-9) {
+    setStatus(
+      `目標 ${target.toFixed(6)} 超出可調整範圍 ` +
+      `[${gLow.toFixed(6)}, ${gHigh.toFixed(6)}]。` +
+      `目前 G19 = ${g19ofDelta(0).toFixed(6)}`,
+      'error'
+    );
+    return;
+  }
+
+  // Determine sign: if G19 decreasing in Δ, lo starts at -1, hi at +1
+  const decreasing = gAtMinus1 >= gAtPlus1;
+  let lo = decreasing ? -1.0 :  1.0;
+  let hi = decreasing ?  1.0 : -1.0;
+  // Normalise so lo < hi
+  if (lo > hi) { [lo, hi] = [hi, lo]; }
+
+  let delta = 0;
+  for (let i = 0; i < 300; i++) {
+    const mid = (lo + hi) / 2;
+    const g   = g19ofDelta(mid);
+    if (Math.abs(g - target) < 1e-12) { delta = mid; break; }
+    // For decreasing function: if g > target → need higher Δ → lo = mid
+    if (decreasing ? g > target : g < target) lo = mid;
+    else hi = mid;
+    delta = mid;
+    if (Math.abs(hi - lo) < 1e-13) break;
+  }
+
+  // Build adjusted C array
+  const newC   = rows.map((r, i) => r.locked ? baseC[i] : clip(baseC[i] + delta));
+  const g19New = calcG19(rows.map((r, i) => ({ a: r.a, b: r.b, c: newC[i] })));
+  const err    = Math.abs(g19New - target);
+
+  showResult(baseC, newC, target, g19New, err);
+}
+
+// ═══════════════════════════════════════════════
+// Render Result
+// ═══════════════════════════════════════════════
+function showResult(baseC, newC, target, g19New, err) {
+  const ok = err < 1e-4;
+
+  // Result info bar
+  document.getElementById('result-bar').innerHTML = `
+    <div class="ritem">
+      <span class="rlabel">目標 G19</span>
+      <span class="rvalue neutral">${target.toFixed(7)}</span>
+    </div>
+    <div class="ritem">
+      <span class="rlabel">調整後 G19</span>
+      <span class="rvalue ${ok ? 'good' : 'bad'}">${g19New.toFixed(7)}</span>
+    </div>
+    <div class="ritem">
+      <span class="rlabel">誤差</span>
+      <span class="rvalue ${ok ? 'good' : 'bad'}">${fmtE(err)}</span>
+    </div>
+    <div class="ritem">
+      <span class="rlabel">狀態</span>
+      <span class="rvalue ${ok ? 'good' : 'bad'}">${ok ? '✔ 收斂' : '⚠ 未完全收斂'}</span>
+    </div>
+  `;
+
+  // Result table
+  const adjRows = rows.map((r, i) => ({ ...r, c: newC[i] }));
+  const denom   = adjRows.reduce((s, r) => s + r.b * (1 - r.c), 0);
+  const tbody   = document.getElementById('result-tbody');
+  tbody.innerHTML = '';
+
+  let changed = 0;
+  adjRows.forEach((row, idx) => {
+    const isChanged = Math.abs(newC[idx] - baseC[idx]) > 1e-10;
+    if (isChanged) changed++;
+    const { d, e, f, g } = calcDerived(row, denom);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.rowIdx}</td>
+      <td>${fmt(row.a)}</td>
+      <td>${fmt(row.b)}</td>
+      <td>${fmt(baseC[idx])}</td>
+      <td class="${isChanged ? 'cell-changed' : ''}">${fmt(newC[idx])}</td>
+      <td>${fmt(d)}</td>
+      <td>${fmt(e)}</td>
+      <td>${fmt(f)}</td>
+      <td>${fmt(g)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Sum row for result (9 columns: #, A, B, C原, C新, D, E, F, G)
+  const sumD = adjRows.reduce((s, r) => s + r.b * (1 - r.c), 0);
+  const sumE = adjRows.reduce((s, r) => s + r.b * r.c, 0);
+  const sumF = adjRows.reduce((s, r) => s + r.b * r.a, 0);
+  const trSum = document.createElement('tr');
+  trSum.className = 'sum-row';
+  trSum.innerHTML = `
+    <td>Σ</td>
+    <td>—</td><td>—</td><td>—</td><td>—</td>
+    <td>${fmt(sumD)}</td>
+    <td>${fmt(sumE)}</td>
+    <td>${fmt(sumF)}</td>
+    <td class="cell-g19">${fmt(g19New)}</td>
+  `;
+  tbody.appendChild(trSum);
+
+  document.getElementById('changed-badge').textContent = changed + ' 列變更';
+  document.getElementById('result-card').style.display = '';
+  document.getElementById('dl-btn').classList.remove('hidden');
+
+  setStatus(
+    `調整完成！G19 = ${g19New.toFixed(7)}，目標 = ${target.toFixed(7)}，誤差 = ${fmtE(err)}`,
+    ok ? 'success' : 'info'
+  );
+
+  // Persist adjusted C into rows (so download picks them up)
+  rows.forEach((r, i) => { r.c = newC[i]; });
+  // Sync raw-table C inputs
+  rows.forEach((r, i) => {
+    const inp = document.getElementById('ci-' + i);
+    if (inp) inp.value = fmt(r.c);
+  });
+  refreshRawG19();
+
+  document.getElementById('result-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════════
+// Reset
+// ═══════════════════════════════════════════════
+function resetC() {
+  if (backupC.length === 0) { setStatus('尚無備份可還原。', 'info'); return; }
+  rows.forEach((r, i) => { r.c = backupC[i]; });
+  rows.forEach((r, i) => {
+    const inp = document.getElementById('ci-' + i);
+    if (inp) inp.value = fmt(r.c);
+  });
+  refreshRawG19();
+  document.getElementById('result-card').style.display = 'none';
+  document.getElementById('dl-btn').classList.add('hidden');
+  setStatus('C 值已還原至原始數值。', 'info');
+}
+
+// ═══════════════════════════════════════════════
+// Download
+// ═══════════════════════════════════════════════
+function downloadExcel() {
+  if (!wb) return;
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  rows.forEach(row => {
+    const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: 2 });
+    if (ws[addr]) { ws[addr].v = row.c; ws[addr].t = 'n'; delete ws[addr].f; }
+    else ws[addr] = { v: row.c, t: 'n' };
+  });
+  const outName = fileName.replace(/\.xlsx?$/i, '') + '_adjusted.xlsx';
+  XLSX.writeFile(wb, outName);
+  setStatus('已下載：' + outName, 'success');
+}
+
+// ═══════════════════════════════════════════════
+// Status helpers
+// ═══════════════════════════════════════════════
+function setStatus(msg, type) {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.className   = 'status-msg ' + type;
+}
+function clearStatus() {
+  const el = document.getElementById('status-msg');
+  el.className = 'status-msg';
+  el.textContent = '';
+}
+</script>
+</body>
+</html>
