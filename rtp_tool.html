@@ -16,6 +16,88 @@ body {
   padding: 18px 22px;
 }
 
+/* Light theme overrides */
+body[data-theme="light"] {
+  background: #f5f6fb;
+  color: #111827;
+}
+body[data-theme="light"] td {
+  color: #111827;
+}
+body[data-theme="light"] .gr-detail .dk,
+body[data-theme="light"] .gr-detail .dv {
+  color: #111827;
+}
+body[data-theme="light"] .gvalue.neutral,
+body[data-theme="light"] .gvalue.dim {
+  color: #111827;
+}
+body[data-theme="light"] .card-header h2 {
+  color: #111827;
+}
+body[data-theme="light"] td {
+  color: #111827;
+}
+body[data-theme="light"] .gr-detail .dk,
+body[data-theme="light"] .gr-detail .dv {
+  color: #111827;
+}
+body[data-theme="light"] .gvalue.neutral,
+body[data-theme="light"] .gvalue.dim {
+  color: #111827;
+}
+body[data-theme="light"] .card-header h2 {
+  color: #111827;
+}
+body[data-theme="light"] .card {
+  background: #ffffff;
+  border-color: #d0d4e5;
+}
+body[data-theme="light"] .card-header {
+  background: #e5e7f3;
+  border-bottom-color: #d0d4e5;
+}
+body[data-theme="light"] #upload-area {
+  background: #ffffff;
+  border-color: #c4c9dd;
+}
+body[data-theme="light"] .gr-display {
+  background: #ffffff;
+  border-color: #d0d4e5;
+}
+body[data-theme="light"] thead th {
+  background: #e5e7f3;
+  color: #1f2937;
+  border-bottom-color: #c4c9dd;
+}
+body[data-theme="light"] tbody tr:hover td {
+  background: #eef2ff;
+}
+body[data-theme="light"] tbody tr.sum-row td {
+  background: #e6ffed;
+  color: #047857;
+}
+body[data-theme="light"] .status-msg.success {
+  background: #e6ffed;
+  color: #047857;
+  border-color: #86efac;
+}
+body[data-theme="light"] .status-msg.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+body[data-theme="light"] .status-msg.info {
+  background: #e0ecff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+body[data-theme="light"] .respin-input {
+  background: #f3f4ff;
+  border-color: #9ca3c7;
+  color: #111827;
+}
+
 /* ── Top Bar ──────────────────────────────── */
 .top-bar {
   display: grid;
@@ -51,10 +133,10 @@ body {
   background: #161b27;
   border: 1px solid #2a3550;
   border-radius: 10px;
-  padding: 14px 24px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 .gr-block { display: flex; flex-direction: column; gap: 4px; }
@@ -76,6 +158,56 @@ body {
 .gr-detail .drow .dk { color: #6677aa; width: 56px; }
 .gr-detail .drow .dv { color: #ccd6e8; font-weight: 600; }
 .gr-detail .drow .dv.hi { color: #5ef77a; }
+
+.gr-cycle-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.gr-cycle-input label {
+  font-size: 0.72rem;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.gr-cycle-input input[type=number] {
+  background: #0f1117;
+  border: 1px solid #3a4a6b;
+  color: #e0e0e0;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-size: 0.86rem;
+  width: 80px;
+  outline: none;
+}
+.gr-cycle-input input[type=number]:focus {
+  border-color: #7eb8f7;
+}
+
+.top-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-theme {
+  border: 1px solid #3a4a6b;
+  background: #263352;
+  color: #aab8cc;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s, transform 0.1s;
+}
+.btn-theme:hover {
+  background: #324067;
+  opacity: 0.9;
+}
+.btn-theme:active {
+  transform: translateY(1px);
+}
 
 /* ── Card ────────────────────────────────── */
 .card {
@@ -106,6 +238,19 @@ body {
 }
 .collapse-btn:hover { background: #263352; color: #ccc; }
 .card-body.collapsed { display: none; }
+
+/* 原始表格：觀察區 / 調整區 佈局 */
+.raw-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+.raw-row .card {
+  flex: 1;
+}
+.table-wrap {
+  overflow: visible;
+}
 
 /* ── Split Table Layout ──────────────────── */
 .split-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
@@ -262,22 +407,30 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
       <div class="drow"><span class="dk">狀態</span><span class="dv" id="det-status">—</span></div>
       <div class="drow"><span class="dk">變更列</span><span class="dv" id="det-changed">—</span></div>
     </div>
+
+    <div class="top-actions">
+      <div class="gr-cycle-input">
+        <label for="cycle-input">週期</label>
+        <input type="number" id="cycle-input" value="1" min="1" step="1" onchange="onCycleChange(this.value)">
+      </div>
+      <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">亮色版</button>
+    </div>
   </div>
 </div>
 
-<!-- ── Raw Table Card ─────────────────────── -->
-<div class="card" id="raw-card" style="display:none">
-  <div class="card-header" id="raw-hdr">
-    <div style="display:flex;align-items:center">
-      <h2>原始表格</h2>
-      <span class="badge" id="row-badge">—</span>
+<!-- ── Raw Table Cards：觀察區 / 調整區 ──────── -->
+<div class="raw-row" id="raw-row" style="display:none">
+  <!-- 觀察區 -->
+  <div class="card" id="observe-card">
+    <div class="card-header" id="observe-hdr">
+      <div style="display:flex;align-items:center">
+        <h2>觀察區</h2>
+        <span class="badge" id="row-badge">—</span>
+      </div>
+      <button class="collapse-btn" id="observe-btn">收合 ▲</button>
     </div>
-    <button class="collapse-btn" id="raw-btn">收合 ▲</button>
-  </div>
-  <div class="card-body" id="raw-body">
-    <div class="split-wrap">
-      <!-- Left pane -->
-      <div class="split-pane" id="left-pane">
+    <div class="card-body" id="observe-body">
+      <div class="table-wrap" id="left-pane">
         <table>
           <thead>
             <tr>
@@ -291,15 +444,26 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
           <tbody id="left-tbody"></tbody>
         </table>
       </div>
-      <!-- Right pane -->
-      <div class="split-pane" id="right-pane">
+    </div>
+  </div>
+
+  <!-- 調整區 -->
+  <div class="card" id="adjust-card">
+    <div class="card-header" id="adjust-hdr">
+      <div style="display:flex;align-items:center">
+        <h2>調整區</h2>
+      </div>
+      <button class="collapse-btn" id="adjust-btn">收合 ▲</button>
+    </div>
+    <div class="card-body" id="adjust-body">
+      <div class="table-wrap" id="right-pane">
         <table>
           <thead>
             <tr>
               <th>#</th>
               <th>倍率下限<span class="sub">range min</span></th>
               <th>倍率上限<span class="sub">range max</span></th>
-              <th>重轉機率 ×10⁴<span class="sub">respin — 可調整</span></th>
+              <th>重轉機率 / 10000<span class="sub">respin — 可調整</span></th>
               <th>GR<span class="sub">prob×(1-respin)×avg / Σ</span></th>
             </tr>
           </thead>
@@ -320,6 +484,9 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
       <div class="input-group">
         <label>目標 GR 值（百分比，例：97）</label>
         <input type="number" id="target-input" placeholder="例：97" step="0.01" min="0">
+        <div style="font-size:0.75rem;color:#8899aa;max-width:260px;">
+          目標 GR 為「每週期」的 GR，若週期 &gt; 1 時，將以 GR/週期 邏輯進行判斷。
+        </div>
       </div>
       <button class="btn btn-run"   onclick="runOptimize()">▶ 執行調整</button>
       <button class="btn btn-reset" onclick="resetRespin()">↺ 還原重轉機率</button>
@@ -348,8 +515,8 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
             <th>倍率上限</th>
             <th>平均倍率</th>
             <th>機率</th>
-            <th>重轉原始 ×10⁴</th>
-            <th>重轉調整後 ×10⁴</th>
+              <th>重轉原始 / 10000</th>
+              <th>重轉調整後 / 10000</th>
             <th>GR</th>
           </tr>
         </thead>
@@ -376,6 +543,11 @@ let backupR    = [];   // original respin values (from Excel)
 let originalGR = 0;   // GR computed from backupR — fixed after load
 let wb         = null;
 let fileName   = '';
+let cycle      = 1;   // 週期（GR 以「每週期」目標計算）
+
+let currentTheme = 'dark';
+let lastTargetTotal = null;   // 上一次最佳化時的「週期總 GR」目標
+let lastResultTotal = null;   // 上一次最佳化結果的「週期總 GR」
 
 // ═══════════════════════════════════════════════
 // Helpers
@@ -476,6 +648,8 @@ function parseSheet() {
 
   backupR    = rows.map(r => r.respin);
   originalGR = calcGR19(rows);   // fixed reference GR
+  lastTargetTotal = null;
+  lastResultTotal = null;
 
   // Auto-lock rows where respin = 0 or 1
   rows.forEach(r => { if (r.respin === 0 || r.respin === 1) r.locked = true; });
@@ -483,18 +657,13 @@ function parseSheet() {
   document.getElementById('row-badge').textContent = rows.length + ' 列';
   renderTables();
 
-  document.getElementById('raw-card').style.display    = '';
+  document.getElementById('raw-row').style.display    = '';
   document.getElementById('ctrl-card').style.display   = '';
   document.getElementById('result-card').style.display = 'none';
   document.getElementById('dl-btn').classList.add('hidden');
 
-  // Show original GR (fixed)
-  const origEl = document.getElementById('gr-original');
-  origEl.textContent = fmtPct(originalGR);
-  origEl.className   = 'gvalue neutral';
-  // Init 當前 GR
-  const curEl2 = document.getElementById('gr-current');
-  if (curEl2) { curEl2.textContent = fmtPct(originalGR); curEl2.className = 'gvalue neutral'; }
+  // 初始化 GR 顯示（會依照目前週期顯示 GR/週期）
+  updateTopGRDisplay();
   // Clear target / result
   document.getElementById('gr-target').textContent = '—';
   document.getElementById('gr-target').className   = 'gvalue dim';
@@ -526,7 +695,7 @@ function renderTables() {
       <td class="range-cell">${row.rangeMin}</td>
       <td class="range-cell">${row.rangeMax}</td>
       <td>${fmt(row.avg)}</td>
-      <td>${fmt(row.prob)}</td>
+      <td>${fmtPct(row.prob)}</td>
     `;
     addHoverSync(ltr, idx);
     ltbody.appendChild(ltr);
@@ -560,6 +729,7 @@ function renderTables() {
 
   appendSumRowLeft(ltbody);
   appendSumRowRight(rtbody);
+  syncRowHeights();
 }
 
 function applyLockUI(idx, locked, trEl) {
@@ -589,7 +759,7 @@ function appendSumRowLeft(tbody) {
   const tr = document.createElement('tr');
   tr.className = 'sum-row';
   tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td>
-    <td id="sum-prob">${fmt(rows.reduce((s,r) => s+r.prob, 0))}</td>`;
+    <td id="sum-prob">${fmtPct(rows.reduce((s,r) => s+r.prob, 0))}</td>`;
   tbody.appendChild(tr);
 }
 
@@ -598,7 +768,7 @@ function appendSumRowRight(tbody) {
   const tr   = document.createElement('tr');
   tr.className = 'sum-row';
   tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td>
-    <td id="sum-gr19" class="cell-grval">${fmt(gr19)}</td>`;
+    <td id="sum-gr19" class="cell-grval">${fmtPct(gr19 / cycle)}</td>`;
   tbody.appendChild(tr);
 }
 
@@ -606,15 +776,29 @@ function refreshRightColumn() {
   const denom = getDenom(rows);
   rows.forEach((row, idx) => {
     const el = document.getElementById('grval-' + idx);
-    if (el) el.textContent = fmt(calcGR(row, denom));
+    if (el) el.textContent = fmtPct(calcGR(row, denom) / cycle);
   });
   const gr19 = calcGR19(rows);
   const el2  = document.getElementById('sum-gr19');
-  if (el2) el2.textContent = fmt(gr19);
+  if (el2) el2.textContent = fmtPct(gr19 / cycle);
   // Update 當前 GR (live, updates on every respin change)
   const curEl = document.getElementById('gr-current');
-  if (curEl) { curEl.textContent = fmtPct(gr19); curEl.className = 'gvalue neutral'; }
+  if (curEl) { curEl.textContent = fmtPct(gr19 / cycle); curEl.className = 'gvalue neutral'; }
   // NOTE: do NOT update gr-original here — it's fixed after load
+}
+
+// 讓觀察區與調整區每一列高度一致
+function syncRowHeights() {
+  for (let i = 0; i < rows.length; i++) {
+    const ltr = document.getElementById('ltr-' + i);
+    const rtr = document.getElementById('rtr-' + i);
+    if (!ltr || !rtr) continue;
+    ltr.style.height = '';
+    rtr.style.height = '';
+    const h = Math.max(ltr.offsetHeight, rtr.offsetHeight);
+    ltr.style.height = h + 'px';
+    rtr.style.height = h + 'px';
+  }
 }
 
 function onRespinChange(idx, val) {
@@ -647,7 +831,8 @@ function makeCollapsible(hId, bId, btnId) {
     btn.textContent = b.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
   });
 }
-makeCollapsible('raw-hdr',    'raw-body',    'raw-btn');
+makeCollapsible('observe-hdr', 'observe-body', 'observe-btn');
+makeCollapsible('adjust-hdr',  'adjust-body',  'adjust-btn');
 makeCollapsible('result-hdr', 'result-body', 'result-btn');
 
 // Left / right panes scroll INDEPENDENTLY (no sync)
@@ -676,7 +861,8 @@ function runOptimize() {
   if (isNaN(targetPct) || targetPct <= 0) {
     setStatus('請輸入有效的目標 GR 值（百分比，如 97 表示 97%）', 'error'); return;
   }
-  const target = targetPct / 100;
+  // 目標為「週期總 GR」＝ 每週期 GR × 週期
+  const target = (targetPct / 100) * cycle;
 
   const unlocked = rows.filter(r => !r.locked);
   if (unlocked.length === 0) {
@@ -690,7 +876,8 @@ function runOptimize() {
       avg: r.avg, prob: r.prob,
       respin: r.locked ? baseR[i] : clip(baseR[i] + d, R_MIN, R_MAX),
     }));
-    return calcGR19(snap);
+    // 內部仍以單位 GR 計算，最後乘上週期當作「週期總 GR」
+    return calcGR19(snap) * cycle;
   }
 
   const gP1 = gr19ofD( 1.0);
@@ -720,9 +907,13 @@ function runOptimize() {
     if (Math.abs(hi - lo) < 1e-13) break;
   }
 
-  const newR    = rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta, R_MIN, R_MAX));
-  const gr19New = calcGR19(rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] })));
-  const err     = Math.abs(gr19New - target);
+  const newR       = rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta, R_MIN, R_MAX));
+  const gr19NewOne = calcGR19(rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] })));
+  const gr19New    = gr19NewOne * cycle;   // 週期總 GR
+  const err        = Math.abs(gr19New - target);
+
+  lastTargetTotal = target;
+  lastResultTotal = gr19New;
 
   showResult(baseR, newR, target, gr19New, err);
 }
@@ -735,11 +926,12 @@ function showResult(baseR, newR, target, gr19New, err) {
 
   // Update top display: target and result only (original stays fixed)
   const tgtEl = document.getElementById('gr-target');
-  tgtEl.textContent = fmtPct(target);
+  // 頂部顯示採「每週期 GR」，因此將週期總 GR / 週期
+  tgtEl.textContent = fmtPct(target / cycle);
   tgtEl.className   = 'gvalue neutral';
 
   const resEl = document.getElementById('gr-result');
-  resEl.textContent = fmtPct(gr19New);
+  resEl.textContent = fmtPct(gr19New / cycle);
   resEl.className   = 'gvalue ' + (ok ? 'good' : 'neutral');
 
   const detEl = document.getElementById('gr-detail');
@@ -774,10 +966,10 @@ function showResult(baseR, newR, target, gr19New, err) {
       <td class="range-cell">${row.rangeMin}</td>
       <td class="range-cell">${row.rangeMax}</td>
       <td>${fmt(row.avg)}</td>
-      <td>${fmt(row.prob)}</td>
+      <td>${fmtPct(row.prob)}</td>
       <td>${toX4(baseR[idx])}</td>
       <td class="${isChanged ? 'cell-changed' : ''}">${arrow}${toX4(newR[idx])}</td>
-      <td>${fmt(gr)}</td>
+      <td>${fmtPct(gr / cycle)}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -788,8 +980,8 @@ function showResult(baseR, newR, target, gr19New, err) {
   trS.className = 'sum-row';
   trS.innerHTML = `
     <td>Σ</td><td>—</td><td>—</td><td>—</td>
-    <td>${fmt(sumProb)}</td><td>—</td><td>—</td>
-    <td class="cell-grval">${fmt(gr19New)}</td>
+    <td>${fmtPct(sumProb)}</td><td>—</td><td>—</td>
+      <td class="cell-grval">${fmtPct(gr19New / cycle)}</td>
   `;
   tbody.appendChild(trS);
 
@@ -799,7 +991,7 @@ function showResult(baseR, newR, target, gr19New, err) {
   document.getElementById('dl-btn').classList.remove('hidden');
 
   setStatus(
-    `調整完成！GR = ${fmtPct(gr19New)}，目標 = ${fmtPct(target)}，誤差 = ${fmtE(err)}`,
+    `調整完成！GR/週期 = ${fmtPct(gr19New / cycle)}，目標 GR/週期 = ${fmtPct(target / cycle)}，誤差(週期總 GR) = ${fmtE(err)}`,
     ok ? 'success' : 'info'
   );
 
@@ -827,7 +1019,23 @@ function resetRespin() {
   document.getElementById('gr-detail').style.display = 'none';
   document.getElementById('result-card').style.display = 'none';
   document.getElementById('dl-btn').classList.add('hidden');
+  lastTargetTotal = null;
+  lastResultTotal = null;
+  updateTopGRDisplay();
   setStatus('重轉機率已還原至原始數值。', 'info');
+}
+
+// ═══════════════════════════════════════════════
+// 週期輸入
+// ═══════════════════════════════════════════════
+function onCycleChange(val) {
+  let v = parseInt(val, 10);
+  if (isNaN(v) || v < 1) v = 1;
+  cycle = v;
+  const inp = document.getElementById('cycle-input');
+  if (inp) inp.value = v;
+  refreshRightColumn();
+  updateTopGRDisplay();
 }
 
 // ═══════════════════════════════════════════════
@@ -858,6 +1066,67 @@ function clearStatus() {
   const el = document.getElementById('status-msg');
   el.className = 'status-msg'; el.textContent = '';
 }
+
+// ═══════════════════════════════════════════════
+// Top GR display update (依照週期套用 GR/週期 顯示)
+// ═══════════════════════════════════════════════
+function updateTopGRDisplay() {
+  const origEl = document.getElementById('gr-original');
+  const curEl  = document.getElementById('gr-current');
+  if (origEl) {
+    origEl.textContent = fmtPct(originalGR / cycle);
+    origEl.className   = 'gvalue neutral';
+  }
+  const currentGR = calcGR19(rows);
+  if (curEl) {
+    curEl.textContent = fmtPct(currentGR / cycle);
+    curEl.className   = 'gvalue neutral';
+  }
+  if (lastTargetTotal != null) {
+    const tgtEl = document.getElementById('gr-target');
+    if (tgtEl) tgtEl.textContent = fmtPct(lastTargetTotal / cycle);
+  }
+  if (lastResultTotal != null) {
+    const resEl = document.getElementById('gr-result');
+    if (resEl) resEl.textContent = fmtPct(lastResultTotal / cycle);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// Theme
+// ═══════════════════════════════════════════════
+function applyTheme(theme) {
+  currentTheme = theme;
+  document.body.dataset.theme = theme;
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '亮色版' : '暗色版';
+  }
+  try {
+    localStorage.setItem('rtp_theme', theme);
+  } catch (_) {
+    // ignore storage errors
+  }
+}
+
+function initTheme() {
+  let theme = 'dark';
+  try {
+    const saved = localStorage.getItem('rtp_theme');
+    if (saved === 'light' || saved === 'dark') theme = saved;
+  } catch (_) {
+    theme = 'dark';
+  }
+  applyTheme(theme);
+}
+
+function toggleTheme() {
+  const next = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+}
+
+// 初始化主題
+initTheme();
 </script>
 </body>
 </html>
