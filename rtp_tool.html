@@ -450,8 +450,20 @@ function parseSheet() {
     if (a === 'TEXT' || b === 'TEXT' || c === 'TEXT' || d === 'TEXT' || e === 'TEXT') continue;
     if (a === null && b === null && c === null && d === null && e === null) continue;
     const safeN = v => (v === null || isNaN(+v)) ? 0 : +v;
-    rows.push({ rowIdx: r+1, rangeMin: safeN(a), rangeMax: safeN(b),
-                avg: safeN(c), prob: safeN(d), respin: safeN(e), locked: false });
+    const avg  = safeN(c);
+    const prob = safeN(d);
+    let resp   = safeN(e);
+    // Excel 可能存原始值 (0.29) 或已乘以 10000 (2900)，>1 時自動視為已乘以 10000
+    if (resp > 1) resp = resp / 10000;
+    rows.push({
+      rowIdx:   r + 1,
+      rangeMin: safeN(a),
+      rangeMax: safeN(b),
+      avg,
+      prob,
+      respin: resp,
+      locked: false,
+    });
   }
 
   // Drop trailing zero-padding rows
