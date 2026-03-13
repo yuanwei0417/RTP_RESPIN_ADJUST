@@ -880,22 +880,47 @@ function runOptimize() {
     return calcGR19(snap) * cycle;
   }
 
-  const gP1 = gr19ofD( 1.0);
-  const gM1 = gr19ofD(-1.0);
-  const gLo = Math.min(gP1, gM1);
-  const gHi = Math.max(gP1, gM1);
+  // 先粗略掃描 [-1, 1] 範圍內可達到的 GR 範圍，避免因為邊界裁切導致 g(+1) 與 g(-1) 相同
+  const baseG = gr19ofD(0);
+  let gMin = baseG;
+  let gMax = baseG;
+  let bracketLo = 0;
+  let bracketHi = 0;
+  let foundBracket = false;
 
-  if (target < gLo - 1e-9 || target > gHi + 1e-9) {
+  for (let step = 0.01; step <= 1.0; step *= 2) {
+    const candidates = [-step, step];
+    for (const d of candidates) {
+      const g = gr19ofD(d);
+      if (g < gMin) { gMin = g; bracketLo = d; }
+      if (g > gMax) { gMax = g; bracketHi = d; }
+    }
+    if (target >= gMin - 1e-9 && target <= gMax + 1e-9) {
+      foundBracket = true;
+      break;
+    }
+  }
+
+  if (!foundBracket) {
     setStatus(
-      `目標 ${fmtPct(target)} 超出可調整範圍 [${fmtPct(gLo)}, ${fmtPct(gHi)}]。` +
-      `目前 GR = ${fmtPct(gr19ofD(0))}`,
+      `目標 ${fmtPct(target)} 超出可調整範圍 [${fmtPct(gMin)}, ${fmtPct(gMax)}]。` +
+      `目前 GR = ${fmtPct(baseG)}`,
       'error'
     );
     return;
   }
 
-  const decreasing = gM1 >= gP1;
-  let lo = -1.0, hi = 1.0, delta = 0;
+  const gLo = gMin;
+  const gHi = gMax;
+
+  // 根據括住目標的兩端判斷單調方向
+  const gLoVal = gr19ofD(bracketLo);
+  const gHiVal = gr19ofD(bracketHi);
+  const decreasing = gHiVal < gLoVal;
+
+  let lo = bracketLo;
+  let hi = bracketHi;
+  let delta = 0;
 
   for (let i = 0; i < 300; i++) {
     const mid = (lo + hi) / 2;
