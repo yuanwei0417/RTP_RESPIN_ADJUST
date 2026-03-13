@@ -243,6 +243,11 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
     </div>
     <div class="gr-sep"></div>
     <div class="gr-block">
+      <span class="glabel">當前 GR</span>
+      <span class="gvalue dim" id="gr-current">—</span>
+    </div>
+    <div class="gr-sep"></div>
+    <div class="gr-block">
       <span class="glabel">目標 GR</span>
       <span class="gvalue dim" id="gr-target">—</span>
     </div>
@@ -360,8 +365,8 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 // ═══════════════════════════════════════════════
 // Constants
 // ═══════════════════════════════════════════════
-const R_MIN = 1e-9;           // respin 調整下限（>0）
-const R_MAX = 1 - 1e-9;       // respin 調整上限（<1）
+const R_MIN = 1 / 10000;      // respin 調整下限（×10⁴ = 1）
+const R_MAX = 9999 / 10000;   // respin 調整上限（×10⁴ = 9999）
 
 // ═══════════════════════════════════════════════
 // State
@@ -475,6 +480,9 @@ function parseSheet() {
   const origEl = document.getElementById('gr-original');
   origEl.textContent = fmtPct(originalGR);
   origEl.className   = 'gvalue neutral';
+  // Init 當前 GR
+  const curEl2 = document.getElementById('gr-current');
+  if (curEl2) { curEl2.textContent = fmtPct(originalGR); curEl2.className = 'gvalue neutral'; }
   // Clear target / result
   document.getElementById('gr-target').textContent = '—';
   document.getElementById('gr-target').className   = 'gvalue dim';
@@ -591,6 +599,9 @@ function refreshRightColumn() {
   const gr19 = calcGR19(rows);
   const el2  = document.getElementById('sum-gr19');
   if (el2) el2.textContent = fmt(gr19);
+  // Update 當前 GR (live, updates on every respin change)
+  const curEl = document.getElementById('gr-current');
+  if (curEl) { curEl.textContent = fmtPct(gr19); curEl.className = 'gvalue neutral'; }
   // NOTE: do NOT update gr-original here — it's fixed after load
 }
 
