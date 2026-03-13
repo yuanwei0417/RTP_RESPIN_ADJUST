@@ -19,17 +19,16 @@ body {
 /* ── Top Bar ──────────────────────────────── */
 .top-bar {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
+  grid-template-columns: 300px 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
   align-items: stretch;
 }
 
-/* Upload compact */
 #upload-area {
   border: 2px dashed #3a4a6b;
   border-radius: 10px;
-  padding: 14px 18px;
+  padding: 12px 16px;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
@@ -38,155 +37,129 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
 }
-#upload-area:hover, #upload-area.drag-over {
-  border-color: #7eb8f7;
-  background: #1a2235;
-}
-#upload-area .up-icon { font-size: 1.6rem; }
-#upload-area p { color: #8899aa; font-size: 0.82rem; }
+#upload-area:hover, #upload-area.drag-over { border-color: #7eb8f7; background: #1a2235; }
+#upload-area .up-icon { font-size: 1.5rem; }
+#upload-area p { color: #8899aa; font-size: 0.8rem; }
 #upload-area p span { color: #7eb8f7; font-weight: 600; }
-#file-name { font-size: 0.75rem; color: #5566aa; margin-top: 2px; }
+#file-name { font-size: 0.73rem; color: #5566aa; margin-top: 1px; }
 #file-input { display: none; }
 
-/* G19 Result Display */
-.g19-display {
+/* GR Display */
+.gr-display {
   background: #161b27;
   border: 1px solid #2a3550;
   border-radius: 10px;
-  padding: 16px 28px;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
-  gap: 48px;
+  gap: 36px;
   flex-wrap: wrap;
 }
-.g19-block { display: flex; flex-direction: column; gap: 4px; }
-.g19-block .glabel { font-size: 0.75rem; color: #8899aa; text-transform: uppercase; letter-spacing: 0.5px; }
-.g19-block .gvalue {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #7eb8f7;
-  letter-spacing: 1px;
-  line-height: 1;
+.gr-block { display: flex; flex-direction: column; gap: 4px; }
+.gr-block .glabel {
+  font-size: 0.72rem; color: #8899aa;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.gr-block .gvalue {
+  font-size: 2.1rem; font-weight: 800;
+  letter-spacing: 1px; line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-.g19-block .gvalue.good { color: #5ef77a; }
-.g19-block .gvalue.neutral { color: #7eb8f7; }
-.g19-block .gvalue.dim { color: #445566; }
-.g19-sep { width: 1px; height: 48px; background: #2a3550; }
-.g19-detail { display: flex; flex-direction: column; gap: 6px; }
-.g19-detail .drow { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; }
-.g19-detail .drow .dk { color: #6677aa; width: 60px; }
-.g19-detail .drow .dv { color: #ccd6e8; font-weight: 600; }
-.g19-detail .drow .dv.hi { color: #5ef77a; }
+.gvalue.good    { color: #5ef77a; }
+.gvalue.neutral { color: #7eb8f7; }
+.gvalue.dim     { color: #445566; }
+.gr-sep { width: 1px; height: 46px; background: #2a3550; }
+.gr-detail { display: flex; flex-direction: column; gap: 5px; }
+.gr-detail .drow { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+.gr-detail .drow .dk { color: #6677aa; width: 56px; }
+.gr-detail .drow .dv { color: #ccd6e8; font-weight: 600; }
+.gr-detail .drow .dv.hi { color: #5ef77a; }
 
 /* ── Card ────────────────────────────────── */
 .card {
   background: #161b27;
   border: 1px solid #2a3550;
   border-radius: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   overflow: hidden;
 }
 .card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 11px 18px;
-  background: #1c2336;
-  border-bottom: 1px solid #2a3550;
-  cursor: pointer;
-  user-select: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  background: #1c2336; border-bottom: 1px solid #2a3550;
+  cursor: pointer; user-select: none;
 }
 .card-header:hover { background: #212840; }
-.card-header h2 { font-size: 0.9rem; font-weight: 600; color: #b0c4de; }
+.card-header h2 { font-size: 0.88rem; font-weight: 600; color: #b0c4de; }
 .card-header .badge {
   background: #263352; color: #7eb8f7;
-  padding: 1px 9px; border-radius: 20px;
-  font-size: 0.75rem; margin-left: 8px;
+  padding: 1px 8px; border-radius: 20px;
+  font-size: 0.73rem; margin-left: 8px;
 }
 .collapse-btn {
   background: none; border: 1px solid #3a4a6b;
   color: #8899aa; border-radius: 5px;
-  padding: 2px 9px; cursor: pointer; font-size: 0.8rem;
+  padding: 2px 8px; cursor: pointer; font-size: 0.78rem;
   transition: all 0.15s;
 }
 .collapse-btn:hover { background: #263352; color: #ccc; }
 .card-body.collapsed { display: none; }
 
 /* ── Split Table Layout ──────────────────── */
-.split-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-
-.split-pane {
-  overflow-x: auto;
-  max-height: 440px;
-  overflow-y: auto;
-}
-.split-pane:first-child {
-  border-right: 2px solid #2a3550;
-}
+.split-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.split-pane { overflow-x: auto; max-height: 420px; overflow-y: auto; }
+.split-pane:first-child { border-right: 2px solid #2a3550; }
 
 /* ── Tables ──────────────────────────────── */
-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
 
 thead th {
-  position: sticky;
-  top: 0;
-  background: #1c2336;
-  color: #7eb8f7;
-  padding: 9px 11px;
+  position: sticky; top: 0;
+  background: #1c2336; color: #7eb8f7;
+  padding: 9px 10px;
   text-align: center;
   border-bottom: 2px solid #3a4a6b;
-  white-space: nowrap;
-  z-index: 2;
-  font-weight: 600;
+  border-right: 1px solid #263352;
+  white-space: nowrap; z-index: 2; font-weight: 600;
 }
-thead th .sub { font-size: 0.67rem; color: #556688; font-weight: 400; display: block; margin-top: 1px; }
-
-/* left pane header accent */
-.pane-left thead th { background: #1c2a36; }
-.pane-right thead th { background: #1c2336; }
+thead th:last-child { border-right: none; }
+thead th .sub { font-size: 0.65rem; color: #556688; font-weight: 400; display: block; margin-top: 1px; }
 
 tbody tr { transition: background 0.1s; }
 tbody tr:hover td { background: #1e2840; }
-
-/* pair rows in both panes highlight together via JS */
 tbody tr.row-hover td { background: #1e2840 !important; }
 
 td {
-  padding: 6px 11px;
-  text-align: right;
+  padding: 6px 10px;
+  text-align: center;           /* ← 置中 */
   border-bottom: 1px solid #1e2535;
+  border-right: 1px solid #1e2a3a;  /* ← 欄位分隔線 */
   color: #ccd6e8;
   white-space: nowrap;
 }
-td:first-child { text-align: center; color: #6677aa; font-size: 0.78rem; }
-
-/* range cells */
-td.range-cell { color: #8899bb; font-size: 0.8rem; }
+td:last-child { border-right: none; }
+td:first-child { color: #6677aa; font-size: 0.77rem; }
+td.range-cell { color: #8899bb; font-size: 0.79rem; }
 
 tbody tr.sum-row td { color: #7ef7a0; background: #1a2e1a; font-weight: 700; }
 tbody tr.sum-row:hover td { background: #1a2e1a !important; }
 tbody tr.sum-row { border-top: 2px solid #3a6b3a; }
 
 /* ── Respin Input ────────────────────────── */
-td.respin-cell { padding: 4px 8px; }
-.respin-wrap { display: flex; align-items: center; gap: 5px; justify-content: flex-end; }
+td.respin-cell { padding: 3px 6px; }
+.respin-wrap { display: flex; align-items: center; gap: 4px; justify-content: center; }
 .respin-input {
   background: #0d1320;
   border: 1.5px solid #3a5a8b;
   border-radius: 5px;
   color: #e0f0ff;
-  text-align: right;
-  width: 86px;
-  font-size: 0.83rem;
+  text-align: center;
+  width: 72px;
+  font-size: 0.82rem;
   font-family: inherit;
-  padding: 4px 8px;
+  padding: 4px 6px;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -195,57 +168,55 @@ td.respin-cell { padding: 4px 8px; }
   box-shadow: 0 0 0 2px rgba(126,184,247,0.15);
 }
 .respin-input:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  border-color: #2a3550;
-  background: #111722;
+  opacity: 0.4; cursor: not-allowed;
+  border-color: #2a3550; background: #111722;
 }
 .lock-btn {
   background: none; border: none;
-  cursor: pointer; padding: 1px 3px;
-  font-size: 0.85rem; border-radius: 4px;
+  cursor: pointer; padding: 1px 2px;
+  font-size: 0.83rem; border-radius: 4px;
   transition: background 0.15s;
 }
 .lock-btn:hover { background: #2a3550; }
 
 td.cell-changed { background: #282510 !important; color: #ffe066 !important; }
-td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
+td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
+
+/* Arrow indicator */
+.arrow-up   { color: #5ef77a; font-size: 0.85rem; margin-right: 3px; }
+.arrow-down { color: #f77e5e; font-size: 0.85rem; margin-right: 3px; }
 
 /* ── Control ─────────────────────────────── */
-.ctrl-body { padding: 14px 18px; }
-.ctrl-row  { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.ctrl-body { padding: 13px 16px; }
+.ctrl-row  { display: flex; align-items: flex-end; gap: 11px; flex-wrap: wrap; }
 .input-group { display: flex; flex-direction: column; gap: 4px; }
-.input-group label { font-size: 0.76rem; color: #8899aa; }
+.input-group label { font-size: 0.75rem; color: #8899aa; }
 .input-group input[type=number] {
-  background: #0f1117;
-  border: 1px solid #3a4a6b;
-  color: #e0e0e0;
-  border-radius: 7px;
-  padding: 7px 13px;
-  font-size: 0.95rem;
-  width: 150px;
-  outline: none;
-  transition: border-color 0.15s;
+  background: #0f1117; border: 1px solid #3a4a6b;
+  color: #e0e0e0; border-radius: 7px;
+  padding: 7px 12px; font-size: 0.93rem; width: 145px;
+  outline: none; transition: border-color 0.15s;
 }
 .input-group input[type=number]:focus { border-color: #7eb8f7; }
-
-.btn { border: none; border-radius: 7px; padding: 8px 20px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
+.btn {
+  border: none; border-radius: 7px;
+  padding: 8px 18px; font-size: 0.86rem; font-weight: 600;
+  cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+}
 .btn:active { transform: translateY(1px); }
-.btn:hover { opacity: 0.86; }
+.btn:hover  { opacity: 0.86; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-run   { background: linear-gradient(135deg, #3a7bd5, #2060b0); color: #fff; }
 .btn-reset { background: #263352; color: #aab8cc; border: 1px solid #3a4a6b; }
 .btn-dl    { background: linear-gradient(135deg, #2e7d52, #1a5c3a); color: #fff; }
 
-.status-msg { margin-top: 12px; padding: 8px 13px; border-radius: 7px; font-size: 0.85rem; display: none; }
+.status-msg { margin-top: 11px; padding: 7px 12px; border-radius: 7px; font-size: 0.83rem; display: none; }
 .status-msg.success { background: #1a2e1a; color: #7ef7a0; border: 1px solid #2a4a2a; display: block; }
 .status-msg.error   { background: #2e1a1a; color: #f77e7e; border: 1px solid #4a2a2a; display: block; }
 .status-msg.info    { background: #1a2235; color: #7eb8f7; border: 1px solid #2a3a5a; display: block; }
 
-/* ── Result Table (9 cols) ───────────────── */
-.result-wrap { overflow-x: auto; max-height: 440px; overflow-y: auto; }
+.result-wrap { overflow-x: auto; max-height: 420px; overflow-y: auto; }
 
-/* ── Scrollbar ───────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: #161b27; }
 ::-webkit-scrollbar-thumb { background: #3a4a6b; border-radius: 3px; }
@@ -258,8 +229,6 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
 
 <!-- ── Top Bar ─────────────────────────────── -->
 <div class="top-bar">
-
-  <!-- Upload compact -->
   <div id="upload-area">
     <div class="up-icon">📂</div>
     <p>拖放 <span>.xlsx</span> 或<span> 點擊上傳</span></p>
@@ -267,30 +236,28 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
     <input type="file" id="file-input" accept=".xlsx,.xls">
   </div>
 
-  <!-- G19 result -->
-  <div class="g19-display">
-    <div class="g19-block">
-      <span class="glabel">目前 G19</span>
-      <span class="gvalue dim" id="g19-current">—</span>
+  <div class="gr-display">
+    <div class="gr-block">
+      <span class="glabel">原始 GR</span>
+      <span class="gvalue dim" id="gr-original">—</span>
     </div>
-    <div class="g19-sep"></div>
-    <div class="g19-block">
-      <span class="glabel">目標 G19</span>
-      <span class="gvalue dim" id="g19-target">—</span>
+    <div class="gr-sep"></div>
+    <div class="gr-block">
+      <span class="glabel">目標 GR</span>
+      <span class="gvalue dim" id="gr-target">—</span>
     </div>
-    <div class="g19-sep"></div>
-    <div class="g19-block">
-      <span class="glabel">調整後 G19</span>
-      <span class="gvalue dim" id="g19-result">—</span>
+    <div class="gr-sep"></div>
+    <div class="gr-block">
+      <span class="glabel">調整後 GR</span>
+      <span class="gvalue dim" id="gr-result">—</span>
     </div>
-    <div class="g19-sep"></div>
-    <div class="g19-detail" id="g19-detail" style="display:none">
+    <div class="gr-sep"></div>
+    <div class="gr-detail" id="gr-detail" style="display:none">
       <div class="drow"><span class="dk">誤差</span><span class="dv" id="det-err">—</span></div>
       <div class="drow"><span class="dk">狀態</span><span class="dv" id="det-status">—</span></div>
       <div class="drow"><span class="dk">變更列</span><span class="dv" id="det-changed">—</span></div>
     </div>
   </div>
-
 </div>
 
 <!-- ── Raw Table Card ─────────────────────── -->
@@ -303,9 +270,8 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
     <button class="collapse-btn" id="raw-btn">收合 ▲</button>
   </div>
   <div class="card-body" id="raw-body">
-    <div class="split-wrap" id="split-wrap">
-
-      <!-- Left pane: range + avg + prob -->
+    <div class="split-wrap">
+      <!-- Left pane -->
       <div class="split-pane" id="left-pane">
         <table>
           <thead>
@@ -320,8 +286,7 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
           <tbody id="left-tbody"></tbody>
         </table>
       </div>
-
-      <!-- Right pane: range + respin + G -->
+      <!-- Right pane -->
       <div class="split-pane" id="right-pane">
         <table>
           <thead>
@@ -329,14 +294,13 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
               <th>#</th>
               <th>倍率下限<span class="sub">range min</span></th>
               <th>倍率上限<span class="sub">range max</span></th>
-              <th>重轉機率<span class="sub">respin — 可調整</span></th>
-              <th>G<span class="sub">B×(1-C)×A / Σ</span></th>
+              <th>重轉機率 ×10⁴<span class="sub">respin — 可調整</span></th>
+              <th>GR<span class="sub">prob×(1-respin)×avg / Σ</span></th>
             </tr>
           </thead>
           <tbody id="right-tbody"></tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>
@@ -349,8 +313,8 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
   <div class="ctrl-body">
     <div class="ctrl-row">
       <div class="input-group">
-        <label>目標 G19 值</label>
-        <input type="number" id="target-input" placeholder="例：0.97" step="0.001" min="0">
+        <label>目標 GR 值（百分比，例：97）</label>
+        <input type="number" id="target-input" placeholder="例：97" step="0.01" min="0">
       </div>
       <button class="btn btn-run"   onclick="runOptimize()">▶ 執行調整</button>
       <button class="btn btn-reset" onclick="resetRespin()">↺ 還原重轉機率</button>
@@ -371,7 +335,7 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
   </div>
   <div class="card-body" id="result-body">
     <div class="result-wrap">
-      <table id="result-table">
+      <table>
         <thead>
           <tr>
             <th>#</th>
@@ -379,9 +343,9 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
             <th>倍率上限</th>
             <th>平均倍率</th>
             <th>機率</th>
-            <th>重轉 原始</th>
-            <th>重轉 調整後</th>
-            <th>G</th>
+            <th>重轉原始 ×10⁴</th>
+            <th>重轉調整後 ×10⁴</th>
+            <th>GR</th>
           </tr>
         </thead>
         <tbody id="result-tbody"></tbody>
@@ -394,21 +358,30 @@ td.cell-g19val  { color: #5ef77a !important; font-weight: 700; }
 'use strict';
 
 // ═══════════════════════════════════════════════
+// Constants
+// ═══════════════════════════════════════════════
+const R_MIN = 1e-9;           // respin 調整下限（>0）
+const R_MAX = 1 - 1e-9;       // respin 調整上限（<1）
+
+// ═══════════════════════════════════════════════
 // State
 // ═══════════════════════════════════════════════
-let rows     = [];   // [{rowIdx, rangeMin, rangeMax, avg, prob, respin, locked}]
-let backupR  = [];   // original respin values
-let wb       = null;
-let fileName = '';
+let rows       = [];   // [{rowIdx, rangeMin, rangeMax, avg, prob, respin, locked}]
+let backupR    = [];   // original respin values (from Excel)
+let originalGR = 0;   // GR computed from backupR — fixed after load
+let wb         = null;
+let fileName   = '';
 
 // ═══════════════════════════════════════════════
-// Math helpers
+// Helpers
 // ═══════════════════════════════════════════════
-const clip = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
-const fmt  = (v, d = 7) => Number(v).toFixed(d);
-const fmtE = (v, d = 3) => Number(v).toExponential(d);
+const clip  = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+const fmt   = (v, d = 4) => Number(v).toFixed(d);   // 4 decimal places for display
+const fmtE  = (v, d = 3) => Number(v).toExponential(d);
+const fmtPct = v => (Number(v) * 100).toFixed(2) + '%';  // percentage display
+const toX4  = v => Math.round(Number(v) * 10000);         // respin → ×10000 integer
 
-function calcG19(arr) {
+function calcGR19(arr) {
   let num = 0, den = 0;
   arr.forEach(r => {
     const w = r.prob * (1 - r.respin);
@@ -418,7 +391,7 @@ function calcG19(arr) {
   return den === 0 ? 0 : num / den;
 }
 
-function calcG(r, denom) {
+function calcGR(r, denom) {
   return denom > 0 ? r.prob * (1 - r.respin) * r.avg / denom : 0;
 }
 
@@ -465,32 +438,18 @@ function parseSheet() {
     const getV = c => {
       const cell = ws[XLSX.utils.encode_cell({ r, c })];
       if (!cell) return null;
-      // skip text header cells
       if (cell.t === 's') return 'TEXT';
       return typeof cell.v === 'number' ? cell.v : null;
     };
-
     const a = getV(0), b = getV(1), c = getV(2), d = getV(3), e = getV(4);
-
-    // Skip header row (any cell is text)
     if (a === 'TEXT' || b === 'TEXT' || c === 'TEXT' || d === 'TEXT' || e === 'TEXT') continue;
-
-    // All null → skip
     if (a === null && b === null && c === null && d === null && e === null) continue;
-
     const safeN = v => (v === null || isNaN(+v)) ? 0 : +v;
-    rows.push({
-      rowIdx:   r + 1,
-      rangeMin: safeN(a),
-      rangeMax: safeN(b),
-      avg:      safeN(c),
-      prob:     safeN(d),
-      respin:   safeN(e),
-      locked:   false,
-    });
+    rows.push({ rowIdx: r+1, rangeMin: safeN(a), rangeMax: safeN(b),
+                avg: safeN(c), prob: safeN(d), respin: safeN(e), locked: false });
   }
 
-  // Drop trailing zero-padding rows (avg=0, prob=0, respin=0)
+  // Drop trailing zero-padding rows
   while (rows.length > 0) {
     const last = rows[rows.length - 1];
     if (last.avg === 0 && last.prob === 0 && last.respin === 0) rows.pop(); else break;
@@ -498,12 +457,11 @@ function parseSheet() {
 
   if (rows.length === 0) { setStatus('找不到有效資料列，請確認 Excel 格式。', 'error'); return; }
 
-  backupR = rows.map(r => r.respin);
+  backupR    = rows.map(r => r.respin);
+  originalGR = calcGR19(rows);   // fixed reference GR
 
-  // 預設鎖定：重轉機率原本為 0 或 1 的列
-  rows.forEach(r => {
-    if (r.respin === 0 || r.respin === 1) r.locked = true;
-  });
+  // Auto-lock rows where respin = 0 or 1
+  rows.forEach(r => { if (r.respin === 0 || r.respin === 1) r.locked = true; });
 
   document.getElementById('row-badge').textContent = rows.length + ' 列';
   renderTables();
@@ -513,24 +471,34 @@ function parseSheet() {
   document.getElementById('result-card').style.display = 'none';
   document.getElementById('dl-btn').classList.add('hidden');
 
-  updateG19Display(calcG19(rows), null, null);
+  // Show original GR (fixed)
+  const origEl = document.getElementById('gr-original');
+  origEl.textContent = fmtPct(originalGR);
+  origEl.className   = 'gvalue neutral';
+  // Clear target / result
+  document.getElementById('gr-target').textContent = '—';
+  document.getElementById('gr-target').className   = 'gvalue dim';
+  document.getElementById('gr-result').textContent = '—';
+  document.getElementById('gr-result').className   = 'gvalue dim';
+  document.getElementById('gr-detail').style.display = 'none';
+
   clearStatus();
 }
 
 // ═══════════════════════════════════════════════
-// Render Tables (split left / right)
+// Render Tables
 // ═══════════════════════════════════════════════
 function renderTables() {
-  const denom   = getDenom(rows);
-  const ltbody  = document.getElementById('left-tbody');
-  const rtbody  = document.getElementById('right-tbody');
+  const denom  = getDenom(rows);
+  const ltbody = document.getElementById('left-tbody');
+  const rtbody = document.getElementById('right-tbody');
   ltbody.innerHTML = '';
   rtbody.innerHTML = '';
 
   rows.forEach((row, idx) => {
-    const g = calcG(row, denom);
+    const gr = calcGR(row, denom);
 
-    // Left row: #, rangeMin, rangeMax, avg, prob
+    // Left row
     const ltr = document.createElement('tr');
     ltr.id = 'ltr-' + idx;
     ltr.innerHTML = `
@@ -543,7 +511,7 @@ function renderTables() {
     addHoverSync(ltr, idx);
     ltbody.appendChild(ltr);
 
-    // Right row: #, rangeMin, rangeMax, respin(input), G
+    // Right row — respin displayed as ×10000 integer
     const rtr = document.createElement('tr');
     rtr.id = 'rtr-' + idx;
     rtr.innerHTML = `
@@ -553,122 +521,96 @@ function renderTables() {
       <td class="respin-cell">
         <div class="respin-wrap">
           <input class="respin-input" id="ri-${idx}" type="number"
-            value="${fmt(row.respin)}" step="0.001" min="0" max="1"
+            value="${toX4(row.respin)}" step="1" min="1" max="9999"
             onchange="onRespinChange(${idx}, this.value)"
-            title="重轉機率（0~1），可直接輸入">
+            title="重轉機率（×10000），範圍 1~9999">
           <button class="lock-btn" id="lb-${idx}"
             onclick="toggleLock(${idx})"
             title="鎖定後不被演算法調整">🔓</button>
         </div>
       </td>
-      <td id="gval-${idx}">${fmt(g)}</td>
+      <td id="grval-${idx}">${fmt(gr)}</td>
     `;
     addHoverSync(rtr, idx);
     rtbody.appendChild(rtr);
 
-    // 套用初始鎖定狀態到 UI
-    if (row.locked) {
-      const inp = rtr.querySelector(`#ri-${idx}`);
-      const btn = rtr.querySelector(`#lb-${idx}`);
-      if (inp) inp.disabled = true;
-      if (btn) { btn.textContent = '🔒'; btn.style.color = '#f7a07e'; btn.title = '此列已鎖定，演算法不會調整其重轉機率'; }
-    }
+    // Apply initial lock state
+    if (row.locked) applyLockUI(idx, true, rtr);
   });
 
-  // Sum rows
   appendSumRowLeft(ltbody);
-  appendSumRowRight(rtbody, denom);
+  appendSumRowRight(rtbody);
+}
+
+function applyLockUI(idx, locked, trEl) {
+  const inp = trEl ? trEl.querySelector('#ri-' + idx) : document.getElementById('ri-' + idx);
+  const btn = trEl ? trEl.querySelector('#lb-' + idx) : document.getElementById('lb-' + idx);
+  if (locked) {
+    if (inp) inp.disabled = true;
+    if (btn) { btn.textContent = '🔒'; btn.style.color = '#f7a07e'; btn.title = '此列已鎖定，演算法不會調整其重轉機率'; }
+  } else {
+    if (inp) inp.disabled = false;
+    if (btn) { btn.textContent = '🔓'; btn.style.color = ''; btn.title = '鎖定後不被演算法調整'; }
+  }
 }
 
 function addHoverSync(tr, idx) {
   tr.addEventListener('mouseenter', () => {
-    const l = document.getElementById('ltr-' + idx);
-    const r = document.getElementById('rtr-' + idx);
-    if (l) l.classList.add('row-hover');
-    if (r) r.classList.add('row-hover');
+    document.getElementById('ltr-' + idx)?.classList.add('row-hover');
+    document.getElementById('rtr-' + idx)?.classList.add('row-hover');
   });
   tr.addEventListener('mouseleave', () => {
-    const l = document.getElementById('ltr-' + idx);
-    const r = document.getElementById('rtr-' + idx);
-    if (l) l.classList.remove('row-hover');
-    if (r) r.classList.remove('row-hover');
+    document.getElementById('ltr-' + idx)?.classList.remove('row-hover');
+    document.getElementById('rtr-' + idx)?.classList.remove('row-hover');
   });
 }
 
 function appendSumRowLeft(tbody) {
   const tr = document.createElement('tr');
   tr.className = 'sum-row';
-  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td><td id="sum-prob">${fmt(rows.reduce((s,r) => s+r.prob, 0))}</td>`;
+  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td>
+    <td id="sum-prob">${fmt(rows.reduce((s,r) => s+r.prob, 0))}</td>`;
   tbody.appendChild(tr);
 }
 
-function appendSumRowRight(tbody, denom) {
-  const g19 = calcG19(rows);
-  const tr  = document.createElement('tr');
+function appendSumRowRight(tbody) {
+  const gr19 = calcGR19(rows);
+  const tr   = document.createElement('tr');
   tr.className = 'sum-row';
-  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td><td id="sum-g19" class="cell-g19val">${fmt(g19)}</td>`;
+  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td>
+    <td id="sum-gr19" class="cell-grval">${fmt(gr19)}</td>`;
   tbody.appendChild(tr);
 }
 
 function refreshRightColumn() {
   const denom = getDenom(rows);
   rows.forEach((row, idx) => {
-    const g  = calcG(row, denom);
-    const el = document.getElementById('gval-' + idx);
-    if (el) el.textContent = fmt(g);
+    const el = document.getElementById('grval-' + idx);
+    if (el) el.textContent = fmt(calcGR(row, denom));
   });
-  const g19 = calcG19(rows);
-  const el2 = document.getElementById('sum-g19');
-  if (el2) el2.textContent = fmt(g19);
-  updateG19Display(g19, null, null);
+  const gr19 = calcGR19(rows);
+  const el2  = document.getElementById('sum-gr19');
+  if (el2) el2.textContent = fmt(gr19);
+  // NOTE: do NOT update gr-original here — it's fixed after load
 }
 
 function onRespinChange(idx, val) {
-  const v = parseFloat(val);
-  if (!isNaN(v)) {
-    rows[idx].respin = clip(v);
-    refreshRightColumn();
+  const x4 = parseFloat(val);
+  if (isNaN(x4) || x4 <= 0 || x4 >= 10000) {
+    setStatus('重轉機率（×10000）必須在 1 ~ 9999 之間（不含 0 和 10000）', 'error');
+    // Restore input to previous value
+    const inp = document.getElementById('ri-' + idx);
+    if (inp) inp.value = toX4(rows[idx].respin);
+    return;
   }
+  rows[idx].respin = x4 / 10000;
+  clearStatus();
+  refreshRightColumn();
 }
 
 function toggleLock(idx) {
   rows[idx].locked = !rows[idx].locked;
-  const btn   = document.getElementById('lb-' + idx);
-  const input = document.getElementById('ri-' + idx);
-  if (rows[idx].locked) {
-    btn.textContent = '🔒';
-    btn.title = '此列已鎖定，演算法不會調整其重轉機率';
-    btn.style.color = '#f7a07e';
-    if (input) { input.disabled = true; }
-  } else {
-    btn.textContent = '🔓';
-    btn.title = '鎖定後不被演算法調整';
-    btn.style.color = '';
-    if (input) { input.disabled = false; }
-  }
-}
-
-// ═══════════════════════════════════════════════
-// G19 top display
-// ═══════════════════════════════════════════════
-function updateG19Display(current, target, result) {
-  const curEl = document.getElementById('g19-current');
-  const tgtEl = document.getElementById('g19-target');
-  const resEl = document.getElementById('g19-result');
-
-  if (current !== null) {
-    curEl.textContent = current.toFixed(6);
-    curEl.className   = 'gvalue neutral';
-  }
-  if (target !== null) {
-    tgtEl.textContent = target.toFixed(6);
-    tgtEl.className   = 'gvalue neutral';
-  }
-  if (result !== null) {
-    const ok = Math.abs(result - (target ?? result)) < 1e-4;
-    resEl.textContent = result.toFixed(6);
-    resEl.className   = 'gvalue ' + (ok ? 'good' : 'neutral');
-  }
+  applyLockUI(idx, rows[idx].locked, null);
 }
 
 // ═══════════════════════════════════════════════
@@ -676,7 +618,7 @@ function updateG19Display(current, target, result) {
 // ═══════════════════════════════════════════════
 function makeCollapsible(hId, bId, btnId) {
   document.getElementById(hId).addEventListener('click', () => {
-    const b = document.getElementById(bId);
+    const b   = document.getElementById(bId);
     const btn = document.getElementById(btnId);
     b.classList.toggle('collapsed');
     btn.textContent = b.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
@@ -685,23 +627,33 @@ function makeCollapsible(hId, bId, btnId) {
 makeCollapsible('raw-hdr',    'raw-body',    'raw-btn');
 makeCollapsible('result-hdr', 'result-body', 'result-btn');
 
-// Sync scroll between left and right pane
-document.addEventListener('DOMContentLoaded', () => {
-  const lp = document.getElementById('left-pane');
-  const rp = document.getElementById('right-pane');
-  if (!lp || !rp) return;
-  lp.addEventListener('scroll', () => { rp.scrollTop = lp.scrollTop; });
-  rp.addEventListener('scroll', () => { lp.scrollTop = rp.scrollTop; });
-});
+// Left / right panes scroll INDEPENDENTLY (no sync)
+
+// ═══════════════════════════════════════════════
+// Silent Reset (used internally before optimize)
+// ═══════════════════════════════════════════════
+function _silentReset() {
+  rows.forEach((r, i) => { r.respin = backupR[i]; });
+  rows.forEach((r, i) => {
+    const inp = document.getElementById('ri-' + i);
+    if (inp) inp.value = toX4(backupR[i]);
+  });
+  refreshRightColumn();
+}
 
 // ═══════════════════════════════════════════════
 // Optimizer — Binary Search on Δ
 // ═══════════════════════════════════════════════
 function runOptimize() {
-  const target = parseFloat(document.getElementById('target-input').value);
-  if (isNaN(target) || target <= 0) {
-    setStatus('請輸入有效的目標 G19 值（正數）', 'error'); return;
+  // Auto-restore to original respin values first
+  _silentReset();
+
+  // Target input is in percentage (e.g. 97 means 0.97)
+  const targetPct = parseFloat(document.getElementById('target-input').value);
+  if (isNaN(targetPct) || targetPct <= 0) {
+    setStatus('請輸入有效的目標 GR 值（百分比，如 97 表示 97%）', 'error'); return;
   }
+  const target = targetPct / 100;
 
   const unlocked = rows.filter(r => !r.locked);
   if (unlocked.length === 0) {
@@ -710,23 +662,23 @@ function runOptimize() {
 
   const baseR = rows.map(r => r.respin);
 
-  function g19ofD(d) {
+  function gr19ofD(d) {
     const snap = rows.map((r, i) => ({
       avg: r.avg, prob: r.prob,
-      respin: r.locked ? baseR[i] : clip(baseR[i] + d),
+      respin: r.locked ? baseR[i] : clip(baseR[i] + d, R_MIN, R_MAX),
     }));
-    return calcG19(snap);
+    return calcGR19(snap);
   }
 
-  const gP1 = g19ofD( 1.0);
-  const gM1 = g19ofD(-1.0);
+  const gP1 = gr19ofD( 1.0);
+  const gM1 = gr19ofD(-1.0);
   const gLo = Math.min(gP1, gM1);
   const gHi = Math.max(gP1, gM1);
 
   if (target < gLo - 1e-9 || target > gHi + 1e-9) {
     setStatus(
-      `目標 ${target.toFixed(6)} 超出可調整範圍 [${gLo.toFixed(6)}, ${gHi.toFixed(6)}]。` +
-      `目前 G19 = ${g19ofD(0).toFixed(6)}`,
+      `目標 ${fmtPct(target)} 超出可調整範圍 [${fmtPct(gLo)}, ${fmtPct(gHi)}]。` +
+      `目前 GR = ${fmtPct(gr19ofD(0))}`,
       'error'
     );
     return;
@@ -737,7 +689,7 @@ function runOptimize() {
 
   for (let i = 0; i < 300; i++) {
     const mid = (lo + hi) / 2;
-    const g   = g19ofD(mid);
+    const g   = gr19ofD(mid);
     if (Math.abs(g - target) < 1e-12) { delta = mid; break; }
     if (decreasing ? g > target : g < target) lo = mid;
     else hi = mid;
@@ -745,39 +697,54 @@ function runOptimize() {
     if (Math.abs(hi - lo) < 1e-13) break;
   }
 
-  const newR   = rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta));
-  const g19New = calcG19(rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] })));
-  const err    = Math.abs(g19New - target);
+  const newR    = rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta, R_MIN, R_MAX));
+  const gr19New = calcGR19(rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] })));
+  const err     = Math.abs(gr19New - target);
 
-  showResult(baseR, newR, target, g19New, err);
+  showResult(baseR, newR, target, gr19New, err);
 }
 
 // ═══════════════════════════════════════════════
 // Result
 // ═══════════════════════════════════════════════
-function showResult(baseR, newR, target, g19New, err) {
+function showResult(baseR, newR, target, gr19New, err) {
   const ok = err < 1e-4;
 
-  // Update top display
-  updateG19Display(calcG19(rows), target, g19New);
-  const detEl = document.getElementById('g19-detail');
+  // Update top display: target and result only (original stays fixed)
+  const tgtEl = document.getElementById('gr-target');
+  tgtEl.textContent = fmtPct(target);
+  tgtEl.className   = 'gvalue neutral';
+
+  const resEl = document.getElementById('gr-result');
+  resEl.textContent = fmtPct(gr19New);
+  resEl.className   = 'gvalue ' + (ok ? 'good' : 'neutral');
+
+  const detEl = document.getElementById('gr-detail');
   detEl.style.display = '';
-  document.getElementById('det-err').textContent     = fmtE(err);
-  document.getElementById('det-err').className       = 'dv ' + (ok ? 'hi' : '');
-  document.getElementById('det-status').textContent  = ok ? '✔ 收斂' : '⚠ 未收斂';
-  document.getElementById('det-status').className    = 'dv ' + (ok ? 'hi' : '');
+  document.getElementById('det-err').textContent    = fmtE(err);
+  document.getElementById('det-err').className      = 'dv ' + (ok ? 'hi' : '');
+  document.getElementById('det-status').textContent = ok ? '✔ 收斂' : '⚠ 未收斂';
+  document.getElementById('det-status').className   = 'dv ' + (ok ? 'hi' : '');
 
   // Result table
   const adjRows = rows.map((r, i) => ({ ...r, respin: newR[i] }));
   const denom   = getDenom(adjRows);
   const tbody   = document.getElementById('result-tbody');
   tbody.innerHTML = '';
-
   let changed = 0;
+
   adjRows.forEach((row, idx) => {
     const isChanged = Math.abs(newR[idx] - baseR[idx]) > 1e-10;
     if (isChanged) changed++;
-    const g = calcG(row, denom);
+    const gr = calcGR(row, denom);
+
+    // Arrow indicator
+    let arrow = '';
+    if (isChanged) {
+      if (newR[idx] > baseR[idx]) arrow = '<span class="arrow-up">↑</span>';
+      else                         arrow = '<span class="arrow-down">↓</span>';
+    }
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.rowIdx}</td>
@@ -785,9 +752,9 @@ function showResult(baseR, newR, target, g19New, err) {
       <td class="range-cell">${row.rangeMax}</td>
       <td>${fmt(row.avg)}</td>
       <td>${fmt(row.prob)}</td>
-      <td>${fmt(baseR[idx])}</td>
-      <td class="${isChanged ? 'cell-changed' : ''}">${fmt(newR[idx])}</td>
-      <td>${fmt(g)}</td>
+      <td>${toX4(baseR[idx])}</td>
+      <td class="${isChanged ? 'cell-changed' : ''}">${arrow}${toX4(newR[idx])}</td>
+      <td>${fmt(gr)}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -799,7 +766,7 @@ function showResult(baseR, newR, target, g19New, err) {
   trS.innerHTML = `
     <td>Σ</td><td>—</td><td>—</td><td>—</td>
     <td>${fmt(sumProb)}</td><td>—</td><td>—</td>
-    <td class="cell-g19val">${fmt(g19New)}</td>
+    <td class="cell-grval">${fmt(gr19New)}</td>
   `;
   tbody.appendChild(trS);
 
@@ -809,17 +776,15 @@ function showResult(baseR, newR, target, g19New, err) {
   document.getElementById('dl-btn').classList.remove('hidden');
 
   setStatus(
-    `調整完成！G19 = ${g19New.toFixed(7)}，目標 = ${target.toFixed(7)}，誤差 = ${fmtE(err)}`,
+    `調整完成！GR = ${fmtPct(gr19New)}，目標 = ${fmtPct(target)}，誤差 = ${fmtE(err)}`,
     ok ? 'success' : 'info'
   );
 
-  // Persist adjusted respin into rows
+  // Persist adjusted respin into rows & sync UI
   rows.forEach((r, i) => { r.respin = newR[i]; });
-
-  // Sync raw table inputs & G column
   rows.forEach((r, i) => {
     const inp = document.getElementById('ri-' + i);
-    if (inp) inp.value = fmt(r.respin);
+    if (inp) inp.value = toX4(r.respin);
   });
   refreshRightColumn();
 
@@ -827,22 +792,16 @@ function showResult(baseR, newR, target, g19New, err) {
 }
 
 // ═══════════════════════════════════════════════
-// Reset
+// Reset (manual button)
 // ═══════════════════════════════════════════════
 function resetRespin() {
   if (backupR.length === 0) { setStatus('尚無備份可還原。', 'info'); return; }
-  rows.forEach((r, i) => { r.respin = backupR[i]; });
-  rows.forEach((r, i) => {
-    const inp = document.getElementById('ri-' + i);
-    if (inp) inp.value = fmt(r.respin);
-  });
-  refreshRightColumn();
-  updateG19Display(calcG19(rows), null, null);
-  document.getElementById('g19-target').textContent = '—';
-  document.getElementById('g19-target').className   = 'gvalue dim';
-  document.getElementById('g19-result').textContent = '—';
-  document.getElementById('g19-result').className   = 'gvalue dim';
-  document.getElementById('g19-detail').style.display = 'none';
+  _silentReset();
+  document.getElementById('gr-target').textContent = '—';
+  document.getElementById('gr-target').className   = 'gvalue dim';
+  document.getElementById('gr-result').textContent = '—';
+  document.getElementById('gr-result').className   = 'gvalue dim';
+  document.getElementById('gr-detail').style.display = 'none';
   document.getElementById('result-card').style.display = 'none';
   document.getElementById('dl-btn').classList.add('hidden');
   setStatus('重轉機率已還原至原始數值。', 'info');
@@ -855,7 +814,7 @@ function downloadExcel() {
   if (!wb) return;
   const ws = wb.Sheets[wb.SheetNames[0]];
   rows.forEach(row => {
-    const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: 4 }); // col E = index 4
+    const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: 4 });
     if (ws[addr]) { ws[addr].v = row.respin; ws[addr].t = 'n'; delete ws[addr].f; }
     else ws[addr] = { v: row.respin, t: 'n' };
   });
@@ -874,8 +833,7 @@ function setStatus(msg, type) {
 }
 function clearStatus() {
   const el = document.getElementById('status-msg');
-  el.className   = 'status-msg';
-  el.textContent = '';
+  el.className = 'status-msg'; el.textContent = '';
 }
 </script>
 </body>
