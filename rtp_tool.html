@@ -500,6 +500,11 @@ function parseSheet() {
 
   backupR = rows.map(r => r.respin);
 
+  // 預設鎖定：重轉機率原本為 0 或 1 的列
+  rows.forEach(r => {
+    if (r.respin === 0 || r.respin === 1) r.locked = true;
+  });
+
   document.getElementById('row-badge').textContent = rows.length + ' 列';
   renderTables();
 
@@ -560,6 +565,14 @@ function renderTables() {
     `;
     addHoverSync(rtr, idx);
     rtbody.appendChild(rtr);
+
+    // 套用初始鎖定狀態到 UI
+    if (row.locked) {
+      const inp = rtr.querySelector(`#ri-${idx}`);
+      const btn = rtr.querySelector(`#lb-${idx}`);
+      if (inp) inp.disabled = true;
+      if (btn) { btn.textContent = '🔒'; btn.style.color = '#f7a07e'; btn.title = '此列已鎖定，演算法不會調整其重轉機率'; }
+    }
   });
 
   // Sum rows
