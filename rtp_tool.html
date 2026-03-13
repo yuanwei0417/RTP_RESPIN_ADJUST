@@ -16,87 +16,30 @@ body {
   padding: 18px 22px;
 }
 
-/* Light theme overrides */
-body[data-theme="light"] {
-  background: #f5f6fb;
-  color: #111827;
-}
-body[data-theme="light"] td {
-  color: #111827;
-}
+/* ── Light theme ──────────────────────────── */
+body[data-theme="light"] { background: #f5f6fb; color: #111827; }
+body[data-theme="light"] td { color: #111827; }
+body[data-theme="light"] .card { background: #ffffff; border-color: #d0d4e5; }
+body[data-theme="light"] .card-header { background: #e5e7f3; border-bottom-color: #d0d4e5; }
+body[data-theme="light"] .card-header h2 { color: #111827; }
+body[data-theme="light"] #upload-area { background: #ffffff; border-color: #c4c9dd; }
+body[data-theme="light"] .gr-display { background: #ffffff; border-color: #d0d4e5; }
+body[data-theme="light"] thead th { background: #e5e7f3; color: #1f2937; border-bottom-color: #c4c9dd; }
+body[data-theme="light"] tbody tr:hover td { background: #eef2ff; }
+body[data-theme="light"] tbody tr.sum-row td { background: #e6ffed; color: #047857; }
+body[data-theme="light"] .status-msg.success { background: #e6ffed; color: #047857; border-color: #86efac; }
+body[data-theme="light"] .status-msg.error   { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+body[data-theme="light"] .status-msg.info    { background: #e0ecff; color: #1d4ed8; border-color: #bfdbfe; }
+body[data-theme="light"] .respin-input { background: #f3f4ff; border-color: #9ca3c7; color: #111827; }
+body[data-theme="light"] .seg-ctrl { border-left-color: #d0d4e5; }
 body[data-theme="light"] .gr-detail .dk,
-body[data-theme="light"] .gr-detail .dv {
-  color: #111827;
-}
+body[data-theme="light"] .gr-detail .dv { color: #111827; }
 body[data-theme="light"] .gvalue.neutral,
-body[data-theme="light"] .gvalue.dim {
-  color: #111827;
+body[data-theme="light"] .gvalue.dim { color: #111827; }
+body[data-theme="light"] .input-group input[type=number] {
+  background: #f3f4ff; border-color: #9ca3c7; color: #111827;
 }
-body[data-theme="light"] .card-header h2 {
-  color: #111827;
-}
-body[data-theme="light"] td {
-  color: #111827;
-}
-body[data-theme="light"] .gr-detail .dk,
-body[data-theme="light"] .gr-detail .dv {
-  color: #111827;
-}
-body[data-theme="light"] .gvalue.neutral,
-body[data-theme="light"] .gvalue.dim {
-  color: #111827;
-}
-body[data-theme="light"] .card-header h2 {
-  color: #111827;
-}
-body[data-theme="light"] .card {
-  background: #ffffff;
-  border-color: #d0d4e5;
-}
-body[data-theme="light"] .card-header {
-  background: #e5e7f3;
-  border-bottom-color: #d0d4e5;
-}
-body[data-theme="light"] #upload-area {
-  background: #ffffff;
-  border-color: #c4c9dd;
-}
-body[data-theme="light"] .gr-display {
-  background: #ffffff;
-  border-color: #d0d4e5;
-}
-body[data-theme="light"] thead th {
-  background: #e5e7f3;
-  color: #1f2937;
-  border-bottom-color: #c4c9dd;
-}
-body[data-theme="light"] tbody tr:hover td {
-  background: #eef2ff;
-}
-body[data-theme="light"] tbody tr.sum-row td {
-  background: #e6ffed;
-  color: #047857;
-}
-body[data-theme="light"] .status-msg.success {
-  background: #e6ffed;
-  color: #047857;
-  border-color: #86efac;
-}
-body[data-theme="light"] .status-msg.error {
-  background: #fee2e2;
-  color: #b91c1c;
-  border-color: #fecaca;
-}
-body[data-theme="light"] .status-msg.info {
-  background: #e0ecff;
-  color: #1d4ed8;
-  border-color: #bfdbfe;
-}
-body[data-theme="light"] .respin-input {
-  background: #f3f4ff;
-  border-color: #9ca3c7;
-  color: #111827;
-}
+body[data-theme="light"] .cycle-tag { color: #374151; }
 
 /* ── Top Bar ──────────────────────────────── */
 .top-bar {
@@ -128,7 +71,7 @@ body[data-theme="light"] .respin-input {
 #file-name { font-size: 0.73rem; color: #5566aa; margin-top: 1px; }
 #file-input { display: none; }
 
-/* GR Display */
+/* ── GR Display ──────────────────────────── */
 .gr-display {
   background: #161b27;
   border: 1px solid #2a3550;
@@ -139,7 +82,7 @@ body[data-theme="light"] .respin-input {
   gap: 24px;
   flex-wrap: wrap;
 }
-.gr-block { display: flex; flex-direction: column; gap: 4px; }
+.gr-block { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
 .gr-block .glabel {
   font-size: 0.72rem; color: #8899aa;
   text-transform: uppercase; letter-spacing: 0.5px;
@@ -152,37 +95,8 @@ body[data-theme="light"] .respin-input {
 .gvalue.good    { color: #5ef77a; }
 .gvalue.neutral { color: #7eb8f7; }
 .gvalue.dim     { color: #445566; }
-.gr-sep { width: 1px; height: 46px; background: #2a3550; }
-.gr-detail { display: flex; flex-direction: column; gap: 5px; }
-.gr-detail .drow { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
-.gr-detail .drow .dk { color: #6677aa; width: 56px; }
-.gr-detail .drow .dv { color: #ccd6e8; font-weight: 600; }
-.gr-detail .drow .dv.hi { color: #5ef77a; }
-
-.gr-cycle-input {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.gr-cycle-input label {
-  font-size: 0.72rem;
-  color: #8899aa;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.gr-cycle-input input[type=number] {
-  background: #0f1117;
-  border: 1px solid #3a4a6b;
-  color: #e0e0e0;
-  border-radius: 7px;
-  padding: 4px 8px;
-  font-size: 0.86rem;
-  width: 80px;
-  outline: none;
-}
-.gr-cycle-input input[type=number]:focus {
-  border-color: #7eb8f7;
-}
+.gr-sep { width: 1px; height: 46px; background: #2a3550; flex-shrink: 0; }
+#seg-gr-blocks { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
 
 .top-actions {
   margin-left: auto;
@@ -190,7 +104,6 @@ body[data-theme="light"] .respin-input {
   align-items: center;
   gap: 8px;
 }
-
 .btn-theme {
   border: 1px solid #3a4a6b;
   background: #263352;
@@ -201,13 +114,8 @@ body[data-theme="light"] .respin-input {
   cursor: pointer;
   transition: background 0.15s, opacity 0.15s, transform 0.1s;
 }
-.btn-theme:hover {
-  background: #324067;
-  opacity: 0.9;
-}
-.btn-theme:active {
-  transform: translateY(1px);
-}
+.btn-theme:hover { background: #324067; opacity: 0.9; }
+.btn-theme:active { transform: translateY(1px); }
 
 /* ── Card ────────────────────────────────── */
 .card {
@@ -230,6 +138,9 @@ body[data-theme="light"] .respin-input {
   padding: 1px 8px; border-radius: 20px;
   font-size: 0.73rem; margin-left: 8px;
 }
+.cycle-tag {
+  font-size: 0.78rem; color: #8899aa; margin-left: 10px;
+}
 .collapse-btn {
   background: none; border: 1px solid #3a4a6b;
   color: #8899aa; border-radius: 5px;
@@ -239,23 +150,25 @@ body[data-theme="light"] .respin-input {
 .collapse-btn:hover { background: #263352; color: #ccc; }
 .card-body.collapsed { display: none; }
 
-/* 原始表格：觀察區 / 調整區 佈局 */
-.raw-row {
+/* ── Segment card layout ─────────────────── */
+.seg-body-wrap {
   display: flex;
-  gap: 12px;
-  align-items: stretch;
+  align-items: flex-start;
 }
-.raw-row .card {
+.seg-body-wrap .table-wrap {
   flex: 1;
+  overflow-x: auto;
 }
-.table-wrap {
-  overflow: visible;
+.seg-ctrl {
+  width: 230px;
+  min-width: 200px;
+  flex-shrink: 0;
+  padding: 14px 16px;
+  border-left: 1px solid #2a3550;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-
-/* ── Split Table Layout ──────────────────── */
-.split-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-.split-pane { overflow-x: auto; max-height: 420px; overflow-y: auto; }
-.split-pane:first-child { border-right: 2px solid #2a3550; }
 
 /* ── Tables ──────────────────────────────── */
 table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
@@ -274,13 +187,12 @@ thead th .sub { font-size: 0.65rem; color: #556688; font-weight: 400; display: b
 
 tbody tr { transition: background 0.1s; }
 tbody tr:hover td { background: #1e2840; }
-tbody tr.row-hover td { background: #1e2840 !important; }
 
 td {
   padding: 6px 10px;
-  text-align: center;           /* ← 置中 */
+  text-align: center;
   border-bottom: 1px solid #1e2535;
-  border-right: 1px solid #1e2a3a;  /* ← 欄位分隔線 */
+  border-right: 1px solid #1e2a3a;
   color: #ccd6e8;
   white-space: nowrap;
 }
@@ -327,25 +239,23 @@ td.respin-cell { padding: 3px 6px; }
 td.cell-changed { background: #282510 !important; color: #ffe066 !important; }
 td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 
-/* Arrow indicator */
 .arrow-up   { color: #5ef77a; font-size: 0.85rem; margin-right: 3px; }
 .arrow-down { color: #f77e5e; font-size: 0.85rem; margin-right: 3px; }
 
-/* ── Control ─────────────────────────────── */
-.ctrl-body { padding: 13px 16px; }
-.ctrl-row  { display: flex; align-items: flex-end; gap: 11px; flex-wrap: wrap; }
+/* ── Controls (inside seg-ctrl) ─────────── */
 .input-group { display: flex; flex-direction: column; gap: 4px; }
 .input-group label { font-size: 0.75rem; color: #8899aa; }
 .input-group input[type=number] {
   background: #0f1117; border: 1px solid #3a4a6b;
   color: #e0e0e0; border-radius: 7px;
-  padding: 7px 12px; font-size: 0.93rem; width: 145px;
+  padding: 7px 12px; font-size: 0.93rem; width: 100%;
   outline: none; transition: border-color 0.15s;
 }
 .input-group input[type=number]:focus { border-color: #7eb8f7; }
+
 .btn {
   border: none; border-radius: 7px;
-  padding: 8px 18px; font-size: 0.86rem; font-weight: 600;
+  padding: 8px 14px; font-size: 0.86rem; font-weight: 600;
   cursor: pointer; transition: opacity 0.15s, transform 0.1s;
 }
 .btn:active { transform: translateY(1px); }
@@ -355,12 +265,16 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 .btn-reset { background: #263352; color: #aab8cc; border: 1px solid #3a4a6b; }
 .btn-dl    { background: linear-gradient(135deg, #2e7d52, #1a5c3a); color: #fff; }
 
-.status-msg { margin-top: 11px; padding: 7px 12px; border-radius: 7px; font-size: 0.83rem; display: none; }
+.seg-ctrl .btn { width: 100%; }
+
+.status-msg { padding: 7px 10px; border-radius: 7px; font-size: 0.81rem; display: none; word-break: break-all; }
 .status-msg.success { background: #1a2e1a; color: #7ef7a0; border: 1px solid #2a4a2a; display: block; }
 .status-msg.error   { background: #2e1a1a; color: #f77e7e; border: 1px solid #4a2a2a; display: block; }
 .status-msg.info    { background: #1a2235; color: #7eb8f7; border: 1px solid #2a3a5a; display: block; }
 
-.result-wrap { overflow-x: auto; max-height: 420px; overflow-y: auto; }
+/* ── Global status / download row ────────── */
+#global-status { margin-bottom: 12px; display: none; }
+#dl-row { margin-bottom: 12px; }
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: #161b27; }
@@ -383,147 +297,26 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 
   <div class="gr-display">
     <div class="gr-block">
-      <span class="glabel">原始 GR</span>
-      <span class="gvalue dim" id="gr-original">—</span>
+      <span class="glabel">Total</span>
+      <span class="gvalue dim" id="gr-total">—</span>
     </div>
-    <div class="gr-sep"></div>
-    <div class="gr-block">
-      <span class="glabel">當前 GR</span>
-      <span class="gvalue dim" id="gr-current">—</span>
-    </div>
-    <div class="gr-sep"></div>
-    <div class="gr-block">
-      <span class="glabel">目標 GR</span>
-      <span class="gvalue dim" id="gr-target">—</span>
-    </div>
-    <div class="gr-sep"></div>
-    <div class="gr-block">
-      <span class="glabel">調整後 GR</span>
-      <span class="gvalue dim" id="gr-result">—</span>
-    </div>
-    <div class="gr-sep"></div>
-    <div class="gr-detail" id="gr-detail" style="display:none">
-      <div class="drow"><span class="dk">誤差</span><span class="dv" id="det-err">—</span></div>
-      <div class="drow"><span class="dk">狀態</span><span class="dv" id="det-status">—</span></div>
-      <div class="drow"><span class="dk">變更列</span><span class="dv" id="det-changed">—</span></div>
-    </div>
-
+    <!-- Segment GR blocks injected by JS -->
+    <div id="seg-gr-blocks"></div>
     <div class="top-actions">
-      <div class="gr-cycle-input">
-        <label for="cycle-input">週期</label>
-        <input type="number" id="cycle-input" value="1" min="1" step="1" onchange="onCycleChange(this.value)">
-      </div>
       <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">亮色版</button>
     </div>
   </div>
 </div>
 
-<!-- ── Raw Table Cards：觀察區 / 調整區 ──────── -->
-<div class="raw-row" id="raw-row" style="display:none">
-  <!-- 觀察區 -->
-  <div class="card" id="observe-card">
-    <div class="card-header" id="observe-hdr">
-      <div style="display:flex;align-items:center">
-        <h2>觀察區</h2>
-        <span class="badge" id="row-badge">—</span>
-      </div>
-      <button class="collapse-btn" id="observe-btn">收合 ▲</button>
-    </div>
-    <div class="card-body" id="observe-body">
-      <div class="table-wrap" id="left-pane">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>倍率下限<span class="sub">range min</span></th>
-              <th>倍率上限<span class="sub">range max</span></th>
-              <th>平均倍率<span class="sub">avg mult</span></th>
-              <th>機率<span class="sub">prob</span></th>
-            </tr>
-          </thead>
-          <tbody id="left-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+<!-- ── Global status ──────────────────────── -->
+<div class="status-msg" id="global-status"></div>
 
-  <!-- 調整區 -->
-  <div class="card" id="adjust-card">
-    <div class="card-header" id="adjust-hdr">
-      <div style="display:flex;align-items:center">
-        <h2>調整區</h2>
-      </div>
-      <button class="collapse-btn" id="adjust-btn">收合 ▲</button>
-    </div>
-    <div class="card-body" id="adjust-body">
-      <div class="table-wrap" id="right-pane">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>倍率下限<span class="sub">range min</span></th>
-              <th>倍率上限<span class="sub">range max</span></th>
-              <th>重轉機率 / 10000<span class="sub">respin — 可調整</span></th>
-              <th>GR<span class="sub">prob×(1-respin)×avg / Σ</span></th>
-            </tr>
-          </thead>
-          <tbody id="right-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- ── Segment Cards (rendered by JS) ────── -->
+<div id="segments-container"></div>
 
-<!-- ── Control Card ───────────────────────── -->
-<div class="card" id="ctrl-card" style="display:none">
-  <div class="card-header" style="cursor:default">
-    <h2>調整控制</h2>
-  </div>
-  <div class="ctrl-body">
-    <div class="ctrl-row">
-      <div class="input-group">
-        <label>目標 GR 值（百分比，例：97）</label>
-        <input type="number" id="target-input" placeholder="例：97" step="0.01" min="0">
-        <div style="font-size:0.75rem;color:#8899aa;max-width:260px;">
-          目標 GR 為「每週期」的 GR，若週期 &gt; 1 時，將以 GR/週期 邏輯進行判斷。
-        </div>
-      </div>
-      <button class="btn btn-run"   onclick="runOptimize()">▶ 執行調整</button>
-      <button class="btn btn-reset" onclick="resetRespin()">↺ 還原重轉機率</button>
-      <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
-    </div>
-    <div class="status-msg" id="status-msg"></div>
-  </div>
-</div>
-
-<!-- ── Result Card ─────────────────────────── -->
-<div class="card" id="result-card" style="display:none">
-  <div class="card-header" id="result-hdr">
-    <div style="display:flex;align-items:center">
-      <h2>調整結果</h2>
-      <span class="badge" id="changed-badge">—</span>
-    </div>
-    <button class="collapse-btn" id="result-btn">收合 ▲</button>
-  </div>
-  <div class="card-body" id="result-body">
-    <div class="result-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>倍率下限</th>
-            <th>倍率上限</th>
-            <th>平均倍率</th>
-            <th>機率</th>
-              <th>重轉原始 / 10000</th>
-              <th>重轉調整後 / 10000</th>
-            <th>GR</th>
-          </tr>
-        </thead>
-        <tbody id="result-tbody"></tbody>
-      </table>
-    </div>
-  </div>
+<!-- ── Download ───────────────────────────── -->
+<div id="dl-row">
+  <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
 </div>
 
 <script>
@@ -532,31 +325,27 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 // ═══════════════════════════════════════════════
 // Constants
 // ═══════════════════════════════════════════════
-const R_MIN = 1 / 10000;      // respin 調整下限（×10⁴ = 1）
-const R_MAX = 9999 / 10000;   // respin 調整上限（×10⁴ = 9999）
+const R_MIN = 1 / 10000;
+const R_MAX = 9999 / 10000;
 
 // ═══════════════════════════════════════════════
 // State
 // ═══════════════════════════════════════════════
-let rows       = [];   // [{rowIdx, rangeMin, rangeMax, avg, prob, respin, locked}]
-let backupR    = [];   // original respin values (from Excel)
-let originalGR = 0;   // GR computed from backupR — fixed after load
-let wb         = null;
-let fileName   = '';
-let cycle      = 1;   // 週期（GR 以「每週期」目標計算）
-
+// segments: [{ name, cycle, startCol, headers, rows, backupR, originalGR }]
+// rows:     [{ rowIdx, rangeMin, rangeMax, avg, prob, respin, locked }]
+let segments = [];
+let wb        = null;
+let fileName  = '';
 let currentTheme = 'dark';
-let lastTargetTotal = null;   // 上一次最佳化時的「週期總 GR」目標
-let lastResultTotal = null;   // 上一次最佳化結果的「週期總 GR」
 
 // ═══════════════════════════════════════════════
-// Helpers
+// Pure helpers
 // ═══════════════════════════════════════════════
-const clip  = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
-const fmt   = (v, d = 4) => Number(v).toFixed(d);   // 4 decimal places for display
-const fmtE  = (v, d = 3) => Number(v).toExponential(d);
-const fmtPct = v => (Number(v) * 100).toFixed(2) + '%';  // percentage display
-const toX4  = v => Math.round(Number(v) * 10000);         // respin → ×10000 integer
+const clip    = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+const fmt     = (v, d = 4) => Number(v).toFixed(d);
+const fmtE    = (v, d = 3) => Number(v).toExponential(d);
+const fmtPct  = v => (Number(v) * 100).toFixed(2) + '%';
+const toX4    = v => Math.round(Number(v) * 10000);
 
 function calcGR19(arr) {
   let num = 0, den = 0;
@@ -577,7 +366,7 @@ function getDenom(arr) {
 }
 
 // ═══════════════════════════════════════════════
-// Upload / Parse
+// Upload
 // ═══════════════════════════════════════════════
 const uploadEl  = document.getElementById('upload-area');
 const fileInput = document.getElementById('file-input');
@@ -600,327 +389,441 @@ function loadFile(file) {
       wb = XLSX.read(ev.target.result, { type: 'array' });
       parseSheet();
     } catch (err) {
-      setStatus('讀取 Excel 失敗：' + err.message, 'error');
+      setGlobalStatus('讀取 Excel 失敗：' + err.message, 'error');
     }
   };
   reader.readAsArrayBuffer(file);
 }
 
+// ═══════════════════════════════════════════════
+// Parse Sheet — multi-segment
+// Row 0: segment name cells (string) + cycle in adjacent cell
+// Row 1: header labels (5 cols per segment)
+// Row 2+: data rows (5 cols per segment)
+// ═══════════════════════════════════════════════
 function parseSheet() {
   const ws  = wb.Sheets[wb.SheetNames[0]];
   const ref = XLSX.utils.decode_range(ws['!ref']);
 
-  rows = [];
-  for (let r = 0; r <= ref.e.r; r++) {
-    const getV = c => {
-      const cell = ws[XLSX.utils.encode_cell({ r, c })];
-      if (!cell) return null;
-      if (cell.t === 's') return 'TEXT';
-      return typeof cell.v === 'number' ? cell.v : null;
-    };
-    const a = getV(0), b = getV(1), c = getV(2), d = getV(3), e = getV(4);
-    if (a === 'TEXT' || b === 'TEXT' || c === 'TEXT' || d === 'TEXT' || e === 'TEXT') continue;
-    if (a === null && b === null && c === null && d === null && e === null) continue;
-    const safeN = v => (v === null || isNaN(+v)) ? 0 : +v;
-    const avg  = safeN(c);
-    const prob = safeN(d);
-    let resp   = safeN(e);
-    // Excel 可能存原始值 (0.29) 或已乘以 10000 (2900)，>1 時自動視為已乘以 10000
-    if (resp > 1) resp = resp / 10000;
-    rows.push({
-      rowIdx:   r + 1,
-      rangeMin: safeN(a),
-      rangeMax: safeN(b),
-      avg,
-      prob,
-      respin: resp,
-      locked: false,
+  const getCellVal = (r, c) => {
+    const cell = ws[XLSX.utils.encode_cell({ r, c })];
+    return cell != null ? cell.v : null;
+  };
+  const getCellStr = (r, c) => {
+    const v = getCellVal(r, c);
+    return (v != null && v !== '') ? String(v).trim() : null;
+  };
+
+  // ── Scan row 0 for segment names (must be string cells) ──
+  const segmentMetas = [];
+  for (let c = 0; c <= ref.e.c; c++) {
+    const cell = ws[XLSX.utils.encode_cell({ r: 0, c })];
+    if (!cell || cell.t !== 's') continue;
+    const name = String(cell.v).trim();
+    if (!name) continue;
+
+    // Cycle: cell to the right (same row), must be a number >= 1
+    const cycleVal = getCellVal(0, c + 1);
+    const cycle = (typeof cycleVal === 'number' && cycleVal >= 1)
+      ? Math.round(cycleVal) : 1;
+
+    // Headers: row 1, cols c to c+4
+    const headers = [];
+    for (let hc = c; hc < c + 5; hc++) {
+      headers.push(getCellStr(1, hc) || '');
+    }
+
+    segmentMetas.push({ name, cycle, startCol: c, headers });
+  }
+
+  if (segmentMetas.length === 0) {
+    setGlobalStatus(
+      '找不到有效的表格名稱，請確認 Excel 格式（第一列需含 MG/FG/BG 等表格名稱）。',
+      'error'
+    );
+    return;
+  }
+
+  // ── Parse data rows for each segment (row 2 onwards) ──
+  const safeN = v => (v == null || isNaN(+v)) ? 0 : +v;
+  const newSegments = [];
+
+  segmentMetas.forEach(meta => {
+    const sRows = [];
+    for (let r = 2; r <= ref.e.r; r++) {
+      const c  = meta.startCol;
+      const v0 = getCellVal(r, c);
+      const v1 = getCellVal(r, c + 1);
+      const v2 = getCellVal(r, c + 2);
+      const v3 = getCellVal(r, c + 3);
+      const v4 = getCellVal(r, c + 4);
+
+      // Skip all-null rows
+      if (v0 == null && v1 == null && v2 == null && v3 == null && v4 == null) continue;
+
+      // Skip rows containing string cells (e.g. repeated header rows)
+      if (typeof v0 === 'string' || typeof v1 === 'string' ||
+          typeof v2 === 'string' || typeof v3 === 'string' || typeof v4 === 'string') continue;
+
+      const avg  = safeN(v2);
+      const prob = safeN(v3);
+      let respin = safeN(v4);
+      // Excel may store respin as raw (0.29) or ×10000 (2900); normalise
+      if (respin > 1) respin = respin / 10000;
+
+      sRows.push({
+        rowIdx:   r + 1,          // 1-based Excel row number for write-back
+        rangeMin: safeN(v0),
+        rangeMax: safeN(v1),
+        avg,
+        prob,
+        respin,
+        locked:   false,
+      });
+    }
+
+    // Drop trailing all-zero padding rows
+    while (sRows.length > 0) {
+      const last = sRows[sRows.length - 1];
+      if (last.avg === 0 && last.prob === 0 && last.respin === 0) sRows.pop();
+      else break;
+    }
+
+    if (sRows.length === 0) return;  // skip empty segments
+
+    const backupR    = sRows.map(r => r.respin);
+    const originalGR = calcGR19(sRows);
+
+    // Auto-lock rows where respin is at its extremes
+    sRows.forEach(r => { if (r.respin === 0 || r.respin === 1) r.locked = true; });
+
+    newSegments.push({
+      name:       meta.name,
+      cycle:      meta.cycle,
+      startCol:   meta.startCol,
+      headers:    meta.headers,
+      rows:       sRows,
+      backupR,
+      originalGR,
     });
+  });
+
+  if (newSegments.length === 0) {
+    setGlobalStatus('找不到有效資料列，請確認 Excel 格式。', 'error');
+    return;
   }
 
-  // Drop trailing zero-padding rows
-  while (rows.length > 0) {
-    const last = rows[rows.length - 1];
-    if (last.avg === 0 && last.prob === 0 && last.respin === 0) rows.pop(); else break;
-  }
-
-  if (rows.length === 0) { setStatus('找不到有效資料列，請確認 Excel 格式。', 'error'); return; }
-
-  backupR    = rows.map(r => r.respin);
-  originalGR = calcGR19(rows);   // fixed reference GR
-  lastTargetTotal = null;
-  lastResultTotal = null;
-
-  // Auto-lock rows where respin = 0 or 1
-  rows.forEach(r => { if (r.respin === 0 || r.respin === 1) r.locked = true; });
-
-  document.getElementById('row-badge').textContent = rows.length + ' 列';
-  renderTables();
-
-  document.getElementById('raw-row').style.display    = '';
-  document.getElementById('ctrl-card').style.display   = '';
-  document.getElementById('result-card').style.display = 'none';
-  document.getElementById('dl-btn').classList.add('hidden');
-
-  // 初始化 GR 顯示（會依照目前週期顯示 GR/週期）
-  updateTopGRDisplay();
-  // Clear target / result
-  document.getElementById('gr-target').textContent = '—';
-  document.getElementById('gr-target').className   = 'gvalue dim';
-  document.getElementById('gr-result').textContent = '—';
-  document.getElementById('gr-result').className   = 'gvalue dim';
-  document.getElementById('gr-detail').style.display = 'none';
-
-  clearStatus();
+  segments = newSegments;
+  clearGlobalStatus();
+  renderAllSegments();
+  document.getElementById('dl-btn').classList.remove('hidden');
 }
 
 // ═══════════════════════════════════════════════
-// Render Tables
+// Render All Segments
 // ═══════════════════════════════════════════════
-function renderTables() {
-  const denom  = getDenom(rows);
-  const ltbody = document.getElementById('left-tbody');
-  const rtbody = document.getElementById('right-tbody');
-  ltbody.innerHTML = '';
-  rtbody.innerHTML = '';
+function renderAllSegments() {
+  // Build top-bar segment GR blocks
+  const segBlocks = document.getElementById('seg-gr-blocks');
+  segBlocks.innerHTML = '';
+  segments.forEach((seg, si) => {
+    const sep = document.createElement('div');
+    sep.className = 'gr-sep';
+    segBlocks.appendChild(sep);
 
-  rows.forEach((row, idx) => {
+    const block = document.createElement('div');
+    block.className = 'gr-block';
+    block.innerHTML = `
+      <span class="glabel">${seg.name}</span>
+      <span class="gvalue dim" id="gr-seg-${si}">—</span>
+    `;
+    segBlocks.appendChild(block);
+  });
+
+  // Build segment cards
+  const container = document.getElementById('segments-container');
+  container.innerHTML = '';
+  segments.forEach((seg, si) => {
+    const card = buildSegmentCard(seg, si);
+    container.appendChild(card);
+    makeCollapsible(`seg-hdr-${si}`, `seg-body-${si}`, `seg-btn-${si}`);
+    renderSegmentRows(si);
+
+    // Update top GR block for this segment
+    const gr19  = calcGR19(seg.rows);
+    const topEl = document.getElementById(`gr-seg-${si}`);
+    if (topEl) { topEl.textContent = fmtPct(gr19 / seg.cycle); topEl.className = 'gvalue neutral'; }
+  });
+
+  recalcTotalGR();
+}
+
+function buildSegmentCard(seg, si) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.id = `seg-card-${si}`;
+
+  const cycleLabel = seg.cycle > 1 ? ` · 週期 ${seg.cycle} 局` : '';
+
+  // Build header cell text from Excel headers (fallback to defaults)
+  const h0 = seg.headers[0] || '下限';
+  const h1 = seg.headers[1] || '上限';
+  const h2 = seg.headers[2] || '平均倍率';
+  const h3 = seg.headers[3] || '機率';
+
+  card.innerHTML = `
+    <div class="card-header" id="seg-hdr-${si}">
+      <div style="display:flex;align-items:center;">
+        <h2>${seg.name}</h2>
+        <span class="cycle-tag">${cycleLabel}</span>
+        <span class="badge">${seg.rows.length} 列</span>
+      </div>
+      <button class="collapse-btn" id="seg-btn-${si}">收合 ▲</button>
+    </div>
+    <div class="card-body" id="seg-body-${si}">
+      <div class="seg-body-wrap">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>${h0}</th>
+                <th>${h1}</th>
+                <th>${h2}</th>
+                <th>${h3}</th>
+                <th>重轉機率 / 10000<span class="sub">可調整</span></th>
+                <th>GR<span class="sub">per cycle</span></th>
+              </tr>
+            </thead>
+            <tbody id="seg-tbody-${si}"></tbody>
+          </table>
+        </div>
+        <div class="seg-ctrl">
+          <div class="input-group">
+            <label>目標 GR（%）</label>
+            <input type="number" id="seg-target-${si}" placeholder="例：97" step="0.01" min="0">
+          </div>
+          <button class="btn btn-run" onclick="runOptimizeForSegment(${si})">▶ 執行調整</button>
+          <button class="btn btn-reset" onclick="resetSegmentRespin(${si})">↺ 還原重轉</button>
+          <div class="status-msg" id="seg-status-${si}"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+// ═══════════════════════════════════════════════
+// Render rows for a single segment
+// ═══════════════════════════════════════════════
+function renderSegmentRows(si) {
+  const seg   = segments[si];
+  const tbody = document.getElementById(`seg-tbody-${si}`);
+  tbody.innerHTML = '';
+
+  const denom = getDenom(seg.rows);
+  seg.rows.forEach((row, idx) => {
     const gr = calcGR(row, denom);
-
-    // Left row
-    const ltr = document.createElement('tr');
-    ltr.id = 'ltr-' + idx;
-    ltr.innerHTML = `
+    const tr = document.createElement('tr');
+    tr.id = `seg-${si}-tr-${idx}`;
+    tr.innerHTML = `
       <td>${row.rowIdx}</td>
       <td class="range-cell">${row.rangeMin}</td>
       <td class="range-cell">${row.rangeMax}</td>
       <td>${fmt(row.avg)}</td>
       <td>${fmtPct(row.prob)}</td>
-    `;
-    addHoverSync(ltr, idx);
-    ltbody.appendChild(ltr);
-
-    // Right row — respin displayed as ×10000 integer
-    const rtr = document.createElement('tr');
-    rtr.id = 'rtr-' + idx;
-    rtr.innerHTML = `
-      <td>${row.rowIdx}</td>
-      <td class="range-cell">${row.rangeMin}</td>
-      <td class="range-cell">${row.rangeMax}</td>
       <td class="respin-cell">
         <div class="respin-wrap">
-          <input class="respin-input" id="ri-${idx}" type="number"
+          <input class="respin-input" id="seg-${si}-ri-${idx}" type="number"
             value="${toX4(row.respin)}" step="1" min="1" max="9999"
-            onchange="onRespinChange(${idx}, this.value)"
+            onchange="onRespinChange(${si}, ${idx}, this.value)"
             title="重轉機率（×10000），範圍 1~9999">
-          <button class="lock-btn" id="lb-${idx}"
-            onclick="toggleLock(${idx})"
+          <button class="lock-btn" id="seg-${si}-lb-${idx}"
+            onclick="toggleLock(${si}, ${idx})"
             title="鎖定後不被演算法調整">🔓</button>
         </div>
       </td>
-      <td id="grval-${idx}">${fmt(gr)}</td>
+      <td id="seg-${si}-grval-${idx}">${fmtPct(gr / seg.cycle)}</td>
     `;
-    addHoverSync(rtr, idx);
-    rtbody.appendChild(rtr);
-
-    // Apply initial lock state
-    if (row.locked) applyLockUI(idx, true, rtr);
+    tbody.appendChild(tr);
+    if (row.locked) applyLockUIForSeg(si, idx, true);
   });
 
-  appendSumRowLeft(ltbody);
-  appendSumRowRight(rtbody);
-  syncRowHeights();
+  // Sum row
+  const gr19    = calcGR19(seg.rows);
+  const sumProb = seg.rows.reduce((s, r) => s + r.prob, 0);
+  const trS = document.createElement('tr');
+  trS.className = 'sum-row';
+  trS.innerHTML = `
+    <td>Σ</td>
+    <td>—</td><td>—</td><td>—</td>
+    <td>${fmtPct(sumProb)}</td>
+    <td>—</td>
+    <td id="seg-${si}-sum-gr" class="cell-grval">${fmtPct(gr19 / seg.cycle)}</td>
+  `;
+  tbody.appendChild(trS);
 }
 
-function applyLockUI(idx, locked, trEl) {
-  const inp = trEl ? trEl.querySelector('#ri-' + idx) : document.getElementById('ri-' + idx);
-  const btn = trEl ? trEl.querySelector('#lb-' + idx) : document.getElementById('lb-' + idx);
+// ═══════════════════════════════════════════════
+// Refresh GR column + top block for one segment
+// ═══════════════════════════════════════════════
+function refreshSegmentGR(si) {
+  const seg   = segments[si];
+  const denom = getDenom(seg.rows);
+
+  seg.rows.forEach((row, idx) => {
+    const el = document.getElementById(`seg-${si}-grval-${idx}`);
+    if (el) el.textContent = fmtPct(calcGR(row, denom) / seg.cycle);
+  });
+
+  const gr19  = calcGR19(seg.rows);
+  const sumEl = document.getElementById(`seg-${si}-sum-gr`);
+  if (sumEl) sumEl.textContent = fmtPct(gr19 / seg.cycle);
+
+  const topEl = document.getElementById(`gr-seg-${si}`);
+  if (topEl) { topEl.textContent = fmtPct(gr19 / seg.cycle); topEl.className = 'gvalue neutral'; }
+
+  recalcTotalGR();
+}
+
+// ═══════════════════════════════════════════════
+// Total GR  (sum of each segment's GR/cycle)
+// ═══════════════════════════════════════════════
+function recalcTotalGR() {
+  let total = 0;
+  segments.forEach(seg => { total += calcGR19(seg.rows) / seg.cycle; });
+  const el = document.getElementById('gr-total');
+  if (el) { el.textContent = fmtPct(total); el.className = 'gvalue neutral'; }
+}
+
+// ═══════════════════════════════════════════════
+// Respin change & Lock
+// ═══════════════════════════════════════════════
+function onRespinChange(si, idx, val) {
+  const seg = segments[si];
+  const x4  = parseFloat(val);
+  if (isNaN(x4) || x4 <= 0 || x4 >= 10000) {
+    setSegStatus(si, '重轉機率（×10000）必須在 1 ~ 9999 之間（不含 0 和 10000）', 'error');
+    const inp = document.getElementById(`seg-${si}-ri-${idx}`);
+    if (inp) inp.value = toX4(seg.rows[idx].respin);
+    return;
+  }
+  seg.rows[idx].respin = x4 / 10000;
+  refreshSegmentGR(si);
+}
+
+function toggleLock(si, idx) {
+  const seg = segments[si];
+  seg.rows[idx].locked = !seg.rows[idx].locked;
+  applyLockUIForSeg(si, idx, seg.rows[idx].locked);
+}
+
+function applyLockUIForSeg(si, idx, locked) {
+  const inp = document.getElementById(`seg-${si}-ri-${idx}`);
+  const btn = document.getElementById(`seg-${si}-lb-${idx}`);
   if (locked) {
     if (inp) inp.disabled = true;
-    if (btn) { btn.textContent = '🔒'; btn.style.color = '#f7a07e'; btn.title = '此列已鎖定，演算法不會調整其重轉機率'; }
+    if (btn) { btn.textContent = '🔒'; btn.style.color = '#f7a07e'; btn.title = '此列已鎖定，演算法不會調整'; }
   } else {
     if (inp) inp.disabled = false;
     if (btn) { btn.textContent = '🔓'; btn.style.color = ''; btn.title = '鎖定後不被演算法調整'; }
   }
 }
 
-function addHoverSync(tr, idx) {
-  tr.addEventListener('mouseenter', () => {
-    document.getElementById('ltr-' + idx)?.classList.add('row-hover');
-    document.getElementById('rtr-' + idx)?.classList.add('row-hover');
+// ═══════════════════════════════════════════════
+// Reset one segment
+// ═══════════════════════════════════════════════
+function resetSegmentRespin(si) {
+  const seg = segments[si];
+  seg.rows.forEach((r, i) => { r.respin = seg.backupR[i]; });
+  seg.rows.forEach((r, i) => {
+    const inp = document.getElementById(`seg-${si}-ri-${i}`);
+    if (inp) inp.value = toX4(seg.backupR[i]);
   });
-  tr.addEventListener('mouseleave', () => {
-    document.getElementById('ltr-' + idx)?.classList.remove('row-hover');
-    document.getElementById('rtr-' + idx)?.classList.remove('row-hover');
-  });
-}
-
-function appendSumRowLeft(tbody) {
-  const tr = document.createElement('tr');
-  tr.className = 'sum-row';
-  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td>
-    <td id="sum-prob">${fmtPct(rows.reduce((s,r) => s+r.prob, 0))}</td>`;
-  tbody.appendChild(tr);
-}
-
-function appendSumRowRight(tbody) {
-  const gr19 = calcGR19(rows);
-  const tr   = document.createElement('tr');
-  tr.className = 'sum-row';
-  tr.innerHTML = `<td>Σ</td><td>—</td><td>—</td><td>—</td>
-    <td id="sum-gr19" class="cell-grval">${fmtPct(gr19 / cycle)}</td>`;
-  tbody.appendChild(tr);
-}
-
-function refreshRightColumn() {
-  const denom = getDenom(rows);
-  rows.forEach((row, idx) => {
-    const el = document.getElementById('grval-' + idx);
-    if (el) el.textContent = fmtPct(calcGR(row, denom) / cycle);
-  });
-  const gr19 = calcGR19(rows);
-  const el2  = document.getElementById('sum-gr19');
-  if (el2) el2.textContent = fmtPct(gr19 / cycle);
-  // Update 當前 GR (live, updates on every respin change)
-  const curEl = document.getElementById('gr-current');
-  if (curEl) { curEl.textContent = fmtPct(gr19 / cycle); curEl.className = 'gvalue neutral'; }
-  // NOTE: do NOT update gr-original here — it's fixed after load
-}
-
-// 讓觀察區與調整區每一列高度一致
-function syncRowHeights() {
-  for (let i = 0; i < rows.length; i++) {
-    const ltr = document.getElementById('ltr-' + i);
-    const rtr = document.getElementById('rtr-' + i);
-    if (!ltr || !rtr) continue;
-    ltr.style.height = '';
-    rtr.style.height = '';
-    const h = Math.max(ltr.offsetHeight, rtr.offsetHeight);
-    ltr.style.height = h + 'px';
-    rtr.style.height = h + 'px';
-  }
-}
-
-function onRespinChange(idx, val) {
-  const x4 = parseFloat(val);
-  if (isNaN(x4) || x4 <= 0 || x4 >= 10000) {
-    setStatus('重轉機率（×10000）必須在 1 ~ 9999 之間（不含 0 和 10000）', 'error');
-    // Restore input to previous value
-    const inp = document.getElementById('ri-' + idx);
-    if (inp) inp.value = toX4(rows[idx].respin);
-    return;
-  }
-  rows[idx].respin = x4 / 10000;
-  clearStatus();
-  refreshRightColumn();
-}
-
-function toggleLock(idx) {
-  rows[idx].locked = !rows[idx].locked;
-  applyLockUI(idx, rows[idx].locked, null);
+  refreshSegmentGR(si);
+  setSegStatus(si, '重轉機率已還原至原始數值。', 'info');
 }
 
 // ═══════════════════════════════════════════════
 // Collapse
 // ═══════════════════════════════════════════════
 function makeCollapsible(hId, bId, btnId) {
-  document.getElementById(hId).addEventListener('click', () => {
+  const hdr = document.getElementById(hId);
+  if (!hdr) return;
+  hdr.addEventListener('click', () => {
     const b   = document.getElementById(bId);
     const btn = document.getElementById(btnId);
     b.classList.toggle('collapsed');
     btn.textContent = b.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
   });
 }
-makeCollapsible('observe-hdr', 'observe-body', 'observe-btn');
-makeCollapsible('adjust-hdr',  'adjust-body',  'adjust-btn');
-makeCollapsible('result-hdr', 'result-body', 'result-btn');
-
-// Left / right panes scroll INDEPENDENTLY (no sync)
 
 // ═══════════════════════════════════════════════
-// Silent Reset (used internally before optimize)
+// Optimizer — Binary Search on Δ (per segment)
 // ═══════════════════════════════════════════════
-function _silentReset() {
-  rows.forEach((r, i) => { r.respin = backupR[i]; });
-  rows.forEach((r, i) => {
-    const inp = document.getElementById('ri-' + i);
-    if (inp) inp.value = toX4(backupR[i]);
+function runOptimizeForSegment(si) {
+  const seg = segments[si];
+
+  // Reset to original respin values before optimising
+  seg.rows.forEach((r, i) => { r.respin = seg.backupR[i]; });
+  seg.rows.forEach((r, i) => {
+    const inp = document.getElementById(`seg-${si}-ri-${i}`);
+    if (inp) inp.value = toX4(seg.backupR[i]);
   });
-  refreshRightColumn();
-}
 
-// ═══════════════════════════════════════════════
-// Optimizer — Binary Search on Δ
-// ═══════════════════════════════════════════════
-function runOptimize() {
-  // Auto-restore to original respin values first
-  _silentReset();
-
-  // Target input is in percentage (e.g. 97 means 0.97)
-  const targetPct = parseFloat(document.getElementById('target-input').value);
+  const targetPct = parseFloat(document.getElementById(`seg-target-${si}`).value);
   if (isNaN(targetPct) || targetPct <= 0) {
-    setStatus('請輸入有效的目標 GR 值（百分比，如 97 表示 97%）', 'error'); return;
+    setSegStatus(si, '請輸入有效的目標 GR 值（百分比，如 97 表示 97%）', 'error');
+    return;
   }
-  // 目標為「週期總 GR」＝ 每週期 GR × 週期
-  const target = (targetPct / 100) * cycle;
+  // target = 週期總 GR
+  const target = (targetPct / 100) * seg.cycle;
 
-  const unlocked = rows.filter(r => !r.locked);
+  const unlocked = seg.rows.filter(r => !r.locked);
   if (unlocked.length === 0) {
-    setStatus('所有列都已鎖定，無法調整。請解鎖至少一列。', 'error'); return;
+    setSegStatus(si, '所有列都已鎖定，無法調整。請解鎖至少一列。', 'error');
+    return;
   }
 
-  const baseR = rows.map(r => r.respin);
+  const baseR = seg.rows.map(r => r.respin);
 
+  // GR as a function of global delta Δ
   function gr19ofD(d) {
-    const snap = rows.map((r, i) => ({
-      avg: r.avg, prob: r.prob,
+    const snap = seg.rows.map((r, i) => ({
+      avg:    r.avg,
+      prob:   r.prob,
       respin: r.locked ? baseR[i] : clip(baseR[i] + d, R_MIN, R_MAX),
     }));
-    // 內部仍以單位 GR 計算，最後乘上週期當作「週期總 GR」
-    return calcGR19(snap) * cycle;
+    return calcGR19(snap) * seg.cycle;
   }
 
-  // 先粗略掃描 [-1, 1] 範圍內可達到的 GR 範圍，避免因為邊界裁切導致 g(+1) 與 g(-1) 相同
+  // Bracket scan: find the smallest Δ range that brackets target
   const baseG = gr19ofD(0);
-  let gMin = baseG;
-  let gMax = baseG;
-  let bracketLo = 0;
-  let bracketHi = 0;
+  let gMin = baseG, gMax = baseG;
+  let bracketLo = 0, bracketHi = 0;
   let foundBracket = false;
 
   for (let step = 0.01; step <= 1.0; step *= 2) {
-    const candidates = [-step, step];
-    for (const d of candidates) {
+    for (const d of [-step, step]) {
       const g = gr19ofD(d);
       if (g < gMin) { gMin = g; bracketLo = d; }
       if (g > gMax) { gMax = g; bracketHi = d; }
     }
-    if (target >= gMin - 1e-9 && target <= gMax + 1e-9) {
-      foundBracket = true;
-      break;
-    }
+    if (target >= gMin - 1e-9 && target <= gMax + 1e-9) { foundBracket = true; break; }
   }
 
   if (!foundBracket) {
-    setStatus(
-      `目標 ${fmtPct(target)} 超出可調整範圍 [${fmtPct(gMin)}, ${fmtPct(gMax)}]。` +
-      `目前 GR = ${fmtPct(baseG)}`,
+    setSegStatus(si,
+      `目標 ${fmtPct(target / seg.cycle)} 超出可調整範圍 ` +
+      `[${fmtPct(gMin / seg.cycle)}, ${fmtPct(gMax / seg.cycle)}]。` +
+      `目前 GR = ${fmtPct(baseG / seg.cycle)}`,
       'error'
     );
     return;
   }
 
-  const gLo = gMin;
-  const gHi = gMax;
-
-  // 根據括住目標的兩端判斷單調方向
-  const gLoVal = gr19ofD(bracketLo);
-  const gHiVal = gr19ofD(bracketHi);
-  const decreasing = gHiVal < gLoVal;
-
-  let lo = bracketLo;
-  let hi = bracketHi;
-  let delta = 0;
+  const decreasing = gr19ofD(bracketHi) < gr19ofD(bracketLo);
+  let lo = bracketLo, hi = bracketHi, delta = 0;
 
   for (let i = 0; i < 300; i++) {
     const mid = (lo + hi) / 2;
@@ -932,189 +835,65 @@ function runOptimize() {
     if (Math.abs(hi - lo) < 1e-13) break;
   }
 
-  const newR       = rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta, R_MIN, R_MAX));
-  const gr19NewOne = calcGR19(rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] })));
-  const gr19New    = gr19NewOne * cycle;   // 週期總 GR
+  const newR       = seg.rows.map((r, i) => r.locked ? baseR[i] : clip(baseR[i] + delta, R_MIN, R_MAX));
+  const gr19New    = calcGR19(seg.rows.map((r, i) => ({ avg: r.avg, prob: r.prob, respin: newR[i] }))) * seg.cycle;
   const err        = Math.abs(gr19New - target);
+  const ok         = err < 1e-4;
 
-  lastTargetTotal = target;
-  lastResultTotal = gr19New;
-
-  showResult(baseR, newR, target, gr19New, err);
-}
-
-// ═══════════════════════════════════════════════
-// Result
-// ═══════════════════════════════════════════════
-function showResult(baseR, newR, target, gr19New, err) {
-  const ok = err < 1e-4;
-
-  // Update top display: target and result only (original stays fixed)
-  const tgtEl = document.getElementById('gr-target');
-  // 頂部顯示採「每週期 GR」，因此將週期總 GR / 週期
-  tgtEl.textContent = fmtPct(target / cycle);
-  tgtEl.className   = 'gvalue neutral';
-
-  const resEl = document.getElementById('gr-result');
-  resEl.textContent = fmtPct(gr19New / cycle);
-  resEl.className   = 'gvalue ' + (ok ? 'good' : 'neutral');
-
-  const detEl = document.getElementById('gr-detail');
-  detEl.style.display = '';
-  document.getElementById('det-err').textContent    = fmtE(err);
-  document.getElementById('det-err').className      = 'dv ' + (ok ? 'hi' : '');
-  document.getElementById('det-status').textContent = ok ? '✔ 收斂' : '⚠ 未收斂';
-  document.getElementById('det-status').className   = 'dv ' + (ok ? 'hi' : '');
-
-  // Result table
-  const adjRows = rows.map((r, i) => ({ ...r, respin: newR[i] }));
-  const denom   = getDenom(adjRows);
-  const tbody   = document.getElementById('result-tbody');
-  tbody.innerHTML = '';
-  let changed = 0;
-
-  adjRows.forEach((row, idx) => {
-    const isChanged = Math.abs(newR[idx] - baseR[idx]) > 1e-10;
-    if (isChanged) changed++;
-    const gr = calcGR(row, denom);
-
-    // Arrow indicator
-    let arrow = '';
-    if (isChanged) {
-      if (newR[idx] > baseR[idx]) arrow = '<span class="arrow-up">↑</span>';
-      else                         arrow = '<span class="arrow-down">↓</span>';
-    }
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${row.rowIdx}</td>
-      <td class="range-cell">${row.rangeMin}</td>
-      <td class="range-cell">${row.rangeMax}</td>
-      <td>${fmt(row.avg)}</td>
-      <td>${fmtPct(row.prob)}</td>
-      <td>${toX4(baseR[idx])}</td>
-      <td class="${isChanged ? 'cell-changed' : ''}">${arrow}${toX4(newR[idx])}</td>
-      <td>${fmtPct(gr / cycle)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  // Sum row
-  const sumProb = adjRows.reduce((s, r) => s + r.prob, 0);
-  const trS = document.createElement('tr');
-  trS.className = 'sum-row';
-  trS.innerHTML = `
-    <td>Σ</td><td>—</td><td>—</td><td>—</td>
-    <td>${fmtPct(sumProb)}</td><td>—</td><td>—</td>
-      <td class="cell-grval">${fmtPct(gr19New / cycle)}</td>
-  `;
-  tbody.appendChild(trS);
-
-  document.getElementById('changed-badge').textContent = changed + ' 列變更';
-  document.getElementById('det-changed').textContent   = changed + ' 列';
-  document.getElementById('result-card').style.display = '';
-  document.getElementById('dl-btn').classList.remove('hidden');
-
-  setStatus(
-    `調整完成！GR/週期 = ${fmtPct(gr19New / cycle)}，目標 GR/週期 = ${fmtPct(target / cycle)}，誤差(週期總 GR) = ${fmtE(err)}`,
-    ok ? 'success' : 'info'
-  );
-
-  // Persist adjusted respin into rows & sync UI
-  rows.forEach((r, i) => { r.respin = newR[i]; });
-  rows.forEach((r, i) => {
-    const inp = document.getElementById('ri-' + i);
+  // Persist new respin values
+  seg.rows.forEach((r, i) => { r.respin = newR[i]; });
+  seg.rows.forEach((r, i) => {
+    const inp = document.getElementById(`seg-${si}-ri-${i}`);
     if (inp) inp.value = toX4(r.respin);
   });
-  refreshRightColumn();
 
-  document.getElementById('result-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  refreshSegmentGR(si);
+
+  setSegStatus(si,
+    `調整完成！GR = ${fmtPct(gr19New / seg.cycle)}，` +
+    `目標 = ${fmtPct(target / seg.cycle)}，誤差 = ${fmtE(err)}`,
+    ok ? 'success' : 'info'
+  );
 }
 
 // ═══════════════════════════════════════════════
-// Reset (manual button)
-// ═══════════════════════════════════════════════
-function resetRespin() {
-  if (backupR.length === 0) { setStatus('尚無備份可還原。', 'info'); return; }
-  _silentReset();
-  document.getElementById('gr-target').textContent = '—';
-  document.getElementById('gr-target').className   = 'gvalue dim';
-  document.getElementById('gr-result').textContent = '—';
-  document.getElementById('gr-result').className   = 'gvalue dim';
-  document.getElementById('gr-detail').style.display = 'none';
-  document.getElementById('result-card').style.display = 'none';
-  document.getElementById('dl-btn').classList.add('hidden');
-  lastTargetTotal = null;
-  lastResultTotal = null;
-  updateTopGRDisplay();
-  setStatus('重轉機率已還原至原始數值。', 'info');
-}
-
-// ═══════════════════════════════════════════════
-// 週期輸入
-// ═══════════════════════════════════════════════
-function onCycleChange(val) {
-  let v = parseInt(val, 10);
-  if (isNaN(v) || v < 1) v = 1;
-  cycle = v;
-  const inp = document.getElementById('cycle-input');
-  if (inp) inp.value = v;
-  refreshRightColumn();
-  updateTopGRDisplay();
-}
-
-// ═══════════════════════════════════════════════
-// Download
+// Download Excel
 // ═══════════════════════════════════════════════
 function downloadExcel() {
   if (!wb) return;
   const ws = wb.Sheets[wb.SheetNames[0]];
-  rows.forEach(row => {
-    const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: 4 });
-    if (ws[addr]) { ws[addr].v = row.respin; ws[addr].t = 'n'; delete ws[addr].f; }
-    else ws[addr] = { v: row.respin, t: 'n' };
+  segments.forEach(seg => {
+    const respinCol = seg.startCol + 4;  // 5th column of segment = Weight/respin
+    seg.rows.forEach(row => {
+      const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: respinCol });
+      if (ws[addr]) { ws[addr].v = row.respin; ws[addr].t = 'n'; delete ws[addr].f; }
+      else ws[addr] = { v: row.respin, t: 'n' };
+    });
   });
   const outName = fileName.replace(/\.xlsx?$/i, '') + '_adjusted.xlsx';
   XLSX.writeFile(wb, outName);
-  setStatus('已下載：' + outName, 'success');
+  setGlobalStatus('已下載：' + outName, 'success');
 }
 
 // ═══════════════════════════════════════════════
-// Status
+// Status helpers
 // ═══════════════════════════════════════════════
-function setStatus(msg, type) {
-  const el = document.getElementById('status-msg');
+function setSegStatus(si, msg, type) {
+  const el = document.getElementById(`seg-status-${si}`);
+  if (el) { el.textContent = msg; el.className = 'status-msg ' + type; }
+}
+
+function setGlobalStatus(msg, type) {
+  const el = document.getElementById('global-status');
+  if (!el) return;
   el.textContent = msg;
   el.className   = 'status-msg ' + type;
-}
-function clearStatus() {
-  const el = document.getElementById('status-msg');
-  el.className = 'status-msg'; el.textContent = '';
+  el.style.display = 'block';
 }
 
-// ═══════════════════════════════════════════════
-// Top GR display update (依照週期套用 GR/週期 顯示)
-// ═══════════════════════════════════════════════
-function updateTopGRDisplay() {
-  const origEl = document.getElementById('gr-original');
-  const curEl  = document.getElementById('gr-current');
-  if (origEl) {
-    origEl.textContent = fmtPct(originalGR / cycle);
-    origEl.className   = 'gvalue neutral';
-  }
-  const currentGR = calcGR19(rows);
-  if (curEl) {
-    curEl.textContent = fmtPct(currentGR / cycle);
-    curEl.className   = 'gvalue neutral';
-  }
-  if (lastTargetTotal != null) {
-    const tgtEl = document.getElementById('gr-target');
-    if (tgtEl) tgtEl.textContent = fmtPct(lastTargetTotal / cycle);
-  }
-  if (lastResultTotal != null) {
-    const resEl = document.getElementById('gr-result');
-    if (resEl) resEl.textContent = fmtPct(lastResultTotal / cycle);
-  }
+function clearGlobalStatus() {
+  const el = document.getElementById('global-status');
+  if (el) { el.textContent = ''; el.className = 'status-msg'; el.style.display = 'none'; }
 }
 
 // ═══════════════════════════════════════════════
@@ -1124,14 +903,8 @@ function applyTheme(theme) {
   currentTheme = theme;
   document.body.dataset.theme = theme;
   const btn = document.getElementById('theme-toggle');
-  if (btn) {
-    btn.textContent = theme === 'dark' ? '亮色版' : '暗色版';
-  }
-  try {
-    localStorage.setItem('rtp_theme', theme);
-  } catch (_) {
-    // ignore storage errors
-  }
+  if (btn) btn.textContent = theme === 'dark' ? '亮色版' : '暗色版';
+  try { localStorage.setItem('rtp_theme', theme); } catch (_) {}
 }
 
 function initTheme() {
@@ -1139,18 +912,14 @@ function initTheme() {
   try {
     const saved = localStorage.getItem('rtp_theme');
     if (saved === 'light' || saved === 'dark') theme = saved;
-  } catch (_) {
-    theme = 'dark';
-  }
+  } catch (_) { theme = 'dark'; }
   applyTheme(theme);
 }
 
 function toggleTheme() {
-  const next = currentTheme === 'dark' ? 'light' : 'dark';
-  applyTheme(next);
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
 }
 
-// 初始化主題
 initTheme();
 </script>
 </body>
