@@ -22,7 +22,13 @@ body[data-theme="light"] td { color: #111827; }
 body[data-theme="light"] .card { background: #ffffff; border-color: #d0d4e5; }
 body[data-theme="light"] .card-header { background: #e5e7f3; border-bottom-color: #d0d4e5; }
 body[data-theme="light"] .card-header h2 { color: #111827; }
-body[data-theme="light"] #upload-area { background: #ffffff; border-color: #c4c9dd; }
+body[data-theme="light"] .game-picker { background: #ffffff; border-color: #c4c9dd; }
+body[data-theme="light"] .game-search { background: #f3f4ff; border-color: #9ca3c7; color: #111827; }
+body[data-theme="light"] .game-list { background: #ffffff; border-color: #c4c9dd; }
+body[data-theme="light"] .game-item:hover { background: #eef2ff; }
+body[data-theme="light"] .game-item.active { background: #dbeafe; }
+body[data-theme="light"] .fallback-upload { border-color: #c4c9dd; }
+body[data-theme="light"] .fallback-upload:hover { border-color: #7eb8f7; }
 body[data-theme="light"] .gr-display { background: #ffffff; border-color: #d0d4e5; }
 body[data-theme="light"] thead th { background: #e5e7f3; color: #1f2937; border-bottom-color: #c4c9dd; }
 body[data-theme="light"] tbody tr:hover td { background: #eef2ff; }
@@ -50,25 +56,66 @@ body[data-theme="light"] .cycle-tag { color: #374151; }
   align-items: stretch;
 }
 
-#upload-area {
-  border: 2px dashed #3a4a6b;
-  border-radius: 10px;
-  padding: 12px 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
+/* ── Game Picker ─────────────────────────── */
+.game-picker {
   background: #161b27;
+  border: 1px solid #2a3550;
+  border-radius: 10px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
+  gap: 6px;
+  position: relative;
 }
-#upload-area:hover, #upload-area.drag-over { border-color: #7eb8f7; background: #1a2235; }
-#upload-area .up-icon { font-size: 1.5rem; }
-#upload-area p { color: #8899aa; font-size: 0.8rem; }
-#upload-area p span { color: #7eb8f7; font-weight: 600; }
-#file-name { font-size: 0.73rem; color: #5566aa; margin-top: 1px; }
+.game-picker-label { font-size: 0.72rem; color: #8899aa; text-transform: uppercase; letter-spacing: 0.5px; }
+.game-search {
+  background: #0f1117;
+  border: 1px solid #3a4a6b;
+  color: #e0e0e0;
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 0.88rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.game-search:focus { border-color: #7eb8f7; }
+.game-search::placeholder { color: #556688; }
+.game-list {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  background: #161b27;
+  border: 1px solid #2a3550;
+  border-radius: 0 0 10px 10px;
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+.game-list.open { display: block; }
+.game-item {
+  padding: 8px 14px;
+  font-size: 0.84rem;
+  cursor: pointer;
+  color: #ccd6e8;
+  transition: background 0.1s;
+}
+.game-item:hover { background: #1e2840; }
+.game-item.active { background: #263352; color: #7eb8f7; font-weight: 600; }
+.game-item .gi-sub { font-size: 0.7rem; color: #556688; margin-left: 6px; }
+.game-current { font-size: 0.78rem; color: #7eb8f7; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fallback-upload {
+  border: 1px dashed #3a4a6b;
+  border-radius: 6px;
+  padding: 4px 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.72rem;
+  color: #556688;
+  transition: border-color 0.15s;
+}
+.fallback-upload:hover { border-color: #7eb8f7; color: #7eb8f7; }
 #file-input { display: none; }
 
 /* ── GR Display ──────────────────────────── */
@@ -304,10 +351,19 @@ body[data-theme="light"] .cycle-input {
 
 <!-- ── Top Bar ─────────────────────────────── -->
 <div class="top-bar">
-  <div id="upload-area">
-    <div class="up-icon">📂</div>
-    <p>拖放 <span>.xlsx</span> 或<span> 點擊上傳</span></p>
-    <div id="file-name">尚未載入</div>
+  <div class="game-picker" id="game-picker">
+    <div class="game-picker-label">選擇遊戲</div>
+    <input type="text" class="game-search" id="game-search"
+      placeholder="搜尋遊戲..." autocomplete="off"
+      onfocus="openGameList()" oninput="filterGameList()">
+    <div class="game-current" id="game-current">尚未載入</div>
+    <div class="game-list" id="game-list"></div>
+    <div class="fallback-upload" id="fallback-upload" onclick="document.getElementById('file-input').click()"
+      ondragover="event.preventDefault(); this.style.borderColor='#7eb8f7';"
+      ondragleave="this.style.borderColor='';"
+      ondrop="event.preventDefault(); this.style.borderColor=''; if(event.dataTransfer.files[0]) loadFile(event.dataTransfer.files[0]);">
+      或 拖放 / 點擊上傳 .xlsx
+    </div>
     <input type="file" id="file-input" accept=".xlsx,.xls">
   </div>
 
@@ -319,7 +375,7 @@ body[data-theme="light"] .cycle-input {
     <!-- Segment GR blocks injected by JS -->
     <div id="seg-gr-blocks"></div>
     <div class="top-actions">
-      <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
+      <button class="btn btn-dl hidden" id="dl-btn" onclick="saveExcel()">💾 儲存更新</button>
       <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">亮色版</button>
     </div>
   </div>
@@ -378,23 +434,83 @@ function getDenom(arr) {
 }
 
 // ═══════════════════════════════════════════════
-// Upload
+// Game Picker + Upload
 // ═══════════════════════════════════════════════
-const uploadEl  = document.getElementById('upload-area');
-const fileInput = document.getElementById('file-input');
+let allGames       = [];   // game folder names from server
+let selectedGame   = '';   // currently selected game name
+let serverAvail    = false;
 
-uploadEl.addEventListener('click', () => fileInput.click());
-uploadEl.addEventListener('dragover', e => { e.preventDefault(); uploadEl.classList.add('drag-over'); });
-uploadEl.addEventListener('dragleave', () => uploadEl.classList.remove('drag-over'));
-uploadEl.addEventListener('drop', e => {
-  e.preventDefault(); uploadEl.classList.remove('drag-over');
-  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
-});
+const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+async function initGameList() {
+  try {
+    const resp = await fetch('/api/games');
+    if (!resp.ok) throw new Error(resp.status);
+    allGames    = await resp.json();
+    serverAvail = true;
+    renderGameList(allGames);
+  } catch (_) {
+    serverAvail = false;
+  }
+}
+
+function renderGameList(list) {
+  const el = document.getElementById('game-list');
+  el.innerHTML = '';
+  list.forEach(name => {
+    const div = document.createElement('div');
+    div.className = 'game-item' + (name === selectedGame ? ' active' : '');
+    div.textContent = name;
+    div.onclick = () => selectGame(name);
+    el.appendChild(div);
+  });
+}
+
+function openGameList() {
+  if (!serverAvail || allGames.length === 0) return;
+  document.getElementById('game-list').classList.add('open');
+}
+
+function filterGameList() {
+  const q = document.getElementById('game-search').value.toLowerCase();
+  const filtered = allGames.filter(n => n.toLowerCase().includes(q));
+  renderGameList(filtered);
+  document.getElementById('game-list').classList.add('open');
+}
+
+document.addEventListener('click', e => {
+  const picker = document.getElementById('game-picker');
+  if (!picker.contains(e.target)) {
+    document.getElementById('game-list').classList.remove('open');
+  }
+});
+
+async function selectGame(name) {
+  document.getElementById('game-list').classList.remove('open');
+  document.getElementById('game-search').value = '';
+  selectedGame = name;
+  document.getElementById('game-current').textContent = name + ' 載入中...';
+
+  try {
+    const resp = await fetch(`/api/games/${encodeURIComponent(name)}/latest`);
+    if (!resp.ok) throw new Error('找不到 xlsx 檔案');
+    const fnHeader = resp.headers.get('X-Filename');
+    fileName = fnHeader ? decodeURIComponent(fnHeader) : (name + '.xlsx');
+    const buf = await resp.arrayBuffer();
+    wb = XLSX.read(new Uint8Array(buf), { type: 'array' });
+    document.getElementById('game-current').textContent = name + ' — ' + fileName;
+    parseSheet();
+  } catch (err) {
+    document.getElementById('game-current').textContent = name;
+    setGlobalStatus('載入失敗：' + err.message, 'error');
+  }
+}
 
 function loadFile(file) {
   fileName = file.name;
-  document.getElementById('file-name').textContent = file.name;
+  selectedGame = '';
+  document.getElementById('game-current').textContent = file.name;
   const reader = new FileReader();
   reader.onload = ev => {
     try {
@@ -406,6 +522,8 @@ function loadFile(file) {
   };
   reader.readAsArrayBuffer(file);
 }
+
+initGameList();
 
 // ═══════════════════════════════════════════════
 // Parse Sheet — multi-segment
@@ -897,13 +1015,22 @@ function runOptimizeForSegment(si) {
 }
 
 // ═══════════════════════════════════════════════
-// Download Excel
+// Save / Download Excel
 // ═══════════════════════════════════════════════
-function downloadExcel() {
+function makeTimestamp() {
+  const now = new Date();
+  return String(now.getFullYear()) +
+    String(now.getMonth() + 1).padStart(2, '0') +
+    String(now.getDate()).padStart(2, '0') +
+    String(now.getHours()).padStart(2, '0') +
+    String(now.getMinutes()).padStart(2, '0');
+}
+
+function prepareWbForSave() {
   if (!wb) return;
   const ws = wb.Sheets[wb.SheetNames[0]];
   segments.forEach(seg => {
-    const respinCol = seg.startCol + 4;  // 5th column of segment = Weight/respin
+    const respinCol = seg.startCol + 4;
     seg.rows.forEach(row => {
       const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: respinCol });
       const x4val = toX4(row.respin);
@@ -911,13 +1038,37 @@ function downloadExcel() {
       else ws[addr] = { v: x4val, t: 'n' };
     });
   });
-  const now = new Date();
-  const ts  = String(now.getFullYear()) +
-    String(now.getMonth() + 1).padStart(2, '0') +
-    String(now.getDate()).padStart(2, '0') +
-    String(now.getHours()).padStart(2, '0') +
-    String(now.getMinutes()).padStart(2, '0');
-  const outName = fileName.replace(/\.xlsx?$/i, '') + '_' + ts + '.xlsx';
+}
+
+async function saveExcel() {
+  if (!wb) return;
+  prepareWbForSave();
+  const ts = makeTimestamp();
+
+  // If we have a selected game and server is available, save to server
+  if (selectedGame && serverAvail) {
+    const outName = selectedGame + '_' + ts + '.xlsx';
+    const wbout   = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    try {
+      const resp = await fetch(
+        `/api/games/${encodeURIComponent(selectedGame)}/save?filename=${encodeURIComponent(outName)}`,
+        { method: 'POST', body: new Uint8Array(wbout) }
+      );
+      if (!resp.ok) throw new Error('Server error ' + resp.status);
+      const result = await resp.json();
+      setGlobalStatus('已儲存：' + result.path, 'success');
+    } catch (err) {
+      setGlobalStatus('儲存失敗：' + err.message + '，改為瀏覽器下載', 'error');
+      fallbackDownload(ts);
+    }
+  } else {
+    fallbackDownload(ts);
+  }
+}
+
+function fallbackDownload(ts) {
+  const baseName = selectedGame || fileName.replace(/\.xlsx?$/i, '');
+  const outName  = baseName + '_' + ts + '.xlsx';
   XLSX.writeFile(wb, outName);
   setGlobalStatus('已下載：' + outName, 'success');
 }
