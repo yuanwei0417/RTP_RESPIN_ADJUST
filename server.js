@@ -27,16 +27,27 @@ function err(res, msg, status = 400) {
   json(res, { error: msg }, status);
 }
 
+const VARIANTS = ['一般', '額外'];
+
+function hasXlsx(dir) {
+  if (!fs.existsSync(dir)) return false;
+  return fs.readdirSync(dir).some(f => /\.xlsx$/i.test(f) && !f.startsWith('~$'));
+}
+
 function getGameDirs() {
   return fs.readdirSync(ROOT, { withFileTypes: true })
     .filter(d => {
       if (!d.isDirectory() || d.name.startsWith('.') || IGNORED.has(d.name)) return false;
       const dir = path.join(ROOT, d.name);
-      const files = fs.readdirSync(dir);
-      return files.some(f => /\.xlsx$/i.test(f) && !f.startsWith('~$'));
+      if (hasXlsx(dir)) return true;
+      return VARIANTS.some(v => hasXlsx(path.join(dir, v)));
     })
-    .map(d => d.name)
-    .sort();
+    .map(d => {
+      const dir = path.join(ROOT, d.name);
+      const hasSub = VARIANTS.some(v => hasXlsx(path.join(dir, v)));
+      return { name: d.name, hasSubfolders: hasSub };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function extractTimestamp(name) {
@@ -44,8 +55,13 @@ function extractTimestamp(name) {
   return m ? m[1] : '';
 }
 
-function getXlsxFiles(gameName) {
-  const dir = path.join(ROOT, gameName);
+function resolveGameDir(gameName, variant) {
+  if (variant && VARIANTS.includes(variant)) return path.join(ROOT, gameName, variant);
+  return path.join(ROOT, gameName);
+}
+
+function getXlsxFiles(gameName, variant) {
+  const dir = resolveGameDir(gameName, variant);
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir)
     .filter(f => /\.xlsx$/i.test(f) && !f.startsWith('~$'))
@@ -84,16 +100,19 @@ const server = http.createServer(async (req, res) => {
 
   const matchFiles  = pn.match(/^\/api\/games\/([^/]+)\/files$/);
   if (matchFiles && req.method === 'GET') {
-    const name = matchFiles[1];
-    return json(res, getXlsxFiles(name));
+    const name    = matchFiles[1];
+    const variant = parsed.query.variant || '';
+    return json(res, getXlsxFiles(name, variant));
   }
 
   const matchLatest = pn.match(/^\/api\/games\/([^/]+)\/latest$/);
   if (matchLatest && req.method === 'GET') {
-    const name  = matchLatest[1];
-    const files = getXlsxFiles(name);
+    const name    = matchLatest[1];
+    const variant = parsed.query.variant || '';
+    const files   = getXlsxFiles(name, variant);
     if (files.length === 0) return err(res, 'No xlsx found', 404);
-    const fp = path.join(ROOT, name, files[0]);
+    const dir  = resolveGameDir(name, variant);
+    const fp   = path.join(dir, files[0]);
     const stat = fs.statSync(fp);
     res.writeHead(200, {
       'Content-Type': MIME['.xlsx'],
@@ -107,14 +126,16 @@ const server = http.createServer(async (req, res) => {
   const matchSave = pn.match(/^\/api\/games\/([^/]+)\/save$/);
   if (matchSave && req.method === 'POST') {
     const name     = matchSave[1];
+    const variant  = parsed.query.variant || '';
     const filename = parsed.query.filename;
     if (!filename || !/\.xlsx$/i.test(filename)) return err(res, 'Invalid filename');
-    const dir = path.join(ROOT, name);
+    const dir = resolveGameDir(name, variant);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     const body = await collectBody(req);
     fs.writeFileSync(path.join(dir, filename), body);
-    console.log(`Saved: ${name}/${filename} (${body.length} bytes)`);
-    return json(res, { ok: true, path: `${name}/${filename}` });
+    const displayPath = variant ? `${name}/${variant}/${filename}` : `${name}/${filename}`;
+    console.log(`Saved: ${displayPath} (${body.length} bytes)`);
+    return json(res, { ok: true, path: displayPath });
   }
 
   // ── Static files ────────────────────────────

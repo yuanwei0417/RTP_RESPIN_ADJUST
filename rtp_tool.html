@@ -29,6 +29,9 @@ body[data-theme="light"] .game-item:hover { background: #eef2ff; }
 body[data-theme="light"] .game-item.active { background: #dbeafe; }
 body[data-theme="light"] .fallback-upload { border-color: #c4c9dd; }
 body[data-theme="light"] .fallback-upload:hover { border-color: #7eb8f7; }
+body[data-theme="light"] .extra-toggle { color: #374151; }
+body[data-theme="light"] .extra-toggle input[type=checkbox] { accent-color: #3a7bd5; }
+body[data-theme="light"] .extra-toggle.disabled span { color: #9ca3af; }
 body[data-theme="light"] .gr-display { background: #ffffff; border-color: #d0d4e5; }
 body[data-theme="light"] thead th { background: #e5e7f3; color: #1f2937; border-bottom-color: #c4c9dd; }
 body[data-theme="light"] tbody tr:hover td { background: #eef2ff; }
@@ -70,6 +73,9 @@ body[data-theme="cyberpunk"] .game-current { color: #e879f9; }
 body[data-theme="cyberpunk"] .game-picker-label { color: #a78bfa; }
 body[data-theme="cyberpunk"] .fallback-upload { border-color: #6b21a8; color: #7c5cbf; }
 body[data-theme="cyberpunk"] .fallback-upload:hover { border-color: #e879f9; color: #e879f9; }
+body[data-theme="cyberpunk"] .extra-toggle { color: #d0c4ee; }
+body[data-theme="cyberpunk"] .extra-toggle input[type=checkbox] { accent-color: #e879f9; }
+body[data-theme="cyberpunk"] .extra-toggle.disabled span { color: #6b4e99; }
 body[data-theme="cyberpunk"] .gr-display { background: #120024; border-color: #6b21a8; }
 body[data-theme="cyberpunk"] .gr-block .glabel { color: #a78bfa; }
 body[data-theme="cyberpunk"] .gr-sep { background: #6b21a8; }
@@ -207,6 +213,9 @@ body[data-theme="green"] .game-current { color: #16a34a; }
 body[data-theme="green"] .game-picker-label { color: #4a8a4a; }
 body[data-theme="green"] .fallback-upload { border-color: #b8e0b8; color: #6b9a6b; }
 body[data-theme="green"] .fallback-upload:hover { border-color: #16a34a; color: #16a34a; }
+body[data-theme="green"] .extra-toggle { color: #1a3a1a; }
+body[data-theme="green"] .extra-toggle input[type=checkbox] { accent-color: #16a34a; }
+body[data-theme="green"] .extra-toggle.disabled span { color: #6b9a6b; }
 body[data-theme="green"] .gr-display { background: #ffffff; border-color: #b8e0b8; }
 body[data-theme="green"] .gr-block .glabel { color: #4a8a4a; }
 body[data-theme="green"] .gr-sep { background: #b8e0b8; }
@@ -268,6 +277,9 @@ body[data-theme="pooh"] .game-current { color: #d4880f; }
 body[data-theme="pooh"] .game-picker-label { color: #b8976a; }
 body[data-theme="pooh"] .fallback-upload { border-color: #f0d58c; color: #b8976a; }
 body[data-theme="pooh"] .fallback-upload:hover { border-color: #d4880f; color: #d4880f; }
+body[data-theme="pooh"] .extra-toggle { color: #5d4037; }
+body[data-theme="pooh"] .extra-toggle input[type=checkbox] { accent-color: #d4880f; }
+body[data-theme="pooh"] .extra-toggle.disabled span { color: #b8976a; }
 body[data-theme="pooh"] .gr-display { background: #fffdf5; border-color: #f0d58c; }
 body[data-theme="pooh"] .gr-block .glabel { color: #b8976a; }
 body[data-theme="pooh"] .gr-sep { background: #f0d58c; }
@@ -371,6 +383,24 @@ body[data-theme="pooh"] ::-webkit-scrollbar-thumb:hover { background: #dbb84d; }
 .game-item.active { background: #263352; color: #7eb8f7; font-weight: 600; }
 .game-item .gi-sub { font-size: 0.7rem; color: #556688; margin-left: 6px; }
 .game-current { font-size: 0.78rem; color: #7eb8f7; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.extra-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: #8899aa;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.15s;
+}
+.extra-toggle input[type=checkbox] {
+  accent-color: #7eb8f7;
+  width: 14px; height: 14px;
+  cursor: pointer;
+}
+.extra-toggle input[type=checkbox]:disabled { cursor: not-allowed; }
+.extra-toggle.disabled { opacity: 0.35; cursor: not-allowed; }
+.extra-toggle.disabled span { color: #556688; }
 .fallback-upload {
   border: 1px dashed #3a4a6b;
   border-radius: 6px;
@@ -650,6 +680,10 @@ body[data-theme="light"] .cycle-input {
     <input type="text" class="game-search" id="game-search"
       placeholder="搜尋遊戲..." autocomplete="off"
       onfocus="openGameList()" oninput="filterGameList()">
+    <label class="extra-toggle" id="extra-toggle">
+      <input type="checkbox" id="extra-cb" disabled onchange="onExtraToggle()">
+      <span>額外</span>
+    </label>
     <div class="game-current" id="game-current">尚未載入</div>
     <div class="game-list" id="game-list"></div>
     <div class="fallback-upload" id="fallback-upload" onclick="document.getElementById('file-input').click()"
@@ -741,8 +775,9 @@ function getDenom(arr) {
 // ═══════════════════════════════════════════════
 // Game Picker + Upload
 // ═══════════════════════════════════════════════
-let allGames       = [];   // game folder names from server
+let allGames       = [];   // [{name, hasSubfolders}] from server
 let selectedGame   = '';   // currently selected game name
+let currentVariant = '';   // '' | '一般' | '額外'
 let serverAvail    = false;
 
 const fileInput = document.getElementById('file-input');
@@ -760,14 +795,40 @@ async function initGameList() {
   }
 }
 
+function getGameInfo(name) {
+  return allGames.find(g => g.name === name);
+}
+
+function updateExtraToggle(game) {
+  const toggle = document.getElementById('extra-toggle');
+  const cb     = document.getElementById('extra-cb');
+  if (!game || !game.hasSubfolders) {
+    cb.checked  = false;
+    cb.disabled = true;
+    toggle.classList.add('disabled');
+    currentVariant = '';
+  } else {
+    cb.disabled = false;
+    cb.checked  = false;
+    toggle.classList.remove('disabled');
+    currentVariant = '一般';
+  }
+}
+
+function onExtraToggle() {
+  const cb = document.getElementById('extra-cb');
+  currentVariant = cb.checked ? '額外' : '一般';
+  if (selectedGame) fetchGameData(selectedGame, currentVariant);
+}
+
 function renderGameList(list) {
   const el = document.getElementById('game-list');
   el.innerHTML = '';
-  list.forEach(name => {
+  list.forEach(g => {
     const div = document.createElement('div');
-    div.className = 'game-item' + (name === selectedGame ? ' active' : '');
-    div.textContent = name;
-    div.onclick = () => selectGame(name);
+    div.className = 'game-item' + (g.name === selectedGame ? ' active' : '');
+    div.textContent = g.name;
+    div.onclick = () => selectGame(g.name);
     el.appendChild(div);
   });
 }
@@ -779,7 +840,7 @@ function openGameList() {
 
 function filterGameList() {
   const q = document.getElementById('game-search').value.toLowerCase();
-  const filtered = allGames.filter(n => n.toLowerCase().includes(q));
+  const filtered = allGames.filter(g => g.name.toLowerCase().includes(q));
   renderGameList(filtered);
   document.getElementById('game-list').classList.add('open');
 }
@@ -795,19 +856,30 @@ async function selectGame(name) {
   document.getElementById('game-list').classList.remove('open');
   document.getElementById('game-search').value = '';
   selectedGame = name;
-  document.getElementById('game-current').textContent = name + ' 載入中...';
+
+  const game = getGameInfo(name);
+  updateExtraToggle(game);
+
+  await fetchGameData(name, currentVariant);
+}
+
+async function fetchGameData(name, variant) {
+  const variantLabel = variant ? ` [${variant}]` : '';
+  document.getElementById('game-current').textContent = name + variantLabel + ' 載入中...';
 
   try {
-    const resp = await fetch(`/api/games/${encodeURIComponent(name)}/latest`);
+    let apiUrl = `/api/games/${encodeURIComponent(name)}/latest`;
+    if (variant) apiUrl += `?variant=${encodeURIComponent(variant)}`;
+    const resp = await fetch(apiUrl);
     if (!resp.ok) throw new Error('找不到 xlsx 檔案');
     const fnHeader = resp.headers.get('X-Filename');
     fileName = fnHeader ? decodeURIComponent(fnHeader) : (name + '.xlsx');
     const buf = await resp.arrayBuffer();
     wb = XLSX.read(new Uint8Array(buf), { type: 'array' });
-    document.getElementById('game-current').textContent = name + ' — ' + fileName;
+    document.getElementById('game-current').textContent = name + variantLabel + ' — ' + fileName;
     parseSheet();
   } catch (err) {
-    document.getElementById('game-current').textContent = name;
+    document.getElementById('game-current').textContent = name + variantLabel;
     setGlobalStatus('載入失敗：' + err.message, 'error');
   }
 }
@@ -815,6 +887,7 @@ async function selectGame(name) {
 function loadFile(file) {
   fileName = file.name;
   selectedGame = '';
+  updateExtraToggle(null);
   document.getElementById('game-current').textContent = file.name;
   const reader = new FileReader();
   reader.onload = ev => {
@@ -1350,13 +1423,14 @@ async function saveExcel() {
   prepareWbForSave();
   const ts = makeTimestamp();
 
-  // If we have a selected game and server is available, save to server
   if (selectedGame && serverAvail) {
     const outName = selectedGame + '_' + ts + '.xlsx';
     const wbout   = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     try {
+      let saveUrl = `/api/games/${encodeURIComponent(selectedGame)}/save?filename=${encodeURIComponent(outName)}`;
+      if (currentVariant) saveUrl += `&variant=${encodeURIComponent(currentVariant)}`;
       const resp = await fetch(
-        `/api/games/${encodeURIComponent(selectedGame)}/save?filename=${encodeURIComponent(outName)}`,
+        saveUrl,
         { method: 'POST', body: new Uint8Array(wbout) }
       );
       if (!resp.ok) throw new Error('Server error ' + resp.status);
