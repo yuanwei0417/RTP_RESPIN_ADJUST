@@ -343,7 +343,7 @@ const R_MAX = 9999 / 10000;
 // ═══════════════════════════════════════════════
 // State
 // ═══════════════════════════════════════════════
-// segments: [{ name, cycle, startCol, headers, rows, backupR, originalGR }]
+// segments: [{ name, cycle, backupCycle, startCol, headers, rows, backupR, originalGR }]
 // rows:     [{ rowIdx, rangeMin, rangeMax, avg, prob, respin, locked }]
 let segments = [];
 let wb        = null;
@@ -512,6 +512,7 @@ function parseSheet() {
     newSegments.push({
       name:       meta.name,
       cycle:      meta.cycle,
+      backupCycle: meta.cycle,
       startCol:   meta.startCol,
       headers:    meta.headers,
       rows:       sRows,
@@ -755,8 +756,11 @@ function resetSegmentRespin(si) {
     const inp = document.getElementById(`seg-${si}-ri-${i}`);
     if (inp) inp.value = toX4(seg.backupR[i]);
   });
+  seg.cycle = seg.backupCycle;
+  const cycleInp = document.getElementById(`seg-cycle-${si}`);
+  if (cycleInp) cycleInp.value = seg.backupCycle;
   refreshSegmentGR(si);
-  setSegStatus(si, '重轉機率已還原至原始數值。', 'info');
+  setSegStatus(si, '重轉機率與週期已還原至原始數值。', 'info');
 }
 
 // ═══════════════════════════════════════════════
