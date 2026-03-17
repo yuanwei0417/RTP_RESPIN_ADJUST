@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RTP Respin 調整工具</title>
-<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -46,6 +46,7 @@ body[data-theme="light"] .gr-detail .dk,
 body[data-theme="light"] .gr-detail .dv { color: #111827; }
 body[data-theme="light"] .gvalue.neutral,
 body[data-theme="light"] .gvalue.dim { color: #111827; }
+body[data-theme="light"] .gvalue.total-gr { color: #b8860b; }
 body[data-theme="light"] .input-group input[type=number] {
   background: #f3f4ff; border-color: #9ca3c7; color: #111827;
 }
@@ -100,6 +101,7 @@ body[data-theme="cyberpunk"] .status-msg.info    { background: #1a0038; color: #
 body[data-theme="cyberpunk"] .gvalue.good    { color: #c084fc; }
 body[data-theme="cyberpunk"] .gvalue.neutral { color: #e879f9; }
 body[data-theme="cyberpunk"] .gvalue.dim     { color: #6b4e99; }
+body[data-theme="cyberpunk"] .gvalue.total-gr { color: #e879f9; }
 body[data-theme="cyberpunk"] .gr-detail .dk,
 body[data-theme="cyberpunk"] .gr-detail .dv { color: #d0c4ee; }
 body[data-theme="cyberpunk"] .cycle-tag { color: #e879f9; }
@@ -238,10 +240,9 @@ body[data-theme="green"] .status-msg.success { background: #d0f0d0; color: #0478
 body[data-theme="green"] .status-msg.error   { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
 body[data-theme="green"] .status-msg.info    { background: #e0f5e0; color: #166534; border-color: #b8e0b8; }
 body[data-theme="green"] .gvalue.good    { color: #16a34a; }
-body[data-theme="green"] .gvalue.neutral { color: #059669; }
-body[data-theme="green"] .gvalue.dim     { color: #6b9a6b; }
 body[data-theme="green"] .gvalue.neutral,
 body[data-theme="green"] .gvalue.dim { color: #1a3a1a; }
+body[data-theme="green"] .gvalue.total-gr { color: #047857; }
 body[data-theme="green"] .gr-detail .dk,
 body[data-theme="green"] .gr-detail .dv { color: #1a3a1a; }
 body[data-theme="green"] .cycle-tag { color: #166534; }
@@ -302,11 +303,9 @@ body[data-theme="pooh"] .status-msg.success { background: #fceabb; color: #b8860
 body[data-theme="pooh"] .status-msg.error   { background: #fde2e2; color: #c0392b; border-color: #f5b7b1; }
 body[data-theme="pooh"] .status-msg.info    { background: #fef3d0; color: #b8860b; border-color: #f0d58c; }
 body[data-theme="pooh"] .gvalue.good    { color: #d4880f; }
-body[data-theme="pooh"] .gvalue.neutral { color: #c49a3c; }
-body[data-theme="pooh"] .gvalue.dim     { color: #b8976a; }
 body[data-theme="pooh"] .gvalue.neutral,
 body[data-theme="pooh"] .gvalue.dim { color: #5d4037; }
-body[data-theme="pooh"] #gr-total { color: #b8860b !important; }
+body[data-theme="pooh"] .gvalue.total-gr { color: #b8860b; }
 body[data-theme="pooh"] #total-gr-block .glabel { color: #b8860b; }
 body[data-theme="pooh"] .gr-detail .dk,
 body[data-theme="pooh"] .gr-detail .dv { color: #5d4037; }
@@ -438,6 +437,7 @@ body[data-theme="pooh"] ::-webkit-scrollbar-thumb:hover { background: #dbb84d; }
 .gvalue.good    { color: #5ef77a; }
 .gvalue.neutral { color: #7eb8f7; }
 .gvalue.dim     { color: #445566; }
+.gvalue.total-gr { color: #ffd700; }
 .gr-sep { width: 1px; height: 46px; background: #2a3550; flex-shrink: 0; }
 #seg-gr-blocks { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
 
@@ -698,7 +698,7 @@ body[data-theme="light"] .cycle-input {
   <div class="gr-display">
     <div class="gr-block" id="total-gr-block">
       <span class="glabel">Total</span>
-      <span class="gvalue dim" id="gr-total" style="color:#ffd700;">—</span>
+      <span class="gvalue total-gr" id="gr-total">—</span>
     </div>
     <!-- Segment GR blocks injected by JS -->
     <div id="seg-gr-blocks"></div>
@@ -753,6 +753,7 @@ const fmt     = (v, d = 4) => Number(v).toFixed(d);
 const fmtE    = (v, d = 3) => Number(v).toExponential(d);
 const fmtPct  = v => (Number(v) * 100).toFixed(2) + '%';
 const toX4    = v => Math.round(Number(v) * 10000);
+const esc     = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function calcGR19(arr) {
   let num = 0, den = 0;
@@ -976,8 +977,9 @@ function parseSheet() {
       const avg  = safeN(v2);
       const prob = safeN(v3);
       let respin = safeN(v4);
-      // Excel may store respin as raw (0.29) or ×10000 (2900); normalise
-      if (respin > 1) respin = respin / 10000;
+      // Excel stores respin as integer ×10000 (e.g. 2900 = 29%).
+      // Values >= 2 are treated as ×10000; values in [0, 1] are already normalised.
+      if (respin >= 2) respin = respin / 10000;
 
       sRows.push({
         rowIdx:   r + 1,          // 1-based Excel row number for write-back
@@ -1043,7 +1045,7 @@ function renderAllSegments() {
     const block = document.createElement('div');
     block.className = 'gr-block';
     block.innerHTML = `
-      <span class="glabel">${seg.name}</span>
+      <span class="glabel">${esc(seg.name)}</span>
       <span class="gvalue dim" id="gr-seg-${si}">—</span>
     `;
     segBlocks.appendChild(block);
@@ -1073,15 +1075,15 @@ function buildSegmentCard(seg, si) {
   card.id = `seg-card-${si}`;
 
   // Build header cell text from Excel headers (fallback to defaults)
-  const h0 = seg.headers[0] || '下限';
-  const h1 = seg.headers[1] || '上限';
-  const h2 = seg.headers[2] || '平均倍率';
-  const h3 = seg.headers[3] || '機率';
+  const h0 = esc(seg.headers[0] || '下限');
+  const h1 = esc(seg.headers[1] || '上限');
+  const h2 = esc(seg.headers[2] || '平均倍率');
+  const h3 = esc(seg.headers[3] || '機率');
 
   card.innerHTML = `
     <div class="card-header" id="seg-hdr-${si}">
-      <div style="display:flex;align-items:center;" onclick="event.stopPropagation()">
-        <h2 style="cursor:pointer" onclick="document.getElementById('seg-hdr-${si}').click()">${seg.name}</h2>
+      <div style="display:flex;align-items:center;">
+        <h2>${esc(seg.name)}</h2>
         <span class="cycle-tag">週期</span>
         <input class="cycle-input" id="seg-cycle-${si}" type="number"
           value="${seg.cycle}" min="1" step="1"
@@ -1205,7 +1207,7 @@ function recalcTotalGR() {
   let total = 0;
   segments.forEach(seg => { total += calcGR19(seg.rows) / seg.cycle; });
   const el = document.getElementById('gr-total');
-  if (el) { el.textContent = fmtPct(total); el.className = 'gvalue'; }
+  if (el) { el.textContent = fmtPct(total); el.className = 'gvalue total-gr'; }
 }
 
 // ═══════════════════════════════════════════════
@@ -1214,8 +1216,8 @@ function recalcTotalGR() {
 function onRespinChange(si, idx, val) {
   const seg = segments[si];
   const x4  = parseFloat(val);
-  if (isNaN(x4) || x4 < 0 || x4 >= 10000) {
-    setSegStatus(si, '重轉機率（×10000）必須在 1 ~ 9999 之間（不含 0 和 10000）', 'error');
+  if (isNaN(x4) || x4 < 0 || x4 > 9999) {
+    setSegStatus(si, '重轉機率（×10000）必須在 0 ~ 9999 之間', 'error');
     const inp = document.getElementById(`seg-${si}-ri-${idx}`);
     if (inp) inp.value = toX4(seg.rows[idx].respin);
     return;
@@ -1263,11 +1265,11 @@ function resetSegmentRespin(si) {
 // Cycle change
 // ═══════════════════════════════════════════════
 function onCycleChange(si, val) {
-  let v = parseInt(val, 10);
-  if (isNaN(v) || v < 1) v = 1;
+  const raw = val.trim();
+  if (raw === '') return;
+  let v = parseInt(raw, 10);
+  if (isNaN(v) || v < 1) return;
   segments[si].cycle = v;
-  const inp = document.getElementById(`seg-cycle-${si}`);
-  if (inp) inp.value = v;
   refreshSegmentGR(si);
 }
 
@@ -1277,7 +1279,8 @@ function onCycleChange(si, val) {
 function makeCollapsible(hId, bId, btnId) {
   const hdr = document.getElementById(hId);
   if (!hdr) return;
-  hdr.addEventListener('click', () => {
+  hdr.addEventListener('click', (e) => {
+    if (e.target.closest('input, button, select')) return;
     const b   = document.getElementById(bId);
     const btn = document.getElementById(btnId);
     b.classList.toggle('collapsed');
@@ -1480,11 +1483,16 @@ const VALID_THEMES = ['dark','light','cyberpunk','green','pooh'];
 const POOH_GIFS = ['resoruce/pooh_1.gif','resoruce/pooh_2.gif','resoruce/pooh_3.gif'];
 let poohTimer = null;
 
+let lastPoohGif = '';
 function randomPoohGif() {
-  return POOH_GIFS[Math.floor(Math.random() * POOH_GIFS.length)];
+  const candidates = POOH_GIFS.filter(g => g !== lastPoohGif);
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+  lastPoohGif = pick;
+  return pick;
 }
 
 function startPoohGif() {
+  stopPoohGif();
   const wrap = document.getElementById('pooh-gif-wrap');
   const img  = document.getElementById('pooh-gif');
   if (!wrap || !img) return;
