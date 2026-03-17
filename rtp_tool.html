@@ -314,7 +314,7 @@ body[data-theme="light"] .cycle-input {
   <div class="gr-display">
     <div class="gr-block">
       <span class="glabel">Total</span>
-      <span class="gvalue dim" id="gr-total">—</span>
+      <span class="gvalue dim" id="gr-total" style="color:#ffd700;">—</span>
     </div>
     <!-- Segment GR blocks injected by JS -->
     <div id="seg-gr-blocks"></div>
@@ -337,7 +337,7 @@ body[data-theme="light"] .cycle-input {
 // ═══════════════════════════════════════════════
 // Constants
 // ═══════════════════════════════════════════════
-const R_MIN = 1 / 10000;
+const R_MIN = 0;
 const R_MAX = 9999 / 10000;
 
 // ═══════════════════════════════════════════════
@@ -650,7 +650,7 @@ function renderSegmentRows(si) {
       <td class="respin-cell">
         <div class="respin-wrap">
           <input class="respin-input" id="seg-${si}-ri-${idx}" type="number"
-            value="${toX4(row.respin)}" step="1" min="1" max="9999"
+            value="${toX4(row.respin)}" step="1" min="0" max="9999"
             onchange="onRespinChange(${si}, ${idx}, this.value)"
             title="重轉機率（×10000），範圍 1~9999">
           <button class="lock-btn" id="seg-${si}-lb-${idx}"
@@ -708,7 +708,7 @@ function recalcTotalGR() {
   let total = 0;
   segments.forEach(seg => { total += calcGR19(seg.rows) / seg.cycle; });
   const el = document.getElementById('gr-total');
-  if (el) { el.textContent = fmtPct(total); el.className = 'gvalue neutral'; }
+  if (el) { el.textContent = fmtPct(total); el.className = 'gvalue'; }
 }
 
 // ═══════════════════════════════════════════════
@@ -717,7 +717,7 @@ function recalcTotalGR() {
 function onRespinChange(si, idx, val) {
   const seg = segments[si];
   const x4  = parseFloat(val);
-  if (isNaN(x4) || x4 <= 0 || x4 >= 10000) {
+  if (isNaN(x4) || x4 < 0 || x4 >= 10000) {
     setSegStatus(si, '重轉機率（×10000）必須在 1 ~ 9999 之間（不含 0 和 10000）', 'error');
     const inp = document.getElementById(`seg-${si}-ri-${idx}`);
     if (inp) inp.value = toX4(seg.rows[idx].respin);
@@ -902,11 +902,18 @@ function downloadExcel() {
     const respinCol = seg.startCol + 4;  // 5th column of segment = Weight/respin
     seg.rows.forEach(row => {
       const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: respinCol });
-      if (ws[addr]) { ws[addr].v = row.respin; ws[addr].t = 'n'; delete ws[addr].f; }
-      else ws[addr] = { v: row.respin, t: 'n' };
+      const x4val = toX4(row.respin);
+      if (ws[addr]) { ws[addr].v = x4val; ws[addr].t = 'n'; delete ws[addr].f; }
+      else ws[addr] = { v: x4val, t: 'n' };
     });
   });
-  const outName = fileName.replace(/\.xlsx?$/i, '') + '_adjusted.xlsx';
+  const now = new Date();
+  const ts  = String(now.getFullYear()) +
+    String(now.getMonth() + 1).padStart(2, '0') +
+    String(now.getDate()).padStart(2, '0') +
+    String(now.getHours()).padStart(2, '0') +
+    String(now.getMinutes()).padStart(2, '0');
+  const outName = fileName.replace(/\.xlsx?$/i, '') + '_' + ts + '.xlsx';
   XLSX.writeFile(wb, outName);
   setGlobalStatus('已下載：' + outName, 'success');
 }
