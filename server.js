@@ -5,7 +5,7 @@ const url  = require('url');
 
 const PORT    = 3000;
 const ROOT    = __dirname;
-const IGNORED = new Set(['.git', '.cursor', 'node_modules', 'assets', 'agent-transcripts', 'mcps', 'terminals']);
+const IGNORED = new Set(['.git', '.cursor', 'node_modules', 'assets', 'agent-transcripts', 'mcps', 'terminals', 'resoruce']);
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -14,6 +14,7 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   '.png':  'image/png',
+  '.gif':  'image/gif',
   '.svg':  'image/svg+xml',
 };
 
@@ -28,7 +29,12 @@ function err(res, msg, status = 400) {
 
 function getGameDirs() {
   return fs.readdirSync(ROOT, { withFileTypes: true })
-    .filter(d => d.isDirectory() && !d.name.startsWith('.') && !IGNORED.has(d.name))
+    .filter(d => {
+      if (!d.isDirectory() || d.name.startsWith('.') || IGNORED.has(d.name)) return false;
+      const dir = path.join(ROOT, d.name);
+      const files = fs.readdirSync(dir);
+      return files.some(f => /\.xlsx$/i.test(f) && !f.startsWith('~$'));
+    })
     .map(d => d.name)
     .sort();
 }

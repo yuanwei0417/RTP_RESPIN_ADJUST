@@ -33,6 +33,7 @@ body[data-theme="light"] .gr-display { background: #ffffff; border-color: #d0d4e
 body[data-theme="light"] thead th { background: #e5e7f3; color: #1f2937; border-bottom-color: #c4c9dd; }
 body[data-theme="light"] tbody tr:hover td { background: #eef2ff; }
 body[data-theme="light"] tbody tr.sum-row td { background: #e6ffed; color: #047857; }
+body[data-theme="light"] tbody tr.sum-row td.cell-grval { color: #047857; }
 body[data-theme="light"] .status-msg.success { background: #e6ffed; color: #047857; border-color: #86efac; }
 body[data-theme="light"] .status-msg.error   { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
 body[data-theme="light"] .status-msg.info    { background: #e0ecff; color: #1d4ed8; border-color: #bfdbfe; }
@@ -46,6 +47,183 @@ body[data-theme="light"] .input-group input[type=number] {
   background: #f3f4ff; border-color: #9ca3c7; color: #111827;
 }
 body[data-theme="light"] .cycle-tag { color: #374151; }
+body[data-theme="light"] .theme-select { background: #e5e7f3; border-color: #c4c9dd; color: #111827; }
+body[data-theme="light"] .theme-select option { background: #ffffff; color: #111827; }
+
+/* ── Cyberpunk 風 ─────────────────────────── */
+body[data-theme="cyberpunk"] { background: #0a0014; color: #e0d4ff; }
+body[data-theme="cyberpunk"] td { color: #d0c4ee; }
+body[data-theme="cyberpunk"] .card { background: #120024; border-color: #6b21a8; }
+body[data-theme="cyberpunk"] .card-header { background: #1a0038; border-bottom-color: #7c3aed; }
+body[data-theme="cyberpunk"] .card-header:hover { background: #220048; }
+body[data-theme="cyberpunk"] .card-header h2 { color: #e879f9; }
+body[data-theme="cyberpunk"] .game-picker { background: #120024; border-color: #6b21a8; }
+body[data-theme="cyberpunk"] .game-search { background: #0a0014; border-color: #7c3aed; color: #e0d4ff; }
+body[data-theme="cyberpunk"] .game-search::placeholder { color: #6b4e99; }
+body[data-theme="cyberpunk"] .game-list { background: #120024; border-color: #6b21a8; }
+body[data-theme="cyberpunk"] .game-item { color: #d0c4ee; }
+body[data-theme="cyberpunk"] .game-item:hover { background: #220048; }
+body[data-theme="cyberpunk"] .game-item.active { background: #3b0764; color: #e879f9; }
+body[data-theme="cyberpunk"] .game-current { color: #e879f9; }
+body[data-theme="cyberpunk"] .game-picker-label { color: #a78bfa; }
+body[data-theme="cyberpunk"] .fallback-upload { border-color: #6b21a8; color: #7c5cbf; }
+body[data-theme="cyberpunk"] .fallback-upload:hover { border-color: #e879f9; color: #e879f9; }
+body[data-theme="cyberpunk"] .gr-display { background: #120024; border-color: #6b21a8; }
+body[data-theme="cyberpunk"] .gr-block .glabel { color: #a78bfa; }
+body[data-theme="cyberpunk"] .gr-sep { background: #6b21a8; }
+body[data-theme="cyberpunk"] thead th { background: #1a0038; color: #e879f9; border-bottom-color: #7c3aed; border-right-color: #3b0764; }
+body[data-theme="cyberpunk"] thead th .sub { color: #6b4e99; }
+body[data-theme="cyberpunk"] tbody tr:hover td { background: #1e0040; }
+body[data-theme="cyberpunk"] tbody tr.sum-row td { background: #1a002e; color: #c084fc; }
+body[data-theme="cyberpunk"] tbody tr.sum-row td.cell-grval { color: #c084fc; }
+body[data-theme="cyberpunk"] tbody tr.sum-row { border-top-color: #7c3aed; }
+body[data-theme="cyberpunk"] td { border-bottom-color: #1e0035; border-right-color: #1e0040; }
+body[data-theme="cyberpunk"] td:first-child { color: #8b5cf6; }
+body[data-theme="cyberpunk"] td.range-cell { color: #a78bfa; }
+body[data-theme="cyberpunk"] .respin-input { background: #0a0014; border-color: #7c3aed; color: #e0d4ff; }
+body[data-theme="cyberpunk"] .respin-input:focus { border-color: #e879f9; box-shadow: 0 0 0 2px rgba(232,121,249,0.2); }
+body[data-theme="cyberpunk"] .seg-ctrl { border-left-color: #6b21a8; }
+body[data-theme="cyberpunk"] .input-group label { color: #a78bfa; }
+body[data-theme="cyberpunk"] .input-group input[type=number] { background: #0a0014; border-color: #7c3aed; color: #e0d4ff; }
+body[data-theme="cyberpunk"] .input-group input[type=number]:focus { border-color: #e879f9; }
+body[data-theme="cyberpunk"] .status-msg.success { background: #1a002e; color: #c084fc; border-color: #7c3aed; }
+body[data-theme="cyberpunk"] .status-msg.error   { background: #2e0020; color: #f472b6; border-color: #9d174d; }
+body[data-theme="cyberpunk"] .status-msg.info    { background: #1a0038; color: #a78bfa; border-color: #6b21a8; }
+body[data-theme="cyberpunk"] .gvalue.good    { color: #c084fc; }
+body[data-theme="cyberpunk"] .gvalue.neutral { color: #e879f9; }
+body[data-theme="cyberpunk"] .gvalue.dim     { color: #6b4e99; }
+body[data-theme="cyberpunk"] .gr-detail .dk,
+body[data-theme="cyberpunk"] .gr-detail .dv { color: #d0c4ee; }
+body[data-theme="cyberpunk"] .cycle-tag { color: #a78bfa; }
+body[data-theme="cyberpunk"] .cycle-input { background: #0a0014; border-color: #7c3aed; color: #e0d4ff; }
+body[data-theme="cyberpunk"] .collapse-btn { border-color: #6b21a8; color: #a78bfa; }
+body[data-theme="cyberpunk"] .collapse-btn:hover { background: #3b0764; color: #e879f9; }
+body[data-theme="cyberpunk"] .btn-reset { background: #1a0038; color: #d0c4ee; border-color: #6b21a8; }
+body[data-theme="cyberpunk"] .theme-select { background: #1a0038; border-color: #7c3aed; color: #e0d4ff; }
+body[data-theme="cyberpunk"] .theme-select option { background: #120024; color: #e0d4ff; }
+body[data-theme="cyberpunk"] ::-webkit-scrollbar-track { background: #0a0014; }
+body[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb { background: #6b21a8; }
+body[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+
+/* ── 清新綠 ───────────────────────────────── */
+body[data-theme="green"] { background: #f0f9f0; color: #1a3a1a; }
+body[data-theme="green"] td { color: #1a3a1a; }
+body[data-theme="green"] .card { background: #ffffff; border-color: #b8e0b8; }
+body[data-theme="green"] .card-header { background: #e0f5e0; border-bottom-color: #b8e0b8; }
+body[data-theme="green"] .card-header:hover { background: #d0eed0; }
+body[data-theme="green"] .card-header h2 { color: #166534; }
+body[data-theme="green"] .game-picker { background: #ffffff; border-color: #b8e0b8; }
+body[data-theme="green"] .game-search { background: #f0f9f0; border-color: #86c886; color: #1a3a1a; }
+body[data-theme="green"] .game-search::placeholder { color: #6b9a6b; }
+body[data-theme="green"] .game-list { background: #ffffff; border-color: #b8e0b8; }
+body[data-theme="green"] .game-item { color: #1a3a1a; }
+body[data-theme="green"] .game-item:hover { background: #e8f8e8; }
+body[data-theme="green"] .game-item.active { background: #d0f0d0; color: #166534; }
+body[data-theme="green"] .game-current { color: #16a34a; }
+body[data-theme="green"] .game-picker-label { color: #4a8a4a; }
+body[data-theme="green"] .fallback-upload { border-color: #b8e0b8; color: #6b9a6b; }
+body[data-theme="green"] .fallback-upload:hover { border-color: #16a34a; color: #16a34a; }
+body[data-theme="green"] .gr-display { background: #ffffff; border-color: #b8e0b8; }
+body[data-theme="green"] .gr-block .glabel { color: #4a8a4a; }
+body[data-theme="green"] .gr-sep { background: #b8e0b8; }
+body[data-theme="green"] thead th { background: #e0f5e0; color: #166534; border-bottom-color: #86c886; border-right-color: #d0eed0; }
+body[data-theme="green"] thead th .sub { color: #6b9a6b; }
+body[data-theme="green"] tbody tr:hover td { background: #e8f8e8; }
+body[data-theme="green"] tbody tr.sum-row td { background: #d0f0d0; color: #047857; }
+body[data-theme="green"] tbody tr.sum-row td.cell-grval { color: #047857; }
+body[data-theme="green"] tbody tr.sum-row { border-top-color: #86c886; }
+body[data-theme="green"] td { border-bottom-color: #e0f0e0; border-right-color: #e8f5e8; }
+body[data-theme="green"] td:first-child { color: #4a8a4a; }
+body[data-theme="green"] td.range-cell { color: #5a9a5a; }
+body[data-theme="green"] .respin-input { background: #f0f9f0; border-color: #86c886; color: #1a3a1a; }
+body[data-theme="green"] .respin-input:focus { border-color: #16a34a; box-shadow: 0 0 0 2px rgba(22,163,74,0.15); }
+body[data-theme="green"] .seg-ctrl { border-left-color: #b8e0b8; }
+body[data-theme="green"] .input-group label { color: #4a8a4a; }
+body[data-theme="green"] .input-group input[type=number] { background: #f0f9f0; border-color: #86c886; color: #1a3a1a; }
+body[data-theme="green"] .input-group input[type=number]:focus { border-color: #16a34a; }
+body[data-theme="green"] .status-msg.success { background: #d0f0d0; color: #047857; border-color: #86c886; }
+body[data-theme="green"] .status-msg.error   { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+body[data-theme="green"] .status-msg.info    { background: #e0f5e0; color: #166534; border-color: #b8e0b8; }
+body[data-theme="green"] .gvalue.good    { color: #16a34a; }
+body[data-theme="green"] .gvalue.neutral { color: #059669; }
+body[data-theme="green"] .gvalue.dim     { color: #6b9a6b; }
+body[data-theme="green"] .gvalue.neutral,
+body[data-theme="green"] .gvalue.dim { color: #1a3a1a; }
+body[data-theme="green"] .gr-detail .dk,
+body[data-theme="green"] .gr-detail .dv { color: #1a3a1a; }
+body[data-theme="green"] .cycle-tag { color: #4a8a4a; }
+body[data-theme="green"] .cycle-input { background: #f0f9f0; border-color: #86c886; color: #1a3a1a; }
+body[data-theme="green"] .collapse-btn { border-color: #b8e0b8; color: #4a8a4a; }
+body[data-theme="green"] .collapse-btn:hover { background: #d0f0d0; color: #166534; }
+body[data-theme="green"] .btn-reset { background: #e0f5e0; color: #1a3a1a; border-color: #b8e0b8; }
+body[data-theme="green"] .btn-run { background: linear-gradient(135deg, #16a34a, #059669); }
+body[data-theme="green"] .btn-dl { background: linear-gradient(135deg, #059669, #047857); }
+body[data-theme="green"] .theme-select { background: #e0f5e0; border-color: #86c886; color: #1a3a1a; }
+body[data-theme="green"] .theme-select option { background: #ffffff; color: #1a3a1a; }
+body[data-theme="green"] ::-webkit-scrollbar-track { background: #f0f9f0; }
+body[data-theme="green"] ::-webkit-scrollbar-thumb { background: #b8e0b8; }
+body[data-theme="green"] ::-webkit-scrollbar-thumb:hover { background: #86c886; }
+
+/* ── 小熊維尼風 ───────────────────────────── */
+body[data-theme="pooh"] { background: #fef9e7; color: #5d4037; }
+body[data-theme="pooh"] td { color: #5d4037; }
+body[data-theme="pooh"] .card { background: #fffdf5; border-color: #f0d58c; }
+body[data-theme="pooh"] .card-header { background: #fceabb; border-bottom-color: #f0d58c; }
+body[data-theme="pooh"] .card-header:hover { background: #fbe3a0; }
+body[data-theme="pooh"] .card-header h2 { color: #b8860b; }
+body[data-theme="pooh"] .game-picker { background: #fffdf5; border-color: #f0d58c; }
+body[data-theme="pooh"] .game-search { background: #fef9e7; border-color: #dbb84d; color: #5d4037; }
+body[data-theme="pooh"] .game-search::placeholder { color: #b8976a; }
+body[data-theme="pooh"] .game-list { background: #fffdf5; border-color: #f0d58c; }
+body[data-theme="pooh"] .game-item { color: #5d4037; }
+body[data-theme="pooh"] .game-item:hover { background: #fef3d0; }
+body[data-theme="pooh"] .game-item.active { background: #fceabb; color: #b8860b; }
+body[data-theme="pooh"] .game-current { color: #d4880f; }
+body[data-theme="pooh"] .game-picker-label { color: #b8976a; }
+body[data-theme="pooh"] .fallback-upload { border-color: #f0d58c; color: #b8976a; }
+body[data-theme="pooh"] .fallback-upload:hover { border-color: #d4880f; color: #d4880f; }
+body[data-theme="pooh"] .gr-display { background: #fffdf5; border-color: #f0d58c; }
+body[data-theme="pooh"] .gr-block .glabel { color: #b8976a; }
+body[data-theme="pooh"] .gr-sep { background: #f0d58c; }
+body[data-theme="pooh"] thead th { background: #fceabb; color: #b8860b; border-bottom-color: #dbb84d; border-right-color: #fbe3a0; }
+body[data-theme="pooh"] thead th .sub { color: #b8976a; }
+body[data-theme="pooh"] tbody tr:hover td { background: #fef3d0; }
+body[data-theme="pooh"] tbody tr.sum-row td { background: #fceabb; color: #b8860b; }
+body[data-theme="pooh"] tbody tr.sum-row td.cell-grval { color: #b8860b; }
+body[data-theme="pooh"] tbody tr.sum-row { border-top-color: #dbb84d; }
+body[data-theme="pooh"] td { border-bottom-color: #faecd0; border-right-color: #faecd0; }
+body[data-theme="pooh"] td:first-child { color: #c49a3c; }
+body[data-theme="pooh"] td.range-cell { color: #b8976a; }
+body[data-theme="pooh"] .respin-input { background: #fef9e7; border-color: #dbb84d; color: #5d4037; }
+body[data-theme="pooh"] .respin-input:focus { border-color: #d4880f; box-shadow: 0 0 0 2px rgba(212,136,15,0.15); }
+body[data-theme="pooh"] .seg-ctrl { border-left-color: #f0d58c; }
+body[data-theme="pooh"] .input-group label { color: #b8976a; }
+body[data-theme="pooh"] .input-group input[type=number] { background: #fef9e7; border-color: #dbb84d; color: #5d4037; }
+body[data-theme="pooh"] .input-group input[type=number]:focus { border-color: #d4880f; }
+body[data-theme="pooh"] .status-msg.success { background: #fceabb; color: #b8860b; border-color: #dbb84d; }
+body[data-theme="pooh"] .status-msg.error   { background: #fde2e2; color: #c0392b; border-color: #f5b7b1; }
+body[data-theme="pooh"] .status-msg.info    { background: #fef3d0; color: #b8860b; border-color: #f0d58c; }
+body[data-theme="pooh"] .gvalue.good    { color: #d4880f; }
+body[data-theme="pooh"] .gvalue.neutral { color: #c49a3c; }
+body[data-theme="pooh"] .gvalue.dim     { color: #b8976a; }
+body[data-theme="pooh"] .gvalue.neutral,
+body[data-theme="pooh"] .gvalue.dim { color: #5d4037; }
+body[data-theme="pooh"] #gr-total { color: #b8860b !important; }
+body[data-theme="pooh"] #total-gr-block .glabel { color: #b8860b; }
+body[data-theme="pooh"] .gr-detail .dk,
+body[data-theme="pooh"] .gr-detail .dv { color: #5d4037; }
+body[data-theme="pooh"] .cycle-tag { color: #b8976a; }
+body[data-theme="pooh"] .cycle-input { background: #fef9e7; border-color: #dbb84d; color: #5d4037; }
+body[data-theme="pooh"] .collapse-btn { border-color: #f0d58c; color: #b8976a; }
+body[data-theme="pooh"] .collapse-btn:hover { background: #fceabb; color: #b8860b; }
+body[data-theme="pooh"] .btn-reset { background: #fceabb; color: #5d4037; border-color: #f0d58c; }
+body[data-theme="pooh"] .btn-run { background: linear-gradient(135deg, #d4880f, #b8860b); }
+body[data-theme="pooh"] .btn-dl { background: linear-gradient(135deg, #c49a3c, #b8860b); }
+body[data-theme="pooh"] .theme-select { background: #fceabb; border-color: #dbb84d; color: #5d4037; }
+body[data-theme="pooh"] .theme-select option { background: #fffdf5; color: #5d4037; }
+body[data-theme="pooh"] ::-webkit-scrollbar-track { background: #fef9e7; }
+body[data-theme="pooh"] ::-webkit-scrollbar-thumb { background: #f0d58c; }
+body[data-theme="pooh"] ::-webkit-scrollbar-thumb:hover { background: #dbb84d; }
 
 /* ── Top Bar ──────────────────────────────── */
 .top-bar {
@@ -151,18 +329,27 @@ body[data-theme="light"] .cycle-tag { color: #374151; }
   align-items: center;
   gap: 8px;
 }
-.btn-theme {
+.theme-select {
   border: 1px solid #3a4a6b;
   background: #263352;
   color: #aab8cc;
-  border-radius: 999px;
-  padding: 4px 12px;
+  border-radius: 7px;
+  padding: 4px 10px;
   font-size: 0.78rem;
   cursor: pointer;
-  transition: background 0.15s, opacity 0.15s, transform 0.1s;
+  outline: none;
+  transition: border-color 0.15s;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238899aa'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 24px;
 }
-.btn-theme:hover { background: #324067; opacity: 0.9; }
-.btn-theme:active { transform: translateY(1px); }
+.theme-select:hover { border-color: #7eb8f7; }
+.theme-select:focus { border-color: #7eb8f7; box-shadow: 0 0 0 2px rgba(126,184,247,0.15); }
+.theme-select option { background: #1c2336; color: #e0e0e0; }
 
 /* ── Card ────────────────────────────────── */
 .card {
@@ -284,7 +471,7 @@ td.respin-cell { padding: 3px 6px; }
 .lock-btn:hover { background: #2a3550; }
 
 td.cell-changed { background: #282510 !important; color: #ffe066 !important; }
-td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
+td.cell-grval   { color: #5ef77a; font-weight: 700; }
 
 .arrow-up   { color: #5ef77a; font-size: 0.85rem; margin-right: 3px; }
 .arrow-down { color: #f77e5e; font-size: 0.85rem; margin-right: 3px; }
@@ -345,6 +532,25 @@ body[data-theme="light"] .cycle-input {
 ::-webkit-scrollbar-thumb:hover { background: #4a5a8b; }
 
 .hidden { display: none !important; }
+
+/* ── Pooh GIF ─────────────────────────────── */
+.pooh-gif-wrap {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.pooh-gif-wrap.visible { opacity: 1; }
+.pooh-gif-wrap img {
+  width: 140px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(180,120,30,0.35);
+  border: 3px solid #f0d58c;
+}
 </style>
 </head>
 <body>
@@ -368,7 +574,7 @@ body[data-theme="light"] .cycle-input {
   </div>
 
   <div class="gr-display">
-    <div class="gr-block">
+    <div class="gr-block" id="total-gr-block">
       <span class="glabel">Total</span>
       <span class="gvalue dim" id="gr-total" style="color:#ffd700;">—</span>
     </div>
@@ -376,7 +582,13 @@ body[data-theme="light"] .cycle-input {
     <div id="seg-gr-blocks"></div>
     <div class="top-actions">
       <button class="btn btn-dl hidden" id="dl-btn" onclick="saveExcel()">💾 儲存更新</button>
-      <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">亮色版</button>
+      <select class="theme-select" id="theme-select" onchange="applyTheme(this.value)">
+        <option value="dark">🌙 暗色版</option>
+        <option value="light">☀️ 亮色版</option>
+        <option value="cyberpunk">🌆 Cyberpunk</option>
+        <option value="green">🌿 清新綠</option>
+        <option value="pooh">🍯 小熊維尼</option>
+      </select>
     </div>
   </div>
 </div>
@@ -386,6 +598,11 @@ body[data-theme="light"] .cycle-input {
 
 <!-- ── Segment Cards (rendered by JS) ────── -->
 <div id="segments-container"></div>
+
+<!-- ── Pooh GIF (only visible in pooh theme) ── -->
+<div class="pooh-gif-wrap" id="pooh-gif-wrap">
+  <img id="pooh-gif" src="" alt="Pooh">
+</div>
 
 <script>
 'use strict';
@@ -1097,25 +1314,46 @@ function clearGlobalStatus() {
 // ═══════════════════════════════════════════════
 // Theme
 // ═══════════════════════════════════════════════
+const VALID_THEMES = ['dark','light','cyberpunk','green','pooh'];
+const POOH_GIFS = ['resoruce/pooh_1.gif','resoruce/pooh_2.gif','resoruce/pooh_3.gif'];
+let poohTimer = null;
+
+function randomPoohGif() {
+  return POOH_GIFS[Math.floor(Math.random() * POOH_GIFS.length)];
+}
+
+function startPoohGif() {
+  const wrap = document.getElementById('pooh-gif-wrap');
+  const img  = document.getElementById('pooh-gif');
+  if (!wrap || !img) return;
+  img.src = randomPoohGif();
+  wrap.classList.add('visible');
+  poohTimer = setInterval(() => { img.src = randomPoohGif(); }, 10000);
+}
+
+function stopPoohGif() {
+  const wrap = document.getElementById('pooh-gif-wrap');
+  if (wrap) wrap.classList.remove('visible');
+  if (poohTimer) { clearInterval(poohTimer); poohTimer = null; }
+}
+
 function applyTheme(theme) {
+  if (!VALID_THEMES.includes(theme)) theme = 'dark';
   currentTheme = theme;
   document.body.dataset.theme = theme;
-  const btn = document.getElementById('theme-toggle');
-  if (btn) btn.textContent = theme === 'dark' ? '亮色版' : '暗色版';
+  const sel = document.getElementById('theme-select');
+  if (sel) sel.value = theme;
   try { localStorage.setItem('rtp_theme', theme); } catch (_) {}
+  if (theme === 'pooh') startPoohGif(); else stopPoohGif();
 }
 
 function initTheme() {
   let theme = 'dark';
   try {
     const saved = localStorage.getItem('rtp_theme');
-    if (saved === 'light' || saved === 'dark') theme = saved;
+    if (VALID_THEMES.includes(saved)) theme = saved;
   } catch (_) { theme = 'dark'; }
   applyTheme(theme);
-}
-
-function toggleTheme() {
-  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
 }
 
 initTheme();
