@@ -1,7 +1,10 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Save / Download Excel
+// save.js — Save/download Excel + status helpers
+// Load order: 2/8
+// Depends on: helpers.js (segments, wb, fileName, selectedGame,
+//             serverAvail, currentVariant, toX4)
 // ═══════════════════════════════════════════════
 function makeTimestamp() {
   const now = new Date();

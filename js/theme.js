@@ -1,13 +1,11 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Theme
+// theme.js — Theme switching, Pooh GIF, Cyberpunk glow
+// Load order: 8/8 (last — runs initTheme() immediately)
+// Depends on: helpers.js (currentTheme, VALID_THEMES, POOH_GIFS,
+//             poohTimer, lastPoohGif)
 // ═══════════════════════════════════════════════
-const VALID_THEMES = ['dark','light','cyberpunk','green','pooh'];
-const POOH_GIFS = ['resoruce/pooh_1.gif','resoruce/pooh_2.gif','resoruce/pooh_3.gif'];
-let poohTimer = null;
-
-let lastPoohGif = '';
 function randomPoohGif() {
   const candidates = POOH_GIFS.filter(g => g !== lastPoohGif);
   const pick = candidates[Math.floor(Math.random() * candidates.length)];

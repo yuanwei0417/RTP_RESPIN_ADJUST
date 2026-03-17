@@ -1,7 +1,8 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Constants
+// helpers.js — Constants, shared state, pure functions
+// Load order: 1/8 (no dependencies, must be first)
 // ═══════════════════════════════════════════════
 const R_MIN = 0;
 const R_MAX = 9999 / 10000;
@@ -15,6 +16,18 @@ let segments = [];
 let wb        = null;
 let fileName  = '';
 let currentTheme = 'dark';
+
+// Game picker state
+let allGames       = [];   // [{name, hasSubfolders}] from server
+let selectedGame   = '';
+let currentVariant = '';   // '' | '一般' | '額外'
+let serverAvail    = false;
+
+// Theme state
+const VALID_THEMES = ['dark','light','cyberpunk','green','pooh'];
+const POOH_GIFS    = ['resoruce/pooh_1.gif','resoruce/pooh_2.gif','resoruce/pooh_3.gif'];
+let poohTimer   = null;
+let lastPoohGif = '';
 
 // ═══════════════════════════════════════════════
 // Pure helpers

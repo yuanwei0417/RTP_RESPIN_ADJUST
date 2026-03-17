@@ -1,7 +1,12 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Optimizer — Binary Search on Δ (per segment)
+// optimizer.js — Binary search Δ optimizer (per segment)
+// Load order: 7/8
+// Depends on: helpers.js (segments, R_MIN, R_MAX, clip, fmtPct,
+//             fmtE, toX4, calcGR19)
+//             save.js (setSegStatus)
+//             segment-ctrl.js (refreshSegmentGR)
 // ═══════════════════════════════════════════════
 function runOptimizeForSegment(si) {
   const seg = segments[si];

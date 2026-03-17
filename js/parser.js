@@ -1,7 +1,11 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Parse Sheet — multi-segment
+// parser.js — Excel sheet parsing (multi-segment)
+// Load order: 5/8
+// Depends on: helpers.js (segments, wb, calcGR19)
+//             save.js (setGlobalStatus, clearGlobalStatus)
+//             renderer.js (renderAllSegments)
 // Row 0: segment name cells (string) + cycle in adjacent cell
 // Row 1: header labels (5 cols per segment)
 // Row 2+: data rows (5 cols per segment)

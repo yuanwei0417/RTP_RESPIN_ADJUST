@@ -1,13 +1,13 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Game Picker + Upload
+// game-picker.js — Game selection, variant toggle, file upload
+// Load order: 6/8
+// Depends on: helpers.js (allGames, selectedGame, currentVariant,
+//             serverAvail, wb, fileName)
+//             save.js (setGlobalStatus)
+//             parser.js (parseSheet)
 // ═══════════════════════════════════════════════
-let allGames       = [];   // [{name, hasSubfolders}] from server
-let selectedGame   = '';
-let currentVariant = '';   // '' | '一般' | '額外'
-let serverAvail    = false;
-
 const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 

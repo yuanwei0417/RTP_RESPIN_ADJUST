@@ -63,7 +63,17 @@
   <img id="pooh-gif" src="" alt="Pooh">
 </div>
 
-<!-- JS modules — load order matters (dependency chain) -->
+<!--
+  JS load order — DO NOT reorder. Dependency chain:
+  1. helpers.js       — all shared state + pure functions (no deps)
+  2. save.js          — status helpers + save logic (← helpers)
+  3. segment-ctrl.js  — GR refresh, lock, cycle (← helpers, save)
+  4. renderer.js      — build cards & rows (← helpers, segment-ctrl)
+  5. parser.js        — Excel parsing (← helpers, save, renderer)
+  6. game-picker.js   — game list, upload (← helpers, save, parser)
+  7. optimizer.js     — binary search (← helpers, save, segment-ctrl)
+  8. theme.js         — theme init + effects (← helpers) [runs immediately]
+-->
 <script src="js/helpers.js"></script>
 <script src="js/save.js"></script>
 <script src="js/segment-ctrl.js"></script>

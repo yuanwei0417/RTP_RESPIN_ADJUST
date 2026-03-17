@@ -1,7 +1,12 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Render All Segments
+// renderer.js — Build and render segment cards + table rows
+// Load order: 4/8
+// Depends on: helpers.js (segments, esc, fmt, fmtPct, toX4,
+//             calcGR, calcGR19, getDenom)
+//             segment-ctrl.js (makeCollapsible, refreshSegmentGR,
+//             recalcTotalGR, applyLockUIForSeg)
 // ═══════════════════════════════════════════════
 function renderAllSegments() {
   const segBlocks = document.getElementById('seg-gr-blocks');

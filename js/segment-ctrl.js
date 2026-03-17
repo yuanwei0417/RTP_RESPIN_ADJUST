@@ -1,7 +1,11 @@
 'use strict';
 
 // ═══════════════════════════════════════════════
-// Refresh GR column + top block for one segment
+// segment-ctrl.js — Segment GR refresh, respin/lock/cycle controls
+// Load order: 3/8
+// Depends on: helpers.js (segments, calcGR, calcGR19, getDenom,
+//             fmtPct, toX4)
+//             save.js (setSegStatus)
 // ═══════════════════════════════════════════════
 function refreshSegmentGR(si) {
   const seg   = segments[si];
