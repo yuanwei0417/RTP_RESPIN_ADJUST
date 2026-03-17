@@ -274,7 +274,23 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 
 /* ── Global status / download row ────────── */
 #global-status { margin-bottom: 12px; display: none; }
-#dl-row { margin-bottom: 12px; }
+.cycle-input {
+  background: #0f1117;
+  border: 1px solid #3a4a6b;
+  color: #e0e0e0;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.82rem;
+  width: 54px;
+  outline: none;
+  margin-left: 8px;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+.cycle-input:focus { border-color: #7eb8f7; }
+body[data-theme="light"] .cycle-input {
+  background: #f3f4ff; border-color: #9ca3c7; color: #111827;
+}
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: #161b27; }
@@ -303,6 +319,7 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
     <!-- Segment GR blocks injected by JS -->
     <div id="seg-gr-blocks"></div>
     <div class="top-actions">
+      <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
       <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">亮色版</button>
     </div>
   </div>
@@ -313,11 +330,6 @@ td.cell-grval   { color: #5ef77a !important; font-weight: 700; }
 
 <!-- ── Segment Cards (rendered by JS) ────── -->
 <div id="segments-container"></div>
-
-<!-- ── Download ───────────────────────────── -->
-<div id="dl-row">
-  <button class="btn btn-dl hidden" id="dl-btn" onclick="downloadExcel()">⬇ 下載 Excel</button>
-</div>
 
 <script>
 'use strict';
@@ -563,8 +575,6 @@ function buildSegmentCard(seg, si) {
   card.className = 'card';
   card.id = `seg-card-${si}`;
 
-  const cycleLabel = seg.cycle > 1 ? ` · 週期 ${seg.cycle} 局` : '';
-
   // Build header cell text from Excel headers (fallback to defaults)
   const h0 = seg.headers[0] || '下限';
   const h1 = seg.headers[1] || '上限';
@@ -573,9 +583,14 @@ function buildSegmentCard(seg, si) {
 
   card.innerHTML = `
     <div class="card-header" id="seg-hdr-${si}">
-      <div style="display:flex;align-items:center;">
-        <h2>${seg.name}</h2>
-        <span class="cycle-tag">${cycleLabel}</span>
+      <div style="display:flex;align-items:center;" onclick="event.stopPropagation()">
+        <h2 style="cursor:pointer" onclick="document.getElementById('seg-hdr-${si}').click()">${seg.name}</h2>
+        <span class="cycle-tag">週期</span>
+        <input class="cycle-input" id="seg-cycle-${si}" type="number"
+          value="${seg.cycle}" min="1" step="1"
+          title="週期：調整後所有 GR 顯示會除以此值"
+          oninput="onCycleChange(${si}, this.value)">
+        <span class="cycle-tag">局</span>
         <span class="badge">${seg.rows.length} 列</span>
       </div>
       <button class="collapse-btn" id="seg-btn-${si}">收合 ▲</button>
@@ -745,6 +760,18 @@ function resetSegmentRespin(si) {
 }
 
 // ═══════════════════════════════════════════════
+// Cycle change
+// ═══════════════════════════════════════════════
+function onCycleChange(si, val) {
+  let v = parseInt(val, 10);
+  if (isNaN(v) || v < 1) v = 1;
+  segments[si].cycle = v;
+  const inp = document.getElementById(`seg-cycle-${si}`);
+  if (inp) inp.value = v;
+  refreshSegmentGR(si);
+}
+
+// ═══════════════════════════════════════════════
 // Collapse
 // ═══════════════════════════════════════════════
 function makeCollapsible(hId, bId, btnId) {
@@ -763,6 +790,15 @@ function makeCollapsible(hId, bId, btnId) {
 // ═══════════════════════════════════════════════
 function runOptimizeForSegment(si) {
   const seg = segments[si];
+
+  // Sync cycle from input field — onchange may not have fired if user clicked
+  // the button immediately after typing without leaving the field first
+  const cycleEl = document.getElementById(`seg-cycle-${si}`);
+  if (cycleEl) {
+    const v = parseInt(cycleEl.value, 10);
+    if (!isNaN(v) && v >= 1) seg.cycle = v;
+    else cycleEl.value = seg.cycle;
+  }
 
   // Reset to original respin values before optimising
   seg.rows.forEach((r, i) => { r.respin = seg.backupR[i]; });
