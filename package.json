@@ -1,0 +1,15 @@
+{
+  "name": "rtp-tool",
+  "version": "1.0.0",
+  "description": "RTP Respin 調整工具",
+  "main": "server.js",
+  "bin": "server.js",
+  "pkg": {
+    "targets": ["node18-win-x64"],
+    "outputPath": "."
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "pkg . --compress GZip"
+  }
+}

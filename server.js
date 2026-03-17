@@ -2,9 +2,11 @@ const http = require('http');
 const fs   = require('fs');
 const path = require('path');
 const url  = require('url');
+const { exec } = require('child_process');
 
 const PORT    = 3000;
-const ROOT    = __dirname;
+// pkg 打包後 __dirname 指向虛擬路徑，改用 exe 所在目錄
+const ROOT    = process.pkg ? path.dirname(process.execPath) : __dirname;
 const IGNORED = new Set(['.git', '.cursor', 'node_modules', 'assets', 'agent-transcripts', 'mcps', 'terminals', 'resoruce']);
 
 const MIME = {
@@ -152,5 +154,9 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`RTP Tool Server running at http://localhost:${PORT}`);
+  const addr = `http://localhost:${PORT}`;
+  console.log(`RTP Tool Server running at ${addr}`);
+  if (process.platform === 'win32') exec(`start ${addr}`);
+  else if (process.platform === 'darwin') exec(`open ${addr}`);
+  else exec(`xdg-open ${addr}`);
 });
