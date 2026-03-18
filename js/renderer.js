@@ -108,9 +108,11 @@ function renderSegmentRows(si) {
   tbody.innerHTML = '';
 
   const denom = getDenom(seg.rows);
+  const sumAdjProb = seg.rows.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
   seg.rows.forEach((row, idx) => {
     const gr = calcGR(row, denom);
-    const adjProb = row.prob * (1 - row.respin);
+    const adjProbRaw = row.prob * (1 - row.respin);
+    const adjProb = sumAdjProb > 0 ? (adjProbRaw / sumAdjProb) : 0;
     const tr = document.createElement('tr');
     tr.id = `seg-${si}-tr-${idx}`;
     tr.innerHTML = `
@@ -139,7 +141,6 @@ function renderSegmentRows(si) {
 
   const gr19       = calcGR19(seg.rows);
   const sumProb    = seg.rows.reduce((s, r) => s + r.prob, 0);
-  const sumAdjProb = seg.rows.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
   const trS = document.createElement('tr');
   trS.className = 'sum-row';
   trS.innerHTML = `
@@ -147,7 +148,7 @@ function renderSegmentRows(si) {
     <td>—</td><td>—</td><td>—</td>
     <td>${fmtPct(sumProb)}</td>
     <td>—</td>
-    <td id="seg-${si}-sum-adjprob">${fmtPct(sumAdjProb)}</td>
+    <td id="seg-${si}-sum-adjprob">${fmtPct(sumAdjProb > 0 ? 1 : 0)}</td>
     <td id="seg-${si}-sum-gr" class="cell-grval">${fmtPct(gr19 / seg.cycle)}</td>
   `;
   tbody.appendChild(trS);

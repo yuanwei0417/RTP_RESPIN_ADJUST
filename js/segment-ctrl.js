@@ -10,13 +10,18 @@
 function refreshSegmentGR(si) {
   const seg   = segments[si];
   const denom = getDenom(seg.rows);
+  const sumAdjProb = seg.rows.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
 
   seg.rows.forEach((row, idx) => {
     const grEl = document.getElementById(`seg-${si}-grval-${idx}`);
     if (grEl) grEl.textContent = fmtPct(calcGR(row, denom) / seg.cycle);
 
     const apEl = document.getElementById(`seg-${si}-adjprob-${idx}`);
-    if (apEl) apEl.textContent = fmtPct(row.prob * (1 - row.respin));
+    if (apEl) {
+      const adjProbRaw = row.prob * (1 - row.respin);
+      const adjProb = sumAdjProb > 0 ? (adjProbRaw / sumAdjProb) : 0;
+      apEl.textContent = fmtPct(adjProb);
+    }
   });
 
   const gr19  = calcGR19(seg.rows);
@@ -25,8 +30,7 @@ function refreshSegmentGR(si) {
 
   const sumApEl = document.getElementById(`seg-${si}-sum-adjprob`);
   if (sumApEl) {
-    const sumAdjProb = seg.rows.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
-    sumApEl.textContent = fmtPct(sumAdjProb);
+    sumApEl.textContent = fmtPct(sumAdjProb > 0 ? 1 : 0);
   }
 
   const topEl = document.getElementById(`gr-seg-${si}`);
