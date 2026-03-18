@@ -77,6 +77,7 @@ function buildSegmentCard(seg, si) {
                 <th>${h2}</th>
                 <th>${h3}</th>
                 <th>重轉機率 / 10000<span class="sub">可調整</span></th>
+                <th>調整後機率<span class="sub">機率×(1−重轉)</span></th>
                 <th>GR<span class="sub">per cycle</span></th>
               </tr>
             </thead>
@@ -109,6 +110,7 @@ function renderSegmentRows(si) {
   const denom = getDenom(seg.rows);
   seg.rows.forEach((row, idx) => {
     const gr = calcGR(row, denom);
+    const adjProb = row.prob * (1 - row.respin);
     const tr = document.createElement('tr');
     tr.id = `seg-${si}-tr-${idx}`;
     tr.innerHTML = `
@@ -128,14 +130,16 @@ function renderSegmentRows(si) {
             title="鎖定後不被演算法調整">🔓</button>
         </div>
       </td>
+      <td id="seg-${si}-adjprob-${idx}">${fmtPct(adjProb)}</td>
       <td id="seg-${si}-grval-${idx}">${fmtPct(gr / seg.cycle)}</td>
     `;
     tbody.appendChild(tr);
     if (row.locked) applyLockUIForSeg(si, idx, true);
   });
 
-  const gr19    = calcGR19(seg.rows);
-  const sumProb = seg.rows.reduce((s, r) => s + r.prob, 0);
+  const gr19       = calcGR19(seg.rows);
+  const sumProb    = seg.rows.reduce((s, r) => s + r.prob, 0);
+  const sumAdjProb = seg.rows.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
   const trS = document.createElement('tr');
   trS.className = 'sum-row';
   trS.innerHTML = `
@@ -143,6 +147,7 @@ function renderSegmentRows(si) {
     <td>—</td><td>—</td><td>—</td>
     <td>${fmtPct(sumProb)}</td>
     <td>—</td>
+    <td id="seg-${si}-sum-adjprob">${fmtPct(sumAdjProb)}</td>
     <td id="seg-${si}-sum-gr" class="cell-grval">${fmtPct(gr19 / seg.cycle)}</td>
   `;
   tbody.appendChild(trS);

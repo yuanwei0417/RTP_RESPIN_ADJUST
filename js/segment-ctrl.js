@@ -12,13 +12,22 @@ function refreshSegmentGR(si) {
   const denom = getDenom(seg.rows);
 
   seg.rows.forEach((row, idx) => {
-    const el = document.getElementById(`seg-${si}-grval-${idx}`);
-    if (el) el.textContent = fmtPct(calcGR(row, denom) / seg.cycle);
+    const grEl = document.getElementById(`seg-${si}-grval-${idx}`);
+    if (grEl) grEl.textContent = fmtPct(calcGR(row, denom) / seg.cycle);
+
+    const apEl = document.getElementById(`seg-${si}-adjprob-${idx}`);
+    if (apEl) apEl.textContent = fmtPct(row.prob * (1 - row.respin));
   });
 
   const gr19  = calcGR19(seg.rows);
   const sumEl = document.getElementById(`seg-${si}-sum-gr`);
   if (sumEl) sumEl.textContent = fmtPct(gr19 / seg.cycle);
+
+  const sumApEl = document.getElementById(`seg-${si}-sum-adjprob`);
+  if (sumApEl) {
+    const sumAdjProb = seg.rows.reduce((s, r) => s + r.prob * (1 - r.respin), 0);
+    sumApEl.textContent = fmtPct(sumAdjProb);
+  }
 
   const topEl = document.getElementById(`gr-seg-${si}`);
   if (topEl) { topEl.textContent = fmtPct(gr19 / seg.cycle); topEl.className = 'gvalue neutral'; }
