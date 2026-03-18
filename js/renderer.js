@@ -30,7 +30,7 @@ function renderAllSegments() {
   segments.forEach((seg, si) => {
     const card = buildSegmentCard(seg, si);
     container.appendChild(card);
-    makeCollapsible(`seg-hdr-${si}`, `seg-body-${si}`, `seg-btn-${si}`);
+    makeCollapsible(`seg-hdr-${si}`, `seg-body-${si}`, `seg-btn-${si}`, true);
     renderSegmentRows(si);
 
     const gr19  = calcGR19(seg.rows);

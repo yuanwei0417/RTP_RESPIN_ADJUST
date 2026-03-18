@@ -102,14 +102,29 @@ function onCycleChange(si, val) {
 // ═══════════════════════════════════════════════
 // Collapse
 // ═══════════════════════════════════════════════
-function makeCollapsible(hId, bId, btnId) {
+function makeCollapsible(hId, bId, btnId, startCollapsed) {
   const hdr = document.getElementById(hId);
-  if (!hdr) return;
-  hdr.addEventListener('click', (e) => {
-    if (e.target.closest('input, button, select')) return;
-    const b   = document.getElementById(bId);
-    const btn = document.getElementById(btnId);
+  const b   = document.getElementById(bId);
+  const btn = document.getElementById(btnId);
+  if (!hdr || !b || !btn) return;
+
+  function toggle() {
     b.classList.toggle('collapsed');
     btn.textContent = b.classList.contains('collapsed') ? '展開 ▼' : '收合 ▲';
+  }
+
+  hdr.addEventListener('click', (e) => {
+    if (e.target.closest('input, button, select')) return;
+    toggle();
   });
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggle();
+  });
+
+  if (startCollapsed) {
+    b.classList.add('collapsed');
+    btn.textContent = '展開 ▼';
+  }
 }
