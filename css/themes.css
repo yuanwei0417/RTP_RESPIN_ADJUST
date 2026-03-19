@@ -11,8 +11,18 @@ body[data-theme="light"] .game-item:hover { background: #eef2ff; }
 body[data-theme="light"] .game-item.active { background: #dbeafe; }
 body[data-theme="light"] .fallback-upload { border-color: #c4c9dd; }
 body[data-theme="light"] .fallback-upload:hover { border-color: #7eb8f7; }
-body[data-theme="light"] .extra-toggle { color: #374151; }
-body[data-theme="light"] .extra-toggle input[type=checkbox] { accent-color: #3a7bd5; }
+body[data-theme="light"] .extra-toggle {
+  color: #374151;
+  background: #e5e7f3;
+  border-color: #c4c9dd;
+  box-shadow: none;
+}
+body[data-theme="light"] .extra-toggle span { color: #374151; }
+body[data-theme="light"] .extra-toggle span::before { color: #6b7280; content: '☆'; }
+body[data-theme="light"] .extra-toggle input[type=checkbox]:checked + span::before { content: '★'; color: #3a7bd5; }
+body[data-theme="light"] .extra-toggle input[type=checkbox]:checked + span {
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.4);
+}
 body[data-theme="light"] .extra-toggle.disabled span { color: #9ca3af; }
 body[data-theme="light"] .gr-display { background: #ffffff; border-color: #d0d4e5; }
 body[data-theme="light"] thead th { background: #e5e7f3; color: #1f2937; border-bottom-color: #c4c9dd; }
@@ -56,9 +66,25 @@ body[data-theme="cyberpunk"] .game-current { color: #e879f9; }
 body[data-theme="cyberpunk"] .game-picker-label { color: #a78bfa; }
 body[data-theme="cyberpunk"] .fallback-upload { border-color: #6b21a8; color: #7c5cbf; }
 body[data-theme="cyberpunk"] .fallback-upload:hover { border-color: #e879f9; color: #e879f9; }
-body[data-theme="cyberpunk"] .extra-toggle { color: #d0c4ee; }
-body[data-theme="cyberpunk"] .extra-toggle input[type=checkbox] { accent-color: #e879f9; }
-body[data-theme="cyberpunk"] .extra-toggle.disabled span { color: #6b4e99; }
+body[data-theme="cyberpunk"] .extra-toggle {
+  color: #d0c4ee;
+  background: #1a0030;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 1px rgba(124,58,237,0.4);
+}
+body[data-theme="cyberpunk"] .extra-toggle span { color: #d0c4ee; }
+body[data-theme="cyberpunk"] .extra-toggle span::before {
+  content: '◆';
+  color: #a78bfa;
+}
+body[data-theme="cyberpunk"] .extra-toggle input[type=checkbox]:checked + span::before {
+  content: '◇';
+  color: #e879f9;
+}
+body[data-theme="cyberpunk"] .extra-toggle input[type=checkbox]:checked + span {
+  box-shadow: 0 0 12px rgba(232,121,249,0.65);
+}
+body[data-theme="cyberpunk"] .extra-toggle.disabled span::before { color: #6b4e99; }
 body[data-theme="cyberpunk"] .gr-display { background: #120024; border-color: #6b21a8; }
 body[data-theme="cyberpunk"] .gr-block .glabel { color: #a78bfa; }
 body[data-theme="cyberpunk"] .gr-sep { background: #6b21a8; }
@@ -197,9 +223,25 @@ body[data-theme="green"] .game-current { color: #16a34a; }
 body[data-theme="green"] .game-picker-label { color: #4a8a4a; }
 body[data-theme="green"] .fallback-upload { border-color: #b8e0b8; color: #6b9a6b; }
 body[data-theme="green"] .fallback-upload:hover { border-color: #16a34a; color: #16a34a; }
-body[data-theme="green"] .extra-toggle { color: #1a3a1a; }
-body[data-theme="green"] .extra-toggle input[type=checkbox] { accent-color: #16a34a; }
-body[data-theme="green"] .extra-toggle.disabled span { color: #6b9a6b; }
+body[data-theme="green"] .extra-toggle {
+  color: #1a3a1a;
+  background: #e0f5e0;
+  border-color: #b8e0b8;
+  box-shadow: none;
+}
+body[data-theme="green"] .extra-toggle span { color: #1a3a1a; }
+body[data-theme="green"] .extra-toggle span::before {
+  content: '✿';
+  color: #16a34a;
+}
+body[data-theme="green"] .extra-toggle input[type=checkbox]:checked + span::before {
+  content: '❀';
+  color: #047857;
+}
+body[data-theme="green"] .extra-toggle input[type=checkbox]:checked + span {
+  box-shadow: 0 0 0 2px rgba(22,163,74,0.35);
+}
+body[data-theme="green"] .extra-toggle.disabled span::before { color: #6b9a6b; }
 body[data-theme="green"] .gr-display { background: #ffffff; border-color: #b8e0b8; }
 body[data-theme="green"] .gr-block .glabel { color: #4a8a4a; }
 body[data-theme="green"] .gr-sep { background: #b8e0b8; }
@@ -260,9 +302,26 @@ body[data-theme="pooh"] .game-current { color: #d4880f; }
 body[data-theme="pooh"] .game-picker-label { color: #b8976a; }
 body[data-theme="pooh"] .fallback-upload { border-color: #f0d58c; color: #b8976a; }
 body[data-theme="pooh"] .fallback-upload:hover { border-color: #d4880f; color: #d4880f; }
-body[data-theme="pooh"] .extra-toggle { color: #5d4037; }
-body[data-theme="pooh"] .extra-toggle input[type=checkbox] { accent-color: #d4880f; }
-body[data-theme="pooh"] .extra-toggle.disabled span { color: #b8976a; }
+body[data-theme="pooh"] .extra-toggle {
+  color: #5d4037;
+  background: #fceabb;
+  border-color: #f0d58c;
+  box-shadow: none;
+}
+body[data-theme="pooh"] .extra-toggle span { color: #5d4037; }
+body[data-theme="pooh"] .extra-toggle span::before {
+  content: '🍯';
+  font-size: 0.95rem;
+  color: #d4880f;
+}
+body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::before {
+  content: '🐝';
+  color: #b8860b;
+}
+body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span {
+  box-shadow: 0 0 0 2px rgba(212,136,15,0.45);
+}
+body[data-theme="pooh"] .extra-toggle.disabled span::before { color: #b8976a; }
 body[data-theme="pooh"] .gr-display { background: #fffdf5; border-color: #f0d58c; }
 body[data-theme="pooh"] .gr-block .glabel { color: #b8976a; }
 body[data-theme="pooh"] .gr-sep { background: #f0d58c; }

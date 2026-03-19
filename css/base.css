@@ -29,6 +29,12 @@ body {
   position: relative;
 }
 .game-picker-label { font-size: 0.72rem; color: #8899aa; text-transform: uppercase; letter-spacing: 0.5px; }
+.game-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
 .game-search {
   background: #0f1117;
   border: 1px solid #3a4a6b;
@@ -67,23 +73,67 @@ body {
 .game-item .gi-sub { font-size: 0.7rem; color: #556688; margin-left: 6px; }
 .game-current { font-size: 0.78rem; color: #7eb8f7; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .extra-toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.78rem;
-  color: #8899aa;
+  justify-content: center;
   cursor: pointer;
   user-select: none;
-  transition: opacity 0.15s;
+  padding: 2px;
+  border-radius: 999px;
+  border: 1px solid #3a4a6b;
+  background: rgba(15,17,23,0.9);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.4);
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+.extra-toggle:hover {
+  background: #1e2535;
+  border-color: #7eb8f7;
+  box-shadow: 0 0 0 1px rgba(126,184,247,0.25);
+}
+.extra-toggle:active {
+  transform: translateY(1px) scale(0.97);
 }
 .extra-toggle input[type=checkbox] {
-  accent-color: #7eb8f7;
-  width: 14px; height: 14px;
-  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
-.extra-toggle input[type=checkbox]:disabled { cursor: not-allowed; }
-.extra-toggle.disabled { opacity: 0.35; cursor: not-allowed; }
-.extra-toggle.disabled span { color: #556688; }
+.extra-toggle span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px 0 6px;
+  height: 22px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: #cdd7f0;
+}
+.extra-toggle span::before {
+  content: '✦';
+  font-size: 0.9rem;
+  color: #8899aa;
+  margin-right: 4px;
+}
+.extra-toggle input[type=checkbox]:checked + span::before {
+  content: '★';
+  color: #7eb8f7;
+}
+.extra-toggle input[type=checkbox]:disabled + span::before {
+  opacity: 0.5;
+}
+.extra-toggle input[type=checkbox]:checked + span {
+  font-weight: 700;
+  box-shadow: 0 0 0 2px rgba(126,184,247,0.5);
+}
+.extra-toggle.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.extra-toggle.disabled span::before {
+  color: #556688;
+}
 .fallback-upload {
   border: 1px dashed #3a4a6b;
   border-radius: 6px;
@@ -315,9 +365,9 @@ td.cell-grval   { color: #5ef77a; font-weight: 700; }
   border: 1px solid #3a4a6b;
   color: #e0e0e0;
   border-radius: 6px;
-  padding: 2px 6px;
+  padding: 2px 8px;
   font-size: 0.82rem;
-  width: 54px;
+  width: 80px;
   outline: none;
   margin-left: 8px;
   text-align: center;

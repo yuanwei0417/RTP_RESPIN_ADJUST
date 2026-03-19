@@ -13,14 +13,16 @@
 <!-- ── Top Bar ─────────────────────────────── -->
 <div class="top-bar">
   <div class="game-picker" id="game-picker">
-    <div class="game-picker-label">選擇遊戲</div>
+    <div class="game-picker-header">
+      <div class="game-picker-label">選擇遊戲</div>
+      <label class="extra-toggle" id="extra-toggle">
+        <input type="checkbox" id="extra-cb" disabled onchange="onExtraToggle()">
+        <span>額外</span>
+      </label>
+    </div>
     <input type="text" class="game-search" id="game-search"
       placeholder="搜尋遊戲..." autocomplete="off"
       onfocus="openGameList()" oninput="filterGameList()">
-    <label class="extra-toggle" id="extra-toggle">
-      <input type="checkbox" id="extra-cb" disabled onchange="onExtraToggle()">
-      <span>額外</span>
-    </label>
     <div class="game-current" id="game-current">尚未載入</div>
     <div class="game-list" id="game-list"></div>
     <div class="fallback-upload" id="fallback-upload" onclick="document.getElementById('file-input').click()"

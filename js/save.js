@@ -19,6 +19,13 @@ function prepareWbForSave() {
   if (!wb) return;
   const ws = wb.Sheets[wb.SheetNames[0]];
   segments.forEach(seg => {
+    // Save cycle back to header row (row 0, col = startCol + 1)
+    const cycleCol = seg.startCol + 1;
+    const cycleAddr = XLSX.utils.encode_cell({ r: 0, c: cycleCol });
+    const cycleVal = seg.cycle;
+    if (ws[cycleAddr]) { ws[cycleAddr].v = cycleVal; ws[cycleAddr].t = 'n'; delete ws[cycleAddr].f; }
+    else ws[cycleAddr] = { v: cycleVal, t: 'n' };
+
     const respinCol = seg.startCol + 4;
     seg.rows.forEach(row => {
       const addr = XLSX.utils.encode_cell({ r: row.rowIdx - 1, c: respinCol });
