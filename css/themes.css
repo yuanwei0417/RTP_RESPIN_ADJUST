@@ -317,20 +317,37 @@ body[data-theme="pooh"] .extra-toggle {
   border-color: #f0d58c;
   box-shadow: none;
 }
-body[data-theme="pooh"] .extra-toggle span { color: #5d4037; }
-body[data-theme="pooh"] .extra-toggle span::before {
+body[data-theme="pooh"] .extra-toggle span {
+  color: #5d4037;
+  position: relative;
+  display: inline-block;
+}
+/* 蜂蜜罐 icon：無論有沒有勾選都顯示在按鈕中央，大小固定 */
+body[data-theme="pooh"] .extra-toggle input[type=checkbox] + span::before,
+body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::before {
   content: '🍯';
-  font-size: 0.95rem;
+  position: relative;
+  font-size: 0.9rem;
   color: #d4880f;
 }
-body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::before {
+/* 蜂蜜罐常駐，蜜蜂用 ::after 顯示與飛行，不影響按鈕尺寸 */
+body[data-theme="pooh"] .extra-toggle span::after {
   content: '🐝';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.85rem;
   color: #b8860b;
-  /* pooh 額外已用繞圈飛行動畫，不套用呼吸效果 */
+  opacity: 0;
 }
 /* 維尼主題下關掉整個 icon 的呼吸動畫，只保留蜜蜂繞圈飛 */
 body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span {
   animation: none;
+}
+/* 勾選時才顯示蜜蜂，飛行結束後停在蜂蜜罐上方貼齊 */
+body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::after {
+  opacity: 1;
 }
 body[data-theme="pooh"] .extra-toggle.disabled span::before { color: #b8976a; }
 body[data-theme="pooh"] .gr-display { background: #fffdf5; border-color: #f0d58c; }
@@ -377,21 +394,23 @@ body[data-theme="pooh"] ::-webkit-scrollbar-thumb { background: #f0d58c; }
 body[data-theme="pooh"] ::-webkit-scrollbar-thumb:hover { background: #dbb84d; }
 
 @keyframes pooh-extra-orbit {
-  /* 大範圍繞外框一圈，半徑約按鈕尺寸再往外 +50% 左右 */
-  0%   { transform: translate(0px,   -25px)    rotate(0deg); }
-  8%   { transform: translate(12px,  -35px)    rotate(-10deg); }
-  18%  { transform: translate(26px,  -39px)    rotate(8deg); }
-  28%  { transform: translate(40px,  -31px)    rotate(15deg); }
-  38%  { transform: translate(50px,  -19px)    rotate(5deg); }
-  48%  { transform: translate(44px,  -5px)     rotate(-12deg); }
-  58%  { transform: translate(30px,   5px)     rotate(-4deg); }
-  68%  { transform: translate(12px,   9px)     rotate(9deg); }
-  78%  { transform: translate(-6px,   3px)     rotate(-6deg); }
-  88%  { transform: translate(-18px, -13px)    rotate(12deg); }
-  96%  { transform: translate(-10px, -31px)    rotate(-8deg); }
-  100% { transform: translate(0px,   -25px)    rotate(0deg); }
+  /* 回復原本大範圍飛行路線，整體往上平移約 5px，最後停在蜂蜜罐上方一點 */
+  /* 初始 / 最終位置調整到蜂蜜罐右上方一點 */
+  0%   { transform: translate(-50%, -50%) translate(6px,   -20px)   rotate(0deg); }
+  8%   { transform: translate(-50%, -50%) translate(12px,  -40px)   rotate(-10deg); }
+  18%  { transform: translate(-50%, -50%) translate(26px,  -44px)   rotate(8deg); }
+  28%  { transform: translate(-50%, -50%) translate(40px,  -36px)   rotate(15deg); }
+  38%  { transform: translate(-50%, -50%) translate(50px,  -24px)   rotate(5deg); }
+  48%  { transform: translate(-50%, -50%) translate(44px,  -10px)   rotate(-12deg); }
+  58%  { transform: translate(-50%, -50%) translate(30px,   0px)    rotate(-4deg); }
+  68%  { transform: translate(-50%, -50%) translate(12px,   4px)    rotate(9deg); }
+  78%  { transform: translate(-50%, -50%) translate(-6px,  -2px)    rotate(-6deg); }
+  88%  { transform: translate(-50%, -50%) translate(-18px, -18px)   rotate(12deg); }
+  96%  { transform: translate(-50%, -50%) translate(-10px, -36px)   rotate(-8deg); }
+  100% { transform: translate(-50%, -50%) translate(6px,   -20px)   rotate(0deg); }
 }
 
-body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::before {
-  animation: pooh-extra-orbit 2.4s linear infinite;
+/* 蜜蜂繞圈三圈後停下來 */
+body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::after {
+  animation: pooh-extra-orbit 3s linear 0s 3 forwards;
 }
