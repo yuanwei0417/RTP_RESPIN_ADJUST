@@ -19,7 +19,14 @@ body[data-theme="light"] .extra-toggle {
 }
 body[data-theme="light"] .extra-toggle span { color: #374151; }
 body[data-theme="light"] .extra-toggle span::before { color: #6b7280; content: '☆'; }
-body[data-theme="light"] .extra-toggle input[type=checkbox]:checked + span::before { content: '★'; color: #3a7bd5; }
+body[data-theme="light"] .extra-toggle input[type=checkbox]:checked + span::before {
+  content: '★';
+  color: #3a7bd5;
+}
+body[data-theme="light"] .extra-toggle input[type=checkbox]:checked + span {
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.4);
+  animation: extra-icon-breathe 1.3s ease-in-out infinite;
+}
 body[data-theme="light"] .extra-toggle input[type=checkbox]:checked + span {
   box-shadow: 0 0 0 2px rgba(59,130,246,0.4);
 }
@@ -83,6 +90,7 @@ body[data-theme="cyberpunk"] .extra-toggle input[type=checkbox]:checked + span::
 }
 body[data-theme="cyberpunk"] .extra-toggle input[type=checkbox]:checked + span {
   box-shadow: 0 0 12px rgba(232,121,249,0.65);
+  animation: extra-icon-breathe 1.2s ease-in-out infinite;
 }
 body[data-theme="cyberpunk"] .extra-toggle.disabled span::before { color: #6b4e99; }
 body[data-theme="cyberpunk"] .gr-display { background: #120024; border-color: #6b21a8; }
@@ -240,6 +248,7 @@ body[data-theme="green"] .extra-toggle input[type=checkbox]:checked + span::befo
 }
 body[data-theme="green"] .extra-toggle input[type=checkbox]:checked + span {
   box-shadow: 0 0 0 2px rgba(22,163,74,0.35);
+  animation: extra-icon-breathe 1.4s ease-in-out infinite;
 }
 body[data-theme="green"] .extra-toggle.disabled span::before { color: #6b9a6b; }
 body[data-theme="green"] .gr-display { background: #ffffff; border-color: #b8e0b8; }
@@ -317,9 +326,11 @@ body[data-theme="pooh"] .extra-toggle span::before {
 body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::before {
   content: '🐝';
   color: #b8860b;
+  /* pooh 額外已用繞圈飛行動畫，不套用呼吸效果 */
 }
+/* 維尼主題下關掉整個 icon 的呼吸動畫，只保留蜜蜂繞圈飛 */
 body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span {
-  box-shadow: 0 0 0 2px rgba(212,136,15,0.45);
+  animation: none;
 }
 body[data-theme="pooh"] .extra-toggle.disabled span::before { color: #b8976a; }
 body[data-theme="pooh"] .gr-display { background: #fffdf5; border-color: #f0d58c; }
@@ -364,3 +375,23 @@ body[data-theme="pooh"] .theme-select option { background: #fffdf5; color: #5d40
 body[data-theme="pooh"] ::-webkit-scrollbar-track { background: #fef9e7; }
 body[data-theme="pooh"] ::-webkit-scrollbar-thumb { background: #f0d58c; }
 body[data-theme="pooh"] ::-webkit-scrollbar-thumb:hover { background: #dbb84d; }
+
+@keyframes pooh-extra-orbit {
+  /* 大範圍繞外框一圈，半徑約按鈕尺寸再往外 +50% 左右 */
+  0%   { transform: translate(0px,   -25px)    rotate(0deg); }
+  8%   { transform: translate(12px,  -35px)    rotate(-10deg); }
+  18%  { transform: translate(26px,  -39px)    rotate(8deg); }
+  28%  { transform: translate(40px,  -31px)    rotate(15deg); }
+  38%  { transform: translate(50px,  -19px)    rotate(5deg); }
+  48%  { transform: translate(44px,  -5px)     rotate(-12deg); }
+  58%  { transform: translate(30px,   5px)     rotate(-4deg); }
+  68%  { transform: translate(12px,   9px)     rotate(9deg); }
+  78%  { transform: translate(-6px,   3px)     rotate(-6deg); }
+  88%  { transform: translate(-18px, -13px)    rotate(12deg); }
+  96%  { transform: translate(-10px, -31px)    rotate(-8deg); }
+  100% { transform: translate(0px,   -25px)    rotate(0deg); }
+}
+
+body[data-theme="pooh"] .extra-toggle input[type=checkbox]:checked + span::before {
+  animation: pooh-extra-orbit 2.4s linear infinite;
+}
